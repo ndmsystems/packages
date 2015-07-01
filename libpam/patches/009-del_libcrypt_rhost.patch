@@ -1,0 +1,59 @@
+diff -Nuar Linux-PAM-1.1.8.orig/modules/Makefile.am Linux-PAM-1.1.8/modules/Makefile.am
+--- Linux-PAM-1.1.8.orig/modules/Makefile.am	2015-04-17 17:33:59.000000000 +0300
++++ Linux-PAM-1.1.8/modules/Makefile.am	2015-04-17 17:37:24.000000000 +0300
+@@ -7,7 +7,7 @@
+ 	pam_group pam_issue pam_keyinit pam_lastlog pam_limits \
+ 	pam_listfile pam_localuser pam_loginuid pam_mail \
+ 	pam_mkhomedir pam_motd pam_namespace pam_nologin \
+-	pam_permit pam_pwhistory pam_rhosts pam_rootok pam_securetty \
++	pam_permit pam_pwhistory pam_rootok pam_securetty \
+ 	pam_selinux pam_sepermit pam_shells pam_stress \
+ 	pam_succeed_if pam_tally pam_tally2 pam_time pam_timestamp \
+ 	pam_tty_audit pam_umask \
+diff -Nuar Linux-PAM-1.1.8.orig/modules/pam_pwhistory/Makefile.am Linux-PAM-1.1.8/modules/pam_pwhistory/Makefile.am
+--- Linux-PAM-1.1.8.orig/modules/pam_pwhistory/Makefile.am	2015-04-17 17:33:59.000000000 +0300
++++ Linux-PAM-1.1.8/modules/pam_pwhistory/Makefile.am	2015-04-17 17:35:19.000000000 +0300
+@@ -25,7 +25,7 @@
+ noinst_HEADERS = opasswd.h
+ 
+ securelib_LTLIBRARIES = pam_pwhistory.la
+-pam_pwhistory_la_LIBADD = $(top_builddir)/libpam/libpam.la @LIBCRYPT@
++pam_pwhistory_la_LIBADD = $(top_builddir)/libpam/libpam.la
+ pam_pwhistory_la_SOURCES = pam_pwhistory.c opasswd.c
+ 
+ if ENABLE_REGENERATE_MAN
+diff -Nuar Linux-PAM-1.1.8.orig/modules/pam_unix/Makefile.am Linux-PAM-1.1.8/modules/pam_unix/Makefile.am
+--- Linux-PAM-1.1.8.orig/modules/pam_unix/Makefile.am	2015-04-17 17:33:59.000000000 +0300
++++ Linux-PAM-1.1.8/modules/pam_unix/Makefile.am	2015-04-17 17:37:03.000000000 +0300
+@@ -30,7 +30,7 @@
+   pam_unix_la_LDFLAGS += -Wl,--version-script=$(srcdir)/../modules.map
+ endif
+ pam_unix_la_LIBADD = $(top_builddir)/libpam/libpam.la \
+-	@LIBCRYPT@ @LIBSELINUX@ $(NIS_LIBS)
++	@LIBSELINUX@ $(NIS_LIBS)
+ 
+ securelib_LTLIBRARIES = pam_unix.la
+ 
+@@ -50,19 +50,19 @@
+ 
+ bigcrypt_SOURCES = bigcrypt.c bigcrypt_main.c
+ bigcrypt_CFLAGS = $(AM_CFLAGS)
+-bigcrypt_LDADD = @LIBCRYPT@
++bigcrypt_LDADD =
+ 
+ unix_chkpwd_SOURCES = unix_chkpwd.c md5_good.c md5_broken.c bigcrypt.c \
+ 	passverify.c
+ unix_chkpwd_CFLAGS = $(AM_CFLAGS) @PIE_CFLAGS@ -DHELPER_COMPILE=\"unix_chkpwd\"
+ unix_chkpwd_LDFLAGS = @PIE_LDFLAGS@
+-unix_chkpwd_LDADD = @LIBCRYPT@ @LIBSELINUX@ @LIBAUDIT@
++unix_chkpwd_LDADD = @LIBSELINUX@ @LIBAUDIT@
+ 
+ unix_update_SOURCES = unix_update.c md5_good.c md5_broken.c bigcrypt.c \
+ 	passverify.c
+ unix_update_CFLAGS = $(AM_CFLAGS) @PIE_CFLAGS@ -DHELPER_COMPILE=\"unix_update\"
+ unix_update_LDFLAGS = @PIE_LDFLAGS@
+-unix_update_LDADD = @LIBCRYPT@ @LIBSELINUX@
++unix_update_LDADD = @LIBSELINUX@
+ 
+ if ENABLE_REGENERATE_MAN
+ noinst_DATA = README

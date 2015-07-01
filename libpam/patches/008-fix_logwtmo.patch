@@ -1,0 +1,17 @@
+diff -Nuar Linux-PAM-1.1.8.orig/modules/pam_lastlog/pam_lastlog.c Linux-PAM-1.1.8/modules/pam_lastlog/pam_lastlog.c
+--- Linux-PAM-1.1.8.orig/modules/pam_lastlog/pam_lastlog.c	2015-04-17 15:04:40.000000000 +0300
++++ Linux-PAM-1.1.8/modules/pam_lastlog/pam_lastlog.c	2015-04-17 15:06:43.000000000 +0300
+@@ -51,6 +51,13 @@
+ # define _PATH_BTMP "/var/log/btmp"
+ #endif
+ 
++
++#ifndef __GLIBC__
++#define logwtmp(args...)
++#endif
++
++
++
+ /* XXX - time before ignoring lock. Is 1 sec enough? */
+ #define LASTLOG_IGNORE_LOCK_TIME     1
+ 

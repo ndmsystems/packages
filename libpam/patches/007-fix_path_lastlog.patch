@@ -1,0 +1,11 @@
+diff -Nuar Linux-PAM-1.1.8.orig/modules/pam_lastlog/pam_lastlog.c Linux-PAM-1.1.8/modules/pam_lastlog/pam_lastlog.c
+--- Linux-PAM-1.1.8.orig/modules/pam_lastlog/pam_lastlog.c	2015-04-16 18:12:41.000000000 +0300
++++ Linux-PAM-1.1.8/modules/pam_lastlog/pam_lastlog.c	2015-04-16 18:14:07.000000000 +0300
+@@ -26,6 +26,7 @@
+ #include <sys/types.h>
+ #include <syslog.h>
+ #include <unistd.h>
++#include <paths.h>
+ 
+ #if defined(hpux) || defined(sunos) || defined(solaris)
+ # ifndef _PATH_LASTLOG
