@@ -1,0 +1,29 @@
+#!/opt/bin/sh
+
+[ -e /opt/etc/default/dropbear ] && . /opt/etc/default/dropbear
+
+if [ "$DROPBEAR_ENABLE" = "no" ]; then
+    exit
+fi
+
+if [ -n "`pidof /opt/sbin/dropbear`" ]; then 
+    killall /opt/sbin/dropbear 2>/dev/null
+fi
+
+if [ ! -d /opt/etc/dropbear ]; then
+	mkdir /opt/etc/dropbear
+fi
+
+if [ ! -f /opt/etc/dropbear/dropbear_dss_host_key ]; then
+	opt/sbin/dropbearkey -t dss -f /opt/etc/dropbear/dropbear_dss_host_key
+fi
+
+if [ ! -f /opt/etc/dropbear/dropbear_rsa_host_key ]; then
+	opt/sbin/dropbearkey -t rsa -f /opt/etc/dropbear/dropbear_rsa_host_key
+fi
+
+if [ -n "$DROPBEAR_PORT" ]; then
+    /opt/sbin/dropbear -p $DROPBEAR_PORT
+else
+    /opt/sbin/dropbear
+fi

@@ -1,0 +1,31 @@
+--- a/svr-auth.c
++++ b/svr-auth.c
+@@ -259,12 +259,7 @@ static int checkusername(unsigned char *
+ 
+ 	TRACE(("shell is %s", ses.authstate.pw_shell))
+ 
+-	/* check that the shell is set */
+-	usershell = ses.authstate.pw_shell;
+-	if (usershell[0] == '\0') {
+-		/* empty shell in /etc/passwd means /bin/sh according to passwd(5) */
+-		usershell = "/bin/sh";
+-	}
++	usershell = get_user_shell();
+ 
+ 	/* check the shell is valid. If /etc/shells doesn't exist, getusershell()
+ 	 * should return some standard shells like "/bin/sh" and "/bin/csh" (this
+
+--- a/common-session.c
++++ b/common-session.c
+@@ -426,8 +426,10 @@ static long select_timeout() {
+ }
+ 
+ const char* get_user_shell() {
++	if( access( "/opt/bin/sh", F_OK ) != -1 ) {
++		return "/opt/bin/sh";
+ 	/* an empty shell should be interpreted as "/bin/sh" */
+-	if (ses.authstate.pw_shell[0] == '\0') {
++	} else if (ses.authstate.pw_shell[0] == '\0') {
+ 		return "/bin/sh";
+ 	} else {
+ 		return ses.authstate.pw_shell;

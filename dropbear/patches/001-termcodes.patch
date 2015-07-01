@@ -1,0 +1,11 @@
+--- a/termcodes.c
++++ b/termcodes.c
+@@ -129,8 +129,6 @@
+ 		{NOFLSH, TERMCODE_LOCAL},
+ 		{TOSTOP, TERMCODE_LOCAL},
+ 		{IEXTEN, TERMCODE_LOCAL},
+-		{ECHOCTL, TERMCODE_LOCAL},
+-		{ECHOKE, TERMCODE_LOCAL},
+ #ifdef PENDIN
+ 		{PENDIN, TERMCODE_LOCAL},
+ #else
