@@ -98,19 +98,19 @@ CONFIGURE_ARGS += \
 endif
 
 define Package/mc/install
-	$(INSTALL_DIR) $(1)/opt/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/mc $(1)/opt/usr/bin
-	$(INSTALL_DIR) $(1)/opt/etc/mc
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/mc $(1)/usr/bin
+	$(INSTALL_DIR) $(1)/etc/mc
 ifeq ($(CONFIG_MC_DIFF_VIEWER),y)
-	ln -sf mc $(1)/opt/usr/bin/mcdiff
+	ln -sf mc $(1)/usr/bin/mcdiff
 endif
 ifeq ($(CONFIG_MC_EDITOR),y)
-	ln -sf mc $(1)/opt/usr/bin/mcedit
+	ln -sf mc $(1)/usr/bin/mcedit
 endif
-	$(INSTALL_DATA) $(PKG_BUILD_DIR)/misc/mc.menu $(1)/opt/etc/mc
-	$(INSTALL_DIR) $(1)/opt/etc/mc/skins
-	$(INSTALL_DATA) $(PKG_BUILD_DIR)/misc/skins/default.ini $(1)/opt/etc/mc/skins
-	$(INSTALL_DIR) $(1)/opt/root/.mc/cedit/Syntax
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/misc/mc.menu $(1)/etc/mc
+	$(INSTALL_DIR) $(1)/etc/mc/skins
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/misc/skins/default.ini $(1)/etc/mc/skins
+	$(INSTALL_DIR) $(1)/root/.mc/cedit/Syntax
 endef
 
 $(eval $(call BuildPackage,mc))
