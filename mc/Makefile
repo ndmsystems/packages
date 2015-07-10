@@ -55,7 +55,6 @@ endef
 #	--prefix=/usr \
 #	--libexecdir=/usr/lib \
 #	--mandir=/usr/share/man \
-#	--sysconfdir=/opt/etc \
 #	--enable-background \
 #	--enable-charset \
 #	--enable-largefile \
@@ -75,6 +74,7 @@ CONFIGURE_ARGS += \
 	--without-gpm-mouse \
 	--without-x \
 	--without-vfs \
+	--sysconfdir=/opt/etc \
 	ac_cv_search_addwstr=no
 
 ifeq ($(CONFIG_MC_DIFF_VIEWER),n)
@@ -110,7 +110,7 @@ endif
 	$(INSTALL_DATA) $(PKG_BUILD_DIR)/misc/mc.menu $(1)/etc/mc
 	$(INSTALL_DIR) $(1)/etc/mc/skins
 	$(INSTALL_DATA) $(PKG_BUILD_DIR)/misc/skins/default.ini $(1)/etc/mc/skins
-	$(INSTALL_DIR) $(1)/root/.mc/cedit/Syntax
+	$(INSTALL_DIR) $(1)/.mc/cedit/Syntax
 endef
 
 $(eval $(call BuildPackage,mc))
