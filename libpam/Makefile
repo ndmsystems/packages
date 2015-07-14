@@ -50,7 +50,7 @@ define Build/Configure
 		--exec-prefix=/opt \
 		--sysconfdir=/opt/etc \
 		--sbindir=/opt/usr/sbin \
-		--includedir=/opt/usr/include \
+		--includedir=/opt/usr/include/security \
 	)
 endef
 
