@@ -46,26 +46,31 @@ define Build/Configure
 		--disable-nls \
 		--disable-rpath \
 		--enable-db=no \
+		--prefix=/opt \
+		--exec-prefix=/opt \
+		--sysconfdir=/opt/etc \
+		--sbindir=/opt/usr/sbin \
+		--includedir=/opt/usr/include \
 	)
 endef
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(1)/lib
 	$(INSTALL_DIR) $(1)/usr/include
-	$(CP) $(PKG_INSTALL_DIR)/lib/* $(1)/lib/
-	$(CP) $(PKG_INSTALL_DIR)/usr/include/* $(1)/usr/include
+	$(CP) $(PKG_INSTALL_DIR)/opt/lib/* $(1)/lib/
+	$(CP) $(PKG_INSTALL_DIR)/opt/usr/include/* $(1)/usr/include
 endef
 
 define Package/libpam/install
 	$(INSTALL_DIR) $(1)/lib $(1)/lib/security $(1)/lib/security/pam_filter 
 	$(INSTALL_DIR) $(1)/etc $(1)/etc/pam.d
 	$(INSTALL_DIR) $(1)/usr/sbin
-	$(CP) $(PKG_INSTALL_DIR)/lib/*.so* $(1)/lib/
-	$(CP) $(PKG_INSTALL_DIR)/lib/security/*.so* $(1)/lib/security/
-	$(CP) $(PKG_INSTALL_DIR)/lib/security/pam_filter/* $(1)/lib/security/pam_filter/
-	$(CP) $(PKG_INSTALL_DIR)/etc/* $(1)/etc/
+	$(CP) $(PKG_INSTALL_DIR)/opt/lib/*.so* $(1)/lib/
+	$(CP) $(PKG_INSTALL_DIR)/opt/lib/security/*.so* $(1)/lib/security/
+	$(CP) $(PKG_INSTALL_DIR)/opt/lib/security/pam_filter/* $(1)/lib/security/pam_filter/
+	$(CP) $(PKG_INSTALL_DIR)/opt/etc/* $(1)/etc/
 	$(CP) ./files/* $(1)/etc/
-	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/sbin/* $(1)/usr/sbin/
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/opt/usr/sbin/* $(1)/usr/sbin/
 endef
 
 $(eval $(call BuildPackage,libpam))
