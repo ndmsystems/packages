@@ -93,10 +93,10 @@ define Build/InstallDev
 endef
 
 define Package/glib2/install
-	$(INSTALL_DIR) $(1)/opt/usr/lib
+	$(INSTALL_DIR) $(1)/usr/lib
 	$(CP) \
 		$(PKG_INSTALL_DIR)/usr/lib/*.so* \
-		$(1)/opt/usr/lib/
+		$(1)/usr/lib/
 endef
 
 $(eval $(call HostBuild))
