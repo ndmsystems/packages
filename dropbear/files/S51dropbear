@@ -6,8 +6,8 @@ if [ "$DROPBEAR_ENABLE" = "no" ]; then
     exit
 fi
 
-if [ -n "`pidof /opt/sbin/dropbear`" ]; then 
-    killall /opt/sbin/dropbear 2>/dev/null
+if [ -n "`pidof dropbear`" ]; then 
+    killall dropbear 2>/dev/null
 fi
 
 if [ ! -d /opt/etc/dropbear ]; then
@@ -15,15 +15,15 @@ if [ ! -d /opt/etc/dropbear ]; then
 fi
 
 if [ ! -f /opt/etc/dropbear/dropbear_dss_host_key ]; then
-	opt/sbin/dropbearkey -t dss -f /opt/etc/dropbear/dropbear_dss_host_key
+	dropbearkey -t dss -f /opt/etc/dropbear/dropbear_dss_host_key
 fi
 
 if [ ! -f /opt/etc/dropbear/dropbear_rsa_host_key ]; then
-	opt/sbin/dropbearkey -t rsa -f /opt/etc/dropbear/dropbear_rsa_host_key
+	dropbearkey -t rsa -f /opt/etc/dropbear/dropbear_rsa_host_key
 fi
 
 if [ -n "$DROPBEAR_PORT" ]; then
-    /opt/sbin/dropbear -p $DROPBEAR_PORT
+    dropbear -p $DROPBEAR_PORT
 else
-    /opt/sbin/dropbear
+    dropbear
 fi
