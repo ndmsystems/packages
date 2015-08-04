@@ -18,8 +18,8 @@ include $(INCLUDE_DIR)/package.mk
 
 define Package/dropbear
   NAME:=$(PKG_NAME)
-  SECTION:=optware
-  CATEGORY:=Optware
+  SECTION:=net
+  CATEGORY:=Network
   TITLE:=Lightweight SSH sever and client
   DEPENDS:=+libpam +pam_ndm
 endef
