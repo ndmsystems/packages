@@ -7,7 +7,7 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=libiconv
+PKG_NAME:=libiconv-full
 PKG_VERSION:=1.11.1
 PKG_RELEASE:=1
 
@@ -22,28 +22,28 @@ PKG_FIXUP:=patch-libtool
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/libiconv/Default
+define Package/libiconv-full/Default
   URL:=http://www.gnu.org/software/libiconv/
   TITLE:=Character set conversion
 endef
 
-define Package/libiconv
-  $(call Package/libiconv/Default)
+define Package/libiconv-full
+  $(call Package/libiconv-full/Default)
   SECTION:=libs
   CATEGORY:=Libraries
   TITLE+= library
 endef
 
 define Package/libcharset
-  $(call Package/libiconv/Default)
+  $(call Package/libiconv-full/Default)
   SECTION:=libs
   CATEGORY:=Libraries
   TITLE+= library
 endef
 
 define Package/iconv
-  $(call Package/libiconv/Default)
-  DEPENDS:=+libiconv +libcharset
+  $(call Package/libiconv-full/Default)
+  DEPENDS:=+libiconv-full +libcharset
   SECTION:=utils
   CATEGORY:=Utilities
   TITLE+= utility
@@ -65,12 +65,12 @@ define Build/Compile
 endef
 
 define Build/InstallDev
-	$(INSTALL_DIR) $(1)/usr/lib/libiconv/include
-	$(CP) $(PKG_INSTALL_DIR)/usr/include/iconv.h $(1)/usr/lib/libiconv/include/
+	$(INSTALL_DIR) $(1)/usr/lib/libiconv-full/include
+	$(CP) $(PKG_INSTALL_DIR)/usr/include/iconv.h $(1)/usr/lib/libiconv-full/include/
 
-	$(INSTALL_DIR) $(1)/usr/lib/libiconv/lib
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libcharset.{a,so*} $(1)/usr/lib/libiconv/lib/
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libiconv.{a,so*} $(1)/usr/lib/libiconv/lib/
+	$(INSTALL_DIR) $(1)/usr/lib/libiconv-full/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libcharset.{a,so*} $(1)/usr/lib/libiconv-full/lib/
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libiconv.{a,so*} $(1)/usr/lib/libiconv-full/lib/
 endef
 
 define Package/libcharset/install
@@ -78,7 +78,7 @@ define Package/libcharset/install
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libcharset.so* $(1)/usr/lib/
 endef
 
-define Package/libiconv/install
+define Package/libiconv-full/install
 	$(INSTALL_DIR) $(1)/usr/lib
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libiconv.so* $(1)/usr/lib/
 endef
@@ -89,5 +89,5 @@ define Package/iconv/install
 endef
 
 $(eval $(call BuildPackage,libcharset))
-$(eval $(call BuildPackage,libiconv))
+$(eval $(call BuildPackage,libiconv-full))
 $(eval $(call BuildPackage,iconv))
