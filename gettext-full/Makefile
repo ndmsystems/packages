@@ -7,7 +7,7 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=gettext
+PKG_NAME:=gettext-full
 PKG_VERSION:=0.18.2.1
 PKG_RELEASE:=1
 
@@ -22,13 +22,13 @@ PKG_MAINTAINER:=Jo-Philipp Wich <jow@openwrt.org>
 PKG_FIXUP:=autoreconf
 PKG_INSTALL:=1
 PKG_BUILD_PARALLEL:=0
-PKG_BUILD_DEPENDS:=gettext/host
+PKG_BUILD_DEPENDS:=gettext-full/host
 PKG_CHECK_FORMAT_SECURITY:=0
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/host-build.mk
 
-define Package/libintl
+define Package/libintl-full
   SECTION:=libs
   CATEGORY:=Libraries
   TITLE:=GNU Internationalization library
@@ -60,20 +60,20 @@ HOST_CONFIGURE_ARGS += \
 	--with-included-libxml --without-libxml2-prefix --with-included-libcroco
 
 define Build/InstallDev
-	$(INSTALL_DIR) $(1)/usr/lib/libintl/include
-	$(CP) $(PKG_INSTALL_DIR)/usr/include/libintl.h $(1)/usr/lib/libintl/include/
+	$(INSTALL_DIR) $(1)/usr/lib/libintl-full/include
+	$(CP) $(PKG_INSTALL_DIR)/usr/include/libintl.h $(1)/usr/lib/libintl-full/include/
 
-	$(INSTALL_DIR) $(1)/usr/lib/libintl/lib
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libintl.{a,so*} $(1)/usr/lib/libintl/lib/
+	$(INSTALL_DIR) $(1)/usr/lib/libintl-full/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libintl.{a,so*} $(1)/usr/lib/libintl-full/lib/
 
 	$(INSTALL_DIR) $(1)/usr/share/aclocal
 	$(INSTALL_DATA) $(PKG_INSTALL_DIR)/usr/share/aclocal/* $(1)/usr/share/aclocal/
 endef
 
-define Package/libintl/install
+define Package/libintl-full/install
 	$(INSTALL_DIR) $(1)/usr/lib
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libintl.so* $(1)/usr/lib/
 endef
 
 $(eval $(call HostBuild))
-$(eval $(call BuildPackage,libintl))
+$(eval $(call BuildPackage,libintl-full))
