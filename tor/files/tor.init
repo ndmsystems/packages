@@ -1,0 +1,28 @@
+#!/bin/sh  /etc/rc.common
+#Copyright (C) 2006-2011 OpenWrt.org
+
+. /opt/lib/functions.sh
+
+start() {
+
+        mkdir -m 755 -p /var/run
+        touch /var/run/tor.pid
+        chown tor:tor /var/run/tor.pid
+
+
+        mkdir -m 0755 -p /var/lib/tor
+        chmod 0700 /var/lib/tor
+        chown tor:tor /var/lib/tor
+
+
+        mkdir -m 0755 -p /var/log/tor
+        chown tor:tor /var/log/tor
+
+        chmod 777 /dev/null
+        chmod 777 /dev/random
+        /opt/usr/sbin/tor --PidFile /var/run/tor.pid  -f /opt/etc/tor/torrc
+}
+
+stop() {
+        service_stop /usr/sbin/tor
+}
