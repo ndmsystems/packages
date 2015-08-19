@@ -112,7 +112,10 @@ define Package/openvpn-$(BUILD_VARIANT)/install
 		files/openvpn.init \
 		$(1)/etc/init.d/openvpn
 
-	$(INSTALL_CONF) files/openvpn.config \
+	$(INSTALL_CONF) files/client.conf \
+		$(1)/etc/config/openvpn
+
+	$(INSTALL_CONF) files/server.conf \
 		$(1)/etc/config/openvpn
 
 	$(INSTALL_DATA) \
