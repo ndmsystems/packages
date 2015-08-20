@@ -1,4 +1,10 @@
-#!/bin/sh
-/opt/usr/sbin/openvpn --config  /opt/etc/config/server
+#!/bin/sh /etc/rc.common
+
+. /opt/lib/functions.sh
+
+start()
+{
+	(/opt/usr/sbin/openvpn --config  /opt/etc/config/server)&
+}
 
 
