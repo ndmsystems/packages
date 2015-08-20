@@ -113,10 +113,10 @@ define Package/openvpn-$(BUILD_VARIANT)/install
 		$(1)/etc/init.d/openvpn
 
 	$(INSTALL_CONF) files/client.conf \
-		$(1)/etc/config/openvpn
+		$(1)/etc/config/
 
 	$(INSTALL_CONF) files/server.conf \
-		$(1)/etc/config/openvpn
+		$(1)/etc/config/
 
 	$(INSTALL_DATA) \
 		files/openvpn.upgrade \
