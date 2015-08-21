@@ -4,7 +4,7 @@
 
 start()
 {
-	(/opt/usr/sbin/openvpn --config  /opt/etc/config/server)&
+	(/opt/usr/sbin/openvpn --config  /opt/etc/config/server.conf)&
 }
 
 
