@@ -1,0 +1,11 @@
+--- a/xupnpd.lua
++++ b/xupnpd.lua
+@@ -29,7 +29,7 @@
+ cfg.debug=1
+ 
+ -- external 'udpxy' url for multicast playlists (udp://@...)
+---cfg.udpxy_url='http://192.168.1.1:4022'
++cfg.udpxy_url='http://192.168.1.1:4022'
+ 
+ -- downstream interface for builtin multicast proxy (comment 'cfg.udpxy_url' for processing 'udp://@...' playlists)
+ cfg.mcast_interface='eth1'

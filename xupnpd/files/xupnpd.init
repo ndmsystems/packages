@@ -1,0 +1,15 @@
+#!/bin/sh /etc/rc.common
+
+XUPNPD="/opt/usr/bin/xupnpd"
+
+start(){
+	start_service $XUPNPD
+}
+
+stop(){
+	service_stop $XUPNPD
+}
+
+reload(){
+	service_reload $XUPNPD
+}
