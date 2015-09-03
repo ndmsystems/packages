@@ -3,26 +3,30 @@
 
 . /opt/lib/functions.sh
 
+
+TOR="/opt/usr/sbin/tor"
+TORRC_CONF="/opt/etc/tor/torrc"
+
+
 start() {
-
-        mkdir -m 755 -p /var/run
-        touch /var/run/tor.pid
-        chown tor:tor /var/run/tor.pid
-
-
-        mkdir -m 0755 -p /var/lib/tor
-        chmod 0700 /var/lib/tor
-        chown tor:tor /var/lib/tor
+	mkdir -m 755 -p /var/run
+	touch /var/run/tor.pid
+	chown tor:tor /var/run/tor.pid
 
 
-        mkdir -m 0755 -p /var/log/tor
-        chown tor:tor /var/log/tor
+	mkdir -m 0755 -p /var/lib/tor
+	chmod 0700 /var/lib/tor
+	chown tor:tor /var/lib/tor
 
-        chmod 777 /dev/null
-        chmod 777 /dev/random
-        /opt/usr/sbin/tor --PidFile /var/run/tor.pid  -f /opt/etc/tor/torrc
+
+	mkdir -m 0755 -p /var/log/tor
+	chown tor:tor /var/log/tor
+
+	chmod 777 /dev/null
+	chmod 777 /dev/random
+	service_start $TOR --PidFile /var/run/tor.pid -f $TORRC_CONF
 }
 
 stop() {
-        service_stop /usr/sbin/tor
+	service_stop $TOR
 }

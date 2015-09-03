@@ -3,7 +3,7 @@
 XUPNPD="/opt/usr/bin/xupnpd"
 
 start(){
-	start_service $XUPNPD
+	service_start $XUPNPD
 }
 
 stop(){

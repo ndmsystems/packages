@@ -2,9 +2,15 @@
 
 . /opt/lib/functions.sh
 
-start()
-{
-	(/opt/usr/sbin/openvpn --config  /opt/etc/config/server.conf)&
+
+OPENVPN="/opt/usr/sbin/openvpn"
+SERVER_CONF="/opt/etc/config/server.conf"
+CLIENT_CONF="/opt/etc/config/client.conf"
+
+start(){
+	service_start $OPENVPN --config  $SERVER_CONF &
 }
 
-
+stop(){
+	service_stop $OPENVPN
+}

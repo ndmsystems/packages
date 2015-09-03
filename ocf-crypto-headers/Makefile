@@ -15,8 +15,8 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 include $(INCLUDE_DIR)/package.mk
 
 define Package/ocf-crypto-headers
-  SECTION:=optware
-  CATEGORY:=Optware
+  SECTION:=utils
+  CATEGORY:=Utils
   TITLE:=OCF-Linux cryptodev header
   PKGARCH:=all
 endef
