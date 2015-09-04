@@ -1,0 +1,16 @@
+--- a/Makefile	2015-09-04 22:31:11.109707333 +0300
++++ b/Makefile	2015-09-04 22:30:38.749608549 +0300
+@@ -8,11 +8,11 @@
+ LOGRDIR=$(ETCDIR)/logrotate.d
+ 
+ OPTFLAGS=-O2
+-HAVEFLAGS=-DHAVE_LOCKDEV
++#HAVEFLAGS=-DHAVE_LOCKDEV
+ #GLIBCFG=glib-config
+ GLIBCFG=pkg-config glib-2.0
+ CFLAGS = -Wall $(shell $(GLIBCFG) --cflags) $(OPTFLAGS) $(HAVEFLAGS)
+-LDFLAGS = $(shell $(GLIBCFG) --libs) -lpopt -ldl -llockdev
++LDFLAGS = -lglib-2.0 -lpopt -ldl #-llockdev
+ CC = gcc
+ 
+ all: ttywatch

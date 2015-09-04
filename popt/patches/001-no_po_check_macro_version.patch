@@ -1,0 +1,14 @@
+--- a/po/Makefile.in.in	2015-09-05 01:44:29.461816446 +0300
++++ b/po/Makefile.in.in	2015-09-05 01:43:31.457484968 +0300
+@@ -96,9 +96,9 @@
+ 	mv t-$@ $@
+ 
+ 
+-all: check-macro-version all-@USE_NLS@
++all: all-@USE_NLS@
+ 
+-all-yes: stamp-po
++all-yes: check-macro-version stamp-po
+ all-no:
+ 
+ # Ensure that the gettext macros and this Makefile.in.in are in sync.
