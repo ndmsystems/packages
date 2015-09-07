@@ -1,0 +1,29 @@
+diff -Nuar ttywatch-0.14/telnet.c ttywatch-0.14.new/telnet.c
+--- ttywatch-0.14/telnet.c	2004-03-30 03:39:46.000000000 +0400
++++ ttywatch-0.14.new/telnet.c	2015-09-07 17:22:37.042814207 +0300
+@@ -112,6 +112,14 @@
+     for (s=data, d=data; s<data+len; s++) {
+ 	switch (nc->ts) {
+ 	case TS_DATA:
++	    if (*s == '\r') {
++	        nc->flags |= TS_FLAG_CR;
++	    } else {
++	        if (*s == '\n' && (nc->flags & TS_FLAG_CR)) {
++	        *s = 0; /* Ignore \n after \r */
++	        }
++	        nc->flags &= ~TS_FLAG_CR;
++	    }
+ 	    if (*s == '\xff') { /* IAC */
+ 		nc->ts = TS_IAC;
+ 		continue;
+diff -Nuar ttywatch-0.14/ttywatch.h ttywatch-0.14.new/ttywatch.h
+--- ttywatch-0.14/ttywatch.h	2004-04-22 23:51:30.000000000 +0400
++++ ttywatch-0.14.new/ttywatch.h	2015-09-07 17:23:05.522965949 +0300
+@@ -38,6 +38,7 @@
+ } telnet_state;
+ 
+ #define TS_FLAG_BREAK 0x01
++#define TS_FLAG_CR    0x02
+ 
+ typedef struct net_conn net_conn;
+ struct net_conn {
