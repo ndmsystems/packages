@@ -16,7 +16,7 @@ include $(INCLUDE_DIR)/package.mk
 
 define Package/ocf-crypto-headers
   SECTION:=utils
-  CATEGORY:=Utils
+  CATEGORY:=Utilities
   TITLE:=OCF-Linux cryptodev header
   PKGARCH:=all
 endef
