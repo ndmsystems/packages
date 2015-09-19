@@ -1,0 +1,27 @@
+--- v8/include/v8.h
++++ v8/include/v8.h
+@@ -2611,6 +2611,11 @@ class V8_EXPORT ArrayBuffer : public Object {
+    * Data length in bytes.
+    */
+   size_t ByteLength() const;
++  
++  /**
++   * Data pointer.
++   */
++  uint8_t* BackingStore() const;
+ 
+   /**
+    * Create a new ArrayBuffer. Allocate |byte_length| bytes.
+--- v8/src/api.cc
++++ v8/src/api.cc
+@@ -5827,6 +5827,10 @@ size_t v8::ArrayBuffer::ByteLength() const {
+   return static_cast<size_t>(obj->byte_length()->Number());
+ }
+ 
++uint8_t* v8::ArrayBuffer::BackingStore() const {
++  i::Handle<i::JSArrayBuffer> buffer = Utils::OpenHandle(this);
++  return static_cast<uint8_t*>(buffer->backing_store());
++}
+ 
+ Local<ArrayBuffer> v8::ArrayBuffer::New(Isolate* isolate, size_t byte_length) {
+   i::Isolate* i_isolate = reinterpret_cast<i::Isolate*>(isolate);

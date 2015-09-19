@@ -1,0 +1,18 @@
+# To workaround this:
+#    Traceback (most recent call last):
+#     File "../../tools/js2c.py", line 36, in <module>
+#       import bz2
+#    ImportError: No module named bz2
+sudo ln -s bz2.x86_64-linux-gnu.so /usr/lib/python2.7/lib-dynload/bz2.so
+export PYTHONPATH=$PYTHONPATH:`python -c 'import sys; print ":".join(sys.path)'`
+
+# On a 64-bit host, to fix this:
+# In file included from /usr/include/c++/4.9/algorithm:60:0,
+#                 from ../src/utils.h:34,
+#                 from ../src/platform.h:51,
+#                 from ../src/assert-scope.h:32,
+#                 from ../src/v8.h:57,
+#                 from ../src/accessors.cc:28:
+#/usr/include/c++/4.9/utility:68:28: fatal error: bits/c++config.h: No such file or directory
+
+aptitude install gcc-multilib g++-multilib
