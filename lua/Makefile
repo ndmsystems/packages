@@ -91,7 +91,7 @@ endef
 define Build/Configure
 endef
 
-EXTRA_CFLAGS := -Wall -DNDEBUG
+EXTRA_CFLAGS := -Wall -DNDEBUG $(FPIC)
 
 ifneq ($(CONFIG_USE_EGLIBC),)
   ifeq ($(CONFIG_EGLIBC_OPTION_EGLIBC_UTMP),)
