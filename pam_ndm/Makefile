@@ -6,7 +6,7 @@ include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/package-defaults.mk
 
 PKG_NAME:=pam_ndm
-PKG_VERSION:=1.0.2
+PKG_VERSION:=1.0.3
 PKG_MD5SUM:=5e75940b1fea433b51a93ddac1bf69ce
 PKG_LICENSE:=NDM
 
@@ -32,7 +32,6 @@ EXTRA_CFLAGS:=\
     -g3 -pipe -fPIC -std=c99 \
     -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 \
     -D_POSIX_C_SOURCE=199309L -D_XOPEN_SOURCE=600 \
-	-D__TARGET_REALM__= $(call StringMacro,CONFIG_TARGET_REALM) \
     -ffunction-sections -fdata-sections \
     -Wall -Winit-self -Wswitch-enum -Wundef -Wunsafe-loop-optimizations \
     -Wmissing-field-initializers -Wnormalized=nfkc \
