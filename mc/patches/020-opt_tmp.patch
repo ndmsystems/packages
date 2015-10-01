@@ -1,0 +1,11 @@
+--- mc-4.8.14/lib/global.h.orig	2015-09-30 11:59:53.000000000 +0300
++++ mc-4.8.14/lib/global.h	2015-10-01 11:48:57.175122187 +0300
+@@ -130,7 +130,7 @@
+ #define PATH_SEP_STR "/"
+ #define IS_PATH_SEP(c) ((c) == PATH_SEP)
+ #define PATH_ENV_SEP ':'
+-#define TMPDIR_DEFAULT "/tmp"
++#define TMPDIR_DEFAULT "/opt/tmp"
+ #define SCRIPT_SUFFIX ""
+ #define get_default_editor() "vi"
+ #define OS_SORT_CASE_SENSITIVE_DEFAULT 1
