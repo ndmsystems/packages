@@ -1,0 +1,27 @@
+--- librpc-2015-04-10/rcmd.c.orig	2007-01-15 00:00:00.000000000 +0300
++++ librpc-2015-04-10/rcmd.c	2015-10-16 12:09:13.545692037 +0300
+@@ -88,7 +88,11 @@
+ #include <sys/uio.h>
+ 
+ #ifndef _PATH_HEQUIV
+-#define _PATH_HEQUIV "/etc/hosts.equiv"
++#define _PATH_HEQUIV "/opt/etc/hosts.equiv"
++#endif
++
++#ifdef __UCLIBC_HAS_REENTRANT_RPC__
++#include <bits/uClibc_alloc.h>
+ #endif
+ 
+ int rresvport(int *alport);
+@@ -128,9 +132,9 @@
+ 	{
+ 	    if (herr != NETDB_INTERNAL || errno != ERANGE)
+ 	    {
+-		__set_h_errno (herr);
++		//__set_h_errno (herr);
+ 		stack_heap_free(tmphstbuf);
+-		herror(*ahost);
++		//herror(*ahost);
+ 		return -1;
+ 	    }
+ 	    else

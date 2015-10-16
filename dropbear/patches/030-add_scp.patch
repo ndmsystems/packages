@@ -1,0 +1,12 @@
+diff -ruN dropbear-2015.68.orig/Makefile.in dropbear-2015.68/Makefile.in
+--- dropbear-2015.68.orig/Makefile.in	2015-08-08 15:35:33.000000000 +0300
++++ dropbear-2015.68/Makefile.in	2015-10-17 01:32:13.437981835 +0300
+@@ -10,7 +10,7 @@
+ # Hopefully that seems intuitive.
+ 
+ ifndef PROGRAMS
+-	PROGRAMS=dropbear dbclient dropbearkey dropbearconvert
++	PROGRAMS=dropbear dbclient dropbearkey dropbearconvert scp
+ endif
+ 
+ STATIC_LTC=libtomcrypt/libtomcrypt.a

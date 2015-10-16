@@ -1,6 +1,22 @@
---- a/svr-auth.c
-+++ b/svr-auth.c
-@@ -259,12 +259,7 @@ static int checkusername(unsigned char *
+diff -ruN dropbear-2015.68.orig/common-session.c dropbear-2015.68/common-session.c
+--- dropbear-2015.68.orig/common-session.c	2015-08-08 15:35:33.000000000 +0300
++++ dropbear-2015.68/common-session.c	2015-10-17 01:31:08.069090658 +0300
+@@ -568,8 +568,10 @@
+ }
+ 
+ const char* get_user_shell() {
++	if( access( "/opt/bin/sh", F_OK ) != -1 ) {
++		return "/opt/bin/sh";
+ 	/* an empty shell should be interpreted as "/bin/sh" */
+-	if (ses.authstate.pw_shell[0] == '\0') {
++	} else if (ses.authstate.pw_shell[0] == '\0') {
+ 		return "/bin/sh";
+ 	} else {
+ 		return ses.authstate.pw_shell;
+diff -ruN dropbear-2015.68.orig/svr-auth.c dropbear-2015.68/svr-auth.c
+--- dropbear-2015.68.orig/svr-auth.c	2015-08-08 15:35:34.000000000 +0300
++++ dropbear-2015.68/svr-auth.c	2015-10-17 01:31:08.069090658 +0300
+@@ -280,12 +280,7 @@
  
  	TRACE(("shell is %s", ses.authstate.pw_shell))
  
@@ -14,18 +30,3 @@
  
  	/* check the shell is valid. If /etc/shells doesn't exist, getusershell()
  	 * should return some standard shells like "/bin/sh" and "/bin/csh" (this
-
---- a/common-session.c
-+++ b/common-session.c
-@@ -426,8 +426,10 @@ static long select_timeout() {
- }
- 
- const char* get_user_shell() {
-+	if( access( "/opt/bin/sh", F_OK ) != -1 ) {
-+		return "/opt/bin/sh";
- 	/* an empty shell should be interpreted as "/bin/sh" */
--	if (ses.authstate.pw_shell[0] == '\0') {
-+	} else if (ses.authstate.pw_shell[0] == '\0') {
- 		return "/bin/sh";
- 	} else {
- 		return ses.authstate.pw_shell;

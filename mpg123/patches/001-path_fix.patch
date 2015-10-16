@@ -1,0 +1,10 @@
+--- mpg123-1.22.3/libmpg123.pc.in.orig	2015-08-03 14:48:00.000000000 +0300
++++ mpg123-1.22.3/libmpg123.pc.in	2015-10-07 00:05:13.039843923 +0300
+@@ -1,6 +1,6 @@
+ prefix=@prefix@
+ exec_prefix=@exec_prefix@
+-libdir=@libdir@
++libdir=${exec_prefix}/lib
+ includedir=@includedir@
+ 
+ Name: libmpg123

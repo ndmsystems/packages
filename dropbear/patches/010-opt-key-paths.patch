@@ -1,6 +1,7 @@
---- a/options.h
-+++ b/options.h
-@@ -21,10 +21,10 @@
+diff -ruN dropbear-2015.68.orig/options.h dropbear-2015.68/options.h
+--- dropbear-2015.68.orig/options.h	2015-08-08 15:35:34.000000000 +0300
++++ dropbear-2015.68/options.h	2015-10-17 01:29:02.767381942 +0300
+@@ -21,13 +21,13 @@
  
  /* Default hostkey paths - these can be specified on the command line */
  #ifndef DSS_PRIV_FILENAME
@@ -11,29 +12,69 @@
 -#define RSA_PRIV_FILENAME "/etc/dropbear/dropbear_rsa_host_key"
 +#define RSA_PRIV_FILENAME "/opt/etc/dropbear/dropbear_rsa_host_key"
  #endif
+ #ifndef ECDSA_PRIV_FILENAME
+-#define ECDSA_PRIV_FILENAME "/etc/dropbear/dropbear_ecdsa_host_key"
++#define ECDSA_PRIV_FILENAME "/opt/etc/dropbear/dropbear_ecdsa_host_key"
+ #endif
  
  /* Set NON_INETD_MODE if you require daemon functionality (ie Dropbear listens
-@@ -227,12 +227,12 @@
+@@ -193,7 +193,7 @@
+ 
+ /* The MOTD file path */
+ #ifndef MOTD_FILENAME
+-#define MOTD_FILENAME "/etc/motd"
++#define MOTD_FILENAME "/opt/etc/motd"
+ #endif
+ 
+ /* Authentication Types - at least one required.
+@@ -276,25 +276,25 @@
+ /* The default file to store the daemon's process ID, for shutdown
+    scripts etc. This can be overridden with the -P flag */
+ #ifndef DROPBEAR_PIDFILE
+-#define DROPBEAR_PIDFILE "/var/run/dropbear.pid"
++#define DROPBEAR_PIDFILE "/opt/var/run/dropbear.pid"
+ #endif
+ 
+ /* The command to invoke for xauth when using X11 forwarding.
+  * "-q" for quiet */
+ #ifndef XAUTH_COMMAND
+-#define XAUTH_COMMAND "/usr/bin/xauth -q"
++#define XAUTH_COMMAND "/opt/usr/bin/xauth -q"
+ #endif
+ 
+ /* if you want to enable running an sftp server (such as the one included with
   * OpenSSH), set the path below. If the path isn't defined, sftp will not
   * be enabled */
  #ifndef SFTPSERVER_PATH
 -#define SFTPSERVER_PATH "/usr/libexec/sftp-server"
-+#define SFTPSERVER_PATH "/opt/libexec/sftp-server"
++#define SFTPSERVER_PATH "/opt/bin/sftp-server"
  #endif
  
  /* This is used by the scp binary when used as a client binary. If you're
   * not using the Dropbear client, you'll need to change it */
--#define _PATH_SSH_PROGRAM "/usr/bin/dbclient"
-+#define _PATH_SSH_PROGRAM "/opt/bin/dbclient"
+-#define DROPBEAR_PATH_SSH_PROGRAM "/usr/bin/dbclient"
++#define DROPBEAR_PATH_SSH_PROGRAM "/opt/bin/dbclient"
  
- /* Whether to log commands executed by a client. This only logs the
-  * (single) command sent to the server, not what a user did in a
-@@ -263,7 +263,7 @@
+ /* Whether to log commands executed by a client. This only logs the 
+  * (single) command sent to the server, not what a user did in a 
+@@ -336,7 +336,7 @@
  #define DEFAULT_IDLE_TIMEOUT 0
  
  /* The default path. This will often get replaced by the shell */
 -#define DEFAULT_PATH "/usr/bin:/bin"
-+#define DEFAULT_PATH "/usr/bin:/bin:/opt/bin"
++#define DEFAULT_PATH "/opt/bin:/opt/usr/bin:/usr/bin:/bin"
  
  /* Some other defines (that mostly should be left alone) are defined
   * in sysoptions.h */
+diff -ruN dropbear-2015.68.orig/sysoptions.h dropbear-2015.68/sysoptions.h
+--- dropbear-2015.68.orig/sysoptions.h	2015-08-08 15:35:34.000000000 +0300
++++ dropbear-2015.68/sysoptions.h	2015-10-17 01:29:55.720104134 +0300
+@@ -61,7 +61,7 @@
+ 
+ #define _PATH_TTY "/dev/tty"
+ 
+-#define _PATH_CP "/bin/cp"
++#define _PATH_CP "/opt/bin/cp"
+ 
+ #define DROPBEAR_ESCAPE_CHAR '~'
+ 

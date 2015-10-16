@@ -1,0 +1,27 @@
+#!/bin/sh
+
+RAETHER_PATH=/lib/modules/*/raeth.ko
+CUSTOM_SCRIPT_PATH=/etc/init.d/custom.sh
+. /opt/lib/functions.sh
+
+chmod -R 777 /dev/*
+
+if [ -f /etc/fstab ]; then
+	mount -a
+fi
+
+ip link set dev lo up
+
+if [ -f $RAETHER_PATH ]
+then
+	insmod $RAETHER_PATH
+fi
+
+load_opt_modules
+
+if [ -x $CUSTOM_SCRIPT_PATH ]
+then
+	$CUSTOM_SCRIPT_PATH
+fi
+
+chmod -R 777 /dev/*

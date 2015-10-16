@@ -248,7 +248,7 @@ diff -ruN mc-4.8.14.orig/src/subshell.c mc-4.8.14/src/subshell.c
 +       http://lists.busybox.net/pipermail/busybox/2012-March/077460.html */
 +    else if (subshell_type == ASH_BUSYBOX)
 +    {
-+        quote_cmd_start = "\"`echo -en '";
++        quote_cmd_start = "\"`printf \"%b\" '";
 +        quote_cmd_end = "'`\"";
 +    }
      else

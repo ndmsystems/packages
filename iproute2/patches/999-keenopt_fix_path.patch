@@ -1,0 +1,143 @@
+diff -ruN iproute2-2.6.37.orig/include/iptables.h iproute2-2.6.37/include/iptables.h
+--- iproute2-2.6.37.orig/include/iptables.h	2015-10-16 11:35:39.000000000 +0300
++++ iproute2-2.6.37/include/iptables.h	2015-10-17 00:41:40.421001262 +0300
+@@ -6,9 +6,9 @@
+ 
+ #include "sys/types.h"
+ 
+-#ifndef IPT_LIB_DIR
+-#define IPT_LIB_DIR "/usr/local/lib/iptables"
+-#endif
++//#ifndef IPT_LIB_DIR
++#define IPT_LIB_DIR "/opt/usr/lib/iptables"
++//#endif
+ 
+ #ifndef IPPROTO_SCTP
+ #define IPPROTO_SCTP 132
+diff -ruN iproute2-2.6.37.orig/include/xt-internal.h iproute2-2.6.37/include/xt-internal.h
+--- iproute2-2.6.37.orig/include/xt-internal.h	2011-01-07 20:54:30.000000000 +0300
++++ iproute2-2.6.37/include/xt-internal.h	2015-10-17 00:41:13.340655060 +0300
+@@ -1,9 +1,9 @@
+ #ifndef _XTABLES_INTERNAL_H
+ #define _XTABLES_INTERNAL_H 1
+ 
+-#ifndef XT_LIB_DIR
+-#	define XT_LIB_DIR "/lib/xtables"
+-#endif
++//#ifndef XT_LIB_DIR
++#	define XT_LIB_DIR "/opt/usr/lib/iptables"
++//#endif
+ 
+ /* protocol family dependent informations */
+ struct afinfo {
+diff -ruN iproute2-2.6.37.orig/ip/iplink.c iproute2-2.6.37/ip/iplink.c
+--- iproute2-2.6.37.orig/ip/iplink.c	2011-01-07 20:54:30.000000000 +0300
++++ iproute2-2.6.37/ip/iplink.c	2015-10-17 00:42:50.981908419 +0300
+@@ -33,9 +33,10 @@
+ #include "ip_common.h"
+ 
+ #define IPLINK_IOCTL_COMPAT	1
+-#ifndef LIBDIR
+-#define LIBDIR "/usr/lib/"
+-#endif
++//#ifndef LIBDIR
++#undef  LIBDIR
++#define LIBDIR "/opt/usr/lib/"
++//#endif
+ 
+ static void usage(void) __attribute__((noreturn));
+ static int iplink_have_newlink(void);
+diff -ruN iproute2-2.6.37.orig/lib/rt_names.c iproute2-2.6.37/lib/rt_names.c
+--- iproute2-2.6.37.orig/lib/rt_names.c	2011-01-07 20:54:30.000000000 +0300
++++ iproute2-2.6.37/lib/rt_names.c	2015-10-17 00:28:37.078708931 +0300
+@@ -127,7 +127,7 @@
+ static void rtnl_rtprot_initialize(void)
+ {
+ 	rtnl_rtprot_init = 1;
+-	rtnl_tab_initialize("/etc/iproute2/rt_protos",
++	rtnl_tab_initialize("/opt/etc/iproute2/rt_protos",
+ 			    rtnl_rtprot_tab, 256);
+ }
+ 
+@@ -194,7 +194,7 @@
+ 	rtnl_rtscope_tab[254] = "host";
+ 	rtnl_rtscope_tab[253] = "link";
+ 	rtnl_rtscope_tab[200] = "site";
+-	rtnl_tab_initialize("/etc/iproute2/rt_scopes",
++	rtnl_tab_initialize("/opt/etc/iproute2/rt_scopes",
+ 			    rtnl_rtscope_tab, 256);
+ }
+ 
+@@ -257,7 +257,7 @@
+ static void rtnl_rtrealm_initialize(void)
+ {
+ 	rtnl_rtrealm_init = 1;
+-	rtnl_tab_initialize("/etc/iproute2/rt_realms",
++	rtnl_tab_initialize("/opt/etc/iproute2/rt_realms",
+ 			    rtnl_rtrealm_tab, 256);
+ }
+ 
+@@ -326,7 +326,7 @@
+ static void rtnl_rttable_initialize(void)
+ {
+ 	rtnl_rttable_init = 1;
+-	rtnl_hash_initialize("/etc/iproute2/rt_tables",
++	rtnl_hash_initialize("/opt/etc/iproute2/rt_tables",
+ 			     rtnl_rttable_hash, 256);
+ }
+ 
+@@ -394,7 +394,7 @@
+ static void rtnl_rtdsfield_initialize(void)
+ {
+ 	rtnl_rtdsfield_init = 1;
+-	rtnl_tab_initialize("/etc/iproute2/rt_dsfield",
++	rtnl_tab_initialize("/opt/etc/iproute2/rt_dsfield",
+ 			    rtnl_rtdsfield_tab, 256);
+ }
+ 
+diff -ruN iproute2-2.6.37.orig/tc/m_ematch.c iproute2-2.6.37/tc/m_ematch.c
+--- iproute2-2.6.37.orig/tc/m_ematch.c	2011-01-07 20:54:30.000000000 +0300
++++ iproute2-2.6.37/tc/m_ematch.c	2015-10-17 00:29:25.063376014 +0300
+@@ -26,7 +26,7 @@
+ #include "tc_util.h"
+ #include "m_ematch.h"
+ 
+-#define EMATCH_MAP "/etc/iproute2/ematch_map"
++#define EMATCH_MAP "/opt/etc/iproute2/ematch_map"
+ 
+ static struct ematch_util *ematch_list;
+ 
+diff -ruN iproute2-2.6.37.orig/tc/m_xt.c iproute2-2.6.37/tc/m_xt.c
+--- iproute2-2.6.37.orig/tc/m_xt.c	2011-01-07 20:54:30.000000000 +0300
++++ iproute2-2.6.37/tc/m_xt.c	2015-10-17 00:40:34.412159466 +0300
+@@ -35,9 +35,10 @@
+ #include <unistd.h>
+ #include <fcntl.h>
+ #include <sys/wait.h>
+-#ifndef XT_LIB_DIR
+-#       define XT_LIB_DIR "/lib/xtables"
+-#endif
++//#ifndef XT_LIB_DIR
++#	undef  XT_LIB_DIR
++#       define XT_LIB_DIR "/opt/usr/lib/iptables"
++//#endif
+ 
+ #ifndef ALIGN
+ #define ALIGN(x,a)		__ALIGN_MASK(x,(typeof(x))(a)-1)
+diff -ruN iproute2-2.6.37.orig/tc/tc_util.c iproute2-2.6.37/tc/tc_util.c
+--- iproute2-2.6.37.orig/tc/tc_util.c	2015-10-16 11:35:39.000000000 +0300
++++ iproute2-2.6.37/tc/tc_util.c	2015-10-17 00:39:52.923634168 +0300
+@@ -25,9 +25,10 @@
+ #include "utils.h"
+ #include "tc_util.h"
+ 
+-#ifndef LIBDIR
+-#define LIBDIR "/usr/lib/"
+-#endif
++//#ifndef LIBDIR
++#undef  LIBDIR
++#define LIBDIR "/opt/usr/lib/"
++//#endif
+ 
+ const char *get_tc_lib(void)
+ {

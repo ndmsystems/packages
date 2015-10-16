@@ -1,6 +1,7 @@
---- a/termcodes.c
-+++ b/termcodes.c
-@@ -129,8 +129,6 @@
+diff -ruN dropbear-2015.68.orig/termcodes.c dropbear-2015.68/termcodes.c
+--- dropbear-2015.68.orig/termcodes.c	2015-08-08 15:35:34.000000000 +0300
++++ dropbear-2015.68/termcodes.c	2015-10-17 01:24:22.771560545 +0300
+@@ -135,8 +135,6 @@
  		{NOFLSH, TERMCODE_LOCAL},
  		{TOSTOP, TERMCODE_LOCAL},
  		{IEXTEN, TERMCODE_LOCAL},

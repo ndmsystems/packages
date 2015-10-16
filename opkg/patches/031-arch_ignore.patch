@@ -1,0 +1,15 @@
+diff -Nuar opkg-618.orig/libopkg/pkg_hash.c opkg-618/libopkg/pkg_hash.c
+--- opkg-618.orig/libopkg/pkg_hash.c	2013-05-31 17:33:32.000000000 +0400
++++ opkg-618/libopkg/pkg_hash.c	2013-05-31 17:34:06.000000000 +0400
+@@ -141,9 +141,11 @@
+ 
+ 		if (!pkg->architecture || !pkg->arch_priority) {
+ 			char *version_str = pkg_version_str_alloc(pkg);
++			/*
+ 			opkg_msg(NOTICE, "Package %s version %s has no "
+ 					"valid architecture, ignoring.\n",
+ 					pkg->name, version_str);
++			*/
+ 			free(version_str);
+ 			continue;
+ 		}

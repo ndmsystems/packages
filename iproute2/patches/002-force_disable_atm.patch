@@ -1,0 +1,12 @@
+--- iproute2-2.6.37/configure.orig	2011-01-07 20:54:30.000000000 +0300
++++ iproute2-2.6.37/configure	2015-09-20 19:00:58.024587996 +0300
+@@ -18,8 +18,7 @@
+ gcc -I$INCLUDE -o /tmp/atmtest /tmp/atmtest.c -latm >/dev/null 2>&1 
+ if [ $? -eq 0 ]
+ then
+-    echo "TC_CONFIG_ATM:=y" >>Config
+-    echo yes
++    echo no
+ else
+     echo no
+ fi

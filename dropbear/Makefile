@@ -6,12 +6,12 @@ include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/package-defaults.mk
 
 PKG_NAME:=dropbear
-PKG_VERSION:=0.52
-PKG_MD5SUM:=1c69ec674481d7745452f68f2ea5597e
+PKG_VERSION:=2015.68
+PKG_MD5SUM:=7664ac10f7cc2301c530eb80c756fc5d
 PKG_LICENSE:=MIT
 
-PKG_SOURCE_URL:=https://matt.ucc.asn.au/dropbear/releases/
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
+PKG_SOURCE_URL:=https://dropbear.nl/mirror/releases
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/package.mk
@@ -36,16 +36,6 @@ CONFIGURE_ARGS += \
     --disable-pututxline \
     --disable-zlib
 
-EXTRA_CFLAGS:=\
-    -g3 -pipe -fPIC -std=c99 \
-    -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 \
-    -D_POSIX_C_SOURCE=199309L -D_XOPEN_SOURCE=600 -DDEBUG_TRACE\
-    -ffunction-sections -fdata-sections \
-    -Wall -Winit-self -Wswitch-enum -Wundef -Wunsafe-loop-optimizations \
-    -Wmissing-field-initializers -Wnormalized=nfkc \
-    -Wredundant-decls -Wstack-protector -ftabstop=4 -Wshadow \
-    -Wpointer-arith
-
 EXTRA_LDFLAGS:= -lpam
 
 define Build/Configure
@@ -57,6 +47,7 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/dropbear{,convert,key} $(1)/sbin/
 	$(INSTALL_DIR) $(1)/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/dbclient $(1)/bin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/scp $(1)/bin/
 	$(INSTALL_DIR) $(1)/etc/default/
 	$(INSTALL_BIN) ./files/dropbear $(1)/etc/default/dropbear
 	$(INSTALL_DIR) $(1)/etc/init.d/

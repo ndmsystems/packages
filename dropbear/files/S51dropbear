@@ -22,6 +22,10 @@ if [ ! -f /opt/etc/dropbear/dropbear_rsa_host_key ]; then
 	dropbearkey -t rsa -f /opt/etc/dropbear/dropbear_rsa_host_key
 fi
 
+if [ ! -f /opt/etc/dropbear/dropbear_ecdsa_host_key ]; then
+	dropbearkey -t rsa -f /opt/etc/dropbear/dropbear_ecdsa_host_key
+fi
+
 if [ -n "$DROPBEAR_PORT" ]; then
     dropbear -p $DROPBEAR_PORT
 else

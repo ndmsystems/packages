@@ -1,0 +1,965 @@
+diff -ruN busybox-1.23.2.orig/archival/dpkg.c busybox-1.23.2/archival/dpkg.c
+--- busybox-1.23.2.orig/archival/dpkg.c	2015-03-23 06:07:18.000000000 +0300
++++ busybox-1.23.2/archival/dpkg.c	2015-10-16 22:55:18.136006446 +0300
+@@ -813,8 +813,8 @@
+ /* This could do with a cleanup */
+ static void write_status_file(deb_file_t **deb_file)
+ {
+-	FILE *old_status_file = xfopen_for_read("/var/lib/dpkg/status");
+-	FILE *new_status_file = xfopen_for_write("/var/lib/dpkg/status.udeb");
++	FILE *old_status_file = xfopen_for_read("/opt/var/lib/dpkg/status");
++	FILE *new_status_file = xfopen_for_write("/opt/var/lib/dpkg/status.udeb");
+ 	char *package_name;
+ 	char *status_from_file;
+ 	char *control_buffer = NULL;
+@@ -942,7 +942,7 @@
+ 	fclose(new_status_file);
+ 
+ 	/* Create a separate backfile to dpkg */
+-	if (rename("/var/lib/dpkg/status", "/var/lib/dpkg/status.udeb.bak") == -1) {
++	if (rename("/opt/var/lib/dpkg/status", "/opt/var/lib/dpkg/status.udeb.bak") == -1) {
+ 		if (errno != ENOENT)
+ 			bb_error_msg_and_die("can't create backup status file");
+ 		/* Its ok if renaming the status file fails because status
+@@ -950,7 +950,7 @@
+ 		bb_error_msg("no status file found, creating new one");
+ 	}
+ 
+-	xrename("/var/lib/dpkg/status.udeb", "/var/lib/dpkg/status");
++	xrename("/opt/var/lib/dpkg/status.udeb", "/opt/var/lib/dpkg/status");
+ }
+ 
+ /* This function returns TRUE if the given package can satisfy a
+@@ -1242,7 +1242,7 @@
+ 	char *script_path;
+ 	int result;
+ 
+-	script_path = xasprintf("/var/lib/dpkg/info/%s.%s", package_name, script_type);
++	script_path = xasprintf("/opt/var/lib/dpkg/info/%s.%s", package_name, script_type);
+ 
+ 	/* If the file doesnt exist is isnt fatal */
+ 	result = access(script_path, F_OK) ? EXIT_SUCCESS : system(script_path);
+@@ -1295,7 +1295,7 @@
+ 	/* Create a list of all /var/lib/dpkg/info/<package> files */
+ 	remove_files = xzalloc(sizeof(all_control_files) + sizeof(char*));
+ 	while (i < ARRAY_SIZE(all_control_files)) {
+-		remove_files[i] = xasprintf("/var/lib/dpkg/info/%s.%s",
++		remove_files[i] = xasprintf("/opt/var/lib/dpkg/info/%s.%s",
+ 				package_name, all_control_files[i]);
+ 		i++;
+ 	}
+@@ -1376,10 +1376,10 @@
+ 	run_package_script_or_die(package_name, "prerm");
+ 
+ 	/* Create a list of files to remove, and a separate list of those to keep */
+-	sprintf(list_name, "/var/lib/dpkg/info/%s.%s", package_name, "list");
++	sprintf(list_name, "/opt/var/lib/dpkg/info/%s.%s", package_name, "list");
+ 	remove_files = create_list(list_name);
+ 
+-	sprintf(conffile_name, "/var/lib/dpkg/info/%s.%s", package_name, "conffiles");
++	sprintf(conffile_name, "/opt/var/lib/dpkg/info/%s.%s", package_name, "conffiles");
+ 	exclude_files = create_list(conffile_name);
+ 
+ 	/* Some directories can't be removed straight away, so do multiple passes */
+@@ -1391,7 +1391,7 @@
+ 	/* Create a list of files in /var/lib/dpkg/info/<package>.* to keep */
+ 	exclude_files = xzalloc(sizeof(exclude_files[0]) * 3);
+ 	exclude_files[0] = xstrdup(conffile_name);
+-	exclude_files[1] = xasprintf("/var/lib/dpkg/info/%s.%s", package_name, "postrm");
++	exclude_files[1] = xasprintf("/opt/var/lib/dpkg/info/%s.%s", package_name, "postrm");
+ 
+ 	/* Create a list of all /var/lib/dpkg/info/<package> files */
+ 	remove_files = all_control_list(package_name);
+@@ -1424,7 +1424,7 @@
+ 	run_package_script_or_die(package_name, "prerm");
+ 
+ 	/* Create a list of files to remove */
+-	sprintf(list_name, "/var/lib/dpkg/info/%s.%s", package_name, "list");
++	sprintf(list_name, "/opt/var/lib/dpkg/info/%s.%s", package_name, "list");
+ 	remove_files = create_list(list_name);
+ 
+ 	/* Some directories cant be removed straight away, so do multiple passes */
+@@ -1437,7 +1437,7 @@
+ 
+ 	/* Delete all of them except the postrm script */
+ 	exclude_files = xzalloc(sizeof(exclude_files[0]) * 2);
+-	exclude_files[0] = xasprintf("/var/lib/dpkg/info/%s.%s", package_name, "postrm");
++	exclude_files[0] = xasprintf("/opt/var/lib/dpkg/info/%s.%s", package_name, "postrm");
+ 	remove_file_array(remove_files, exclude_files);
+ 	free_array(exclude_files);
+ 
+@@ -1528,7 +1528,7 @@
+ 	FILE *fp;
+ 	char *filename, *line;
+ 
+-	filename = xasprintf("/var/lib/dpkg/info/%s.%s", package_name, control_name);
++	filename = xasprintf("/opt/var/lib/dpkg/info/%s.%s", package_name, control_name);
+ 	fp = fopen_for_read(filename);
+ 	free(filename);
+ 	if (fp != NULL) {
+@@ -1648,7 +1648,7 @@
+ 	}
+ 
+ 	/* Extract control.tar.gz to /var/lib/dpkg/info/<package>.filename */
+-	info_prefix = xasprintf("/var/lib/dpkg/info/%s.%s", package_name, "");
++	info_prefix = xasprintf("/opt/var/lib/dpkg/info/%s.%s", package_name, "");
+ 	archive_handle = init_archive_deb_ar(deb_file->filename);
+ 	init_archive_deb_control(archive_handle);
+ 
+@@ -1688,7 +1688,7 @@
+ 	unpack_ar_archive(archive_handle);
+ 
+ 	/* Create the list file */
+-	list_filename = xasprintf("/var/lib/dpkg/info/%s.%s", package_name, "list");
++	list_filename = xasprintf("/opt/var/lib/dpkg/info/%s.%s", package_name, "list");
+ 	out_stream = xfopen_for_write(list_filename);
+ 	archive_handle->dpkg__sub_archive->passed = llist_rev(archive_handle->dpkg__sub_archive->passed);
+ 	while (archive_handle->dpkg__sub_archive->passed) {
+@@ -1782,7 +1782,7 @@
+ 	}
+ 
+ /*	puts("(Reading database ... xxxxx files and directories installed.)"); */
+-	index_status_file("/var/lib/dpkg/status");
++	index_status_file("/opt/var/lib/dpkg/status");
+ 
+ 	/* if the list action was given print the installed packages and exit */
+ 	if (opt & OPT_list_installed) {
+diff -ruN busybox-1.23.2.orig/debianutils/mktemp.c busybox-1.23.2/debianutils/mktemp.c
+--- busybox-1.23.2.orig/debianutils/mktemp.c	2015-03-23 06:06:55.000000000 +0300
++++ busybox-1.23.2/debianutils/mktemp.c	2015-10-16 22:41:17.336486327 +0300
+@@ -69,7 +69,7 @@
+ 
+ 	path = getenv("TMPDIR");
+ 	if (!path || path[0] == '\0')
+-		path = "/tmp";
++		path = "/opt/tmp";
+ 
+ 	opt_complementary = "?1"; /* 1 argument max */
+ 	opts = getopt32(argv, "dqtp:u", &path);
+diff -ruN busybox-1.23.2.orig/e2fsprogs/fsck.c busybox-1.23.2/e2fsprogs/fsck.c
+--- busybox-1.23.2.orig/e2fsprogs/fsck.c	2015-03-23 06:07:18.000000000 +0300
++++ busybox-1.23.2/e2fsprogs/fsck.c	2015-10-16 22:23:31.729462627 +0300
+@@ -1059,7 +1059,7 @@
+ 	 * so we are scanning it anyway */
+ 	fstab = getenv("FSTAB_FILE");
+ 	if (!fstab)
+-		fstab = "/etc/fstab";
++		fstab = "/opt/etc/fstab";
+ 	load_fs_info(fstab);
+ 
+ 	/*interactive = (num_devices == 1) | serialize;*/
+diff -ruN busybox-1.23.2.orig/e2fsprogs/old_e2fsprogs/blkid/blkidP.h busybox-1.23.2/e2fsprogs/old_e2fsprogs/blkid/blkidP.h
+--- busybox-1.23.2.orig/e2fsprogs/old_e2fsprogs/blkid/blkidP.h	2015-03-23 06:06:55.000000000 +0300
++++ busybox-1.23.2/e2fsprogs/old_e2fsprogs/blkid/blkidP.h	2015-10-16 23:07:27.779199987 +0300
+@@ -103,7 +103,7 @@
+ extern char *blkid_strdup(const char *s);
+ extern char *blkid_strndup(const char *s, const int length);
+ 
+-#define BLKID_CACHE_FILE "/etc/blkid.tab"
++#define BLKID_CACHE_FILE "/opt/etc/blkid.tab"
+ extern const char *blkid_devdirs[];
+ 
+ #define BLKID_ERR_IO	 5
+diff -ruN busybox-1.23.2.orig/e2fsprogs/old_e2fsprogs/ext2fs/ismounted.c busybox-1.23.2/e2fsprogs/old_e2fsprogs/ext2fs/ismounted.c
+--- busybox-1.23.2.orig/e2fsprogs/old_e2fsprogs/ext2fs/ismounted.c	2015-03-23 06:06:55.000000000 +0300
++++ busybox-1.23.2/e2fsprogs/old_e2fsprogs/ext2fs/ismounted.c	2015-10-16 22:42:26.901384975 +0300
+@@ -168,7 +168,7 @@
+ 	errcode_t	retval;
+ 
+ #ifdef DEBUG
+-	retval = check_mntent_file("/tmp/mtab", file, mount_flags,
++	retval = check_mntent_file("/opt/tmp/mtab", file, mount_flags,
+ 				   mtpt, mtlen);
+ 	if (retval == 0)
+ 		return 0;
+diff -ruN busybox-1.23.2.orig/e2fsprogs/old_e2fsprogs/fsck.c busybox-1.23.2/e2fsprogs/old_e2fsprogs/fsck.c
+--- busybox-1.23.2.orig/e2fsprogs/old_e2fsprogs/fsck.c	2015-03-23 06:06:55.000000000 +0300
++++ busybox-1.23.2/e2fsprogs/old_e2fsprogs/fsck.c	2015-10-16 22:23:57.633883697 +0300
+@@ -46,7 +46,7 @@
+ #include "libbb.h"
+ 
+ #ifndef _PATH_MNTTAB
+-#define _PATH_MNTTAB    "/etc/fstab"
++#define _PATH_MNTTAB    "/opt/etc/fstab"
+ #endif
+ 
+ /*
+diff -ruN busybox-1.23.2.orig/e2fsprogs/old_e2fsprogs/util.c busybox-1.23.2/e2fsprogs/old_e2fsprogs/util.c
+--- busybox-1.23.2.orig/e2fsprogs/old_e2fsprogs/util.c	2015-03-23 06:06:55.000000000 +0300
++++ busybox-1.23.2/e2fsprogs/old_e2fsprogs/util.c	2015-10-16 23:43:50.112729909 +0300
+@@ -253,7 +253,7 @@
+ {
+ 	char *oldpath = getenv("PATH");
+ 	/* Update our PATH to include /sbin  */
+-#define PATH_SET "/sbin"
++#define PATH_SET "/opt/sbin"
+ 	if (oldpath)
+ 		oldpath = xasprintf("%s:%s", PATH_SET, oldpath);
+ 	 else
+diff -ruN busybox-1.23.2.orig/editors/diff.c busybox-1.23.2/editors/diff.c
+--- busybox-1.23.2.orig/editors/diff.c	2015-03-23 06:07:18.000000000 +0300
++++ busybox-1.23.2/editors/diff.c	2015-10-16 22:27:53.005514636 +0300
+@@ -734,7 +734,7 @@
+ 		 * When we meet non-seekable file, we must make a temp copy.
+ 		 */
+ 		if (lseek(fd, 0, SEEK_SET) == -1 && errno == ESPIPE) {
+-			char name[] = "/tmp/difXXXXXX";
++			char name[] = "/opt/tmp/difXXXXXX";
+ 			int fd_tmp = xmkstemp(name);
+ 
+ 			unlink(name);
+diff -ruN busybox-1.23.2.orig/include/libbb.h busybox-1.23.2/include/libbb.h
+--- busybox-1.23.2.orig/include/libbb.h	2015-10-16 11:36:30.000000000 +0300
++++ busybox-1.23.2/include/libbb.h	2015-10-16 22:34:54.675440698 +0300
+@@ -97,16 +97,16 @@
+ #endif
+ /* Just in case libc doesn't define some of these... */
+ #ifndef _PATH_PASSWD
+-#define _PATH_PASSWD  "/etc/passwd"
++#define _PATH_PASSWD  "/opt/etc/passwd"
+ #endif
+ #ifndef _PATH_GROUP
+-#define _PATH_GROUP   "/etc/group"
++#define _PATH_GROUP   "/opt/etc/group"
+ #endif
+ #ifndef _PATH_SHADOW
+-#define _PATH_SHADOW  "/etc/shadow"
++#define _PATH_SHADOW  "/opt/etc/shadow"
+ #endif
+ #ifndef _PATH_GSHADOW
+-#define _PATH_GSHADOW "/etc/gshadow"
++#define _PATH_GSHADOW "/opt/etc/gshadow"
+ #endif
+ #if defined __FreeBSD__ || defined __OpenBSD__
+ # include <netinet/in.h>
+@@ -1761,14 +1761,14 @@
+ 
+ /* Busybox mount uses either /proc/mounts or /etc/mtab to
+  * get the list of currently mounted filesystems */
+-#define bb_path_mtab_file IF_FEATURE_MTAB_SUPPORT("/etc/mtab")IF_NOT_FEATURE_MTAB_SUPPORT("/proc/mounts")
++#define bb_path_mtab_file IF_FEATURE_MTAB_SUPPORT("/opt/etc/mtab")IF_NOT_FEATURE_MTAB_SUPPORT("/proc/mounts")
+ 
+ #define bb_path_passwd_file  _PATH_PASSWD
+ #define bb_path_group_file   _PATH_GROUP
+ #define bb_path_shadow_file  _PATH_SHADOW
+ #define bb_path_gshadow_file _PATH_GSHADOW
+ 
+-#define bb_path_motd_file "/etc/motd"
++#define bb_path_motd_file "/opt/etc/motd"
+ 
+ #define bb_dev_null "/dev/null"
+ extern const char bb_busybox_exec_path[] ALIGN1;
+@@ -1776,7 +1776,7 @@
+  * but I want to save a few bytes here */
+ extern const char bb_PATH_root_path[] ALIGN1; /* "PATH=/sbin:/usr/sbin:/bin:/usr/bin" */
+ #define bb_default_root_path (bb_PATH_root_path + sizeof("PATH"))
+-#define bb_default_path      (bb_PATH_root_path + sizeof("PATH=/sbin:/usr/sbin"))
++#define bb_default_path      (bb_PATH_root_path + sizeof("PATH=/opt/sbin:/opt/usr/sbin:/sbin:/usr/sbin"))
+ 
+ extern const int const_int_0;
+ extern const int const_int_1;
+diff -ruN busybox-1.23.2.orig/init/bootchartd.c busybox-1.23.2/init/bootchartd.c
+--- busybox-1.23.2.orig/init/bootchartd.c	2015-03-23 06:06:55.000000000 +0300
++++ busybox-1.23.2/init/bootchartd.c	2015-10-16 22:46:23.180410295 +0300
+@@ -184,7 +184,7 @@
+ 
+ static char *make_tempdir(void)
+ {
+-	char template[] = "/tmp/bootchart.XXXXXX";
++	char template[] = "/opt/tmp/bootchart.XXXXXX";
+ 	char *tempdir = xstrdup(mkdtemp(template));
+ 	if (!tempdir) {
+ #ifdef __linux__
+@@ -313,7 +313,7 @@
+ 	fclose(header_fp);
+ 
+ 	/* Package log files */
+-	system(xasprintf("tar -zcf /var/log/bootlog.tgz header %s *.log", process_accounting ? "kernel_pacct" : ""));
++	system(xasprintf("tar -zcf /opt/var/log/bootlog.tgz header %s *.log", process_accounting ? "kernel_pacct" : ""));
+ 	/* Clean up (if we are not in detached tmpfs) */
+ 	if (tempdir) {
+ 		unlink("header");
+@@ -383,9 +383,9 @@
+ 	process_accounting = 0;
+ 	if (ENABLE_FEATURE_BOOTCHARTD_CONFIG_FILE) {
+ 		char* token[2];
+-		parser_t *parser = config_open2("/etc/bootchartd.conf" + 5, fopen_for_read);
++		parser_t *parser = config_open2("/opt/etc/bootchartd.conf" + 5, fopen_for_read);
+ 		if (!parser)
+-			parser = config_open2("/etc/bootchartd.conf", fopen_for_read);
++			parser = config_open2("/opt/etc/bootchartd.conf", fopen_for_read);
+ 		while (config_read(parser, token, 2, 0, "#=", PARSE_NORMAL & ~PARSE_COLLAPSE)) {
+ 			if (strcmp(token[0], "SAMPLE_PERIOD") == 0 && token[1])
+ 				sample_period_us = atof(token[1]) * 1000000;
+diff -ruN busybox-1.23.2.orig/libbb/appletlib.c busybox-1.23.2/libbb/appletlib.c
+--- busybox-1.23.2.orig/libbb/appletlib.c	2015-03-23 06:07:19.000000000 +0300
++++ busybox-1.23.2/libbb/appletlib.c	2015-10-16 23:12:52.847714404 +0300
+@@ -271,7 +271,7 @@
+ static void parse_config_file(void)
+ {
+ 	/* Don't depend on the tools to combine strings. */
+-	static const char config_file[] ALIGN1 = "/etc/busybox.conf";
++	static const char config_file[] ALIGN1 = "/opt/etc/busybox.conf";
+ 
+ 	struct suid_config_t *sct_head;
+ 	int applet_no;
+diff -ruN busybox-1.23.2.orig/libbb/messages.c busybox-1.23.2/libbb/messages.c
+--- busybox-1.23.2.orig/libbb/messages.c	2015-03-23 06:06:55.000000000 +0300
++++ busybox-1.23.2/libbb/messages.c	2015-10-16 22:36:39.220840605 +0300
+@@ -40,7 +40,7 @@
+ /* util-linux manpage says /sbin:/bin:/usr/sbin:/usr/bin,
+  * but I want to save a few bytes here. Check libbb.h before changing! */
+ const char bb_PATH_root_path[] ALIGN1 =
+-	"PATH=/sbin:/usr/sbin:/bin:/usr/bin" BB_ADDITIONAL_PATH;
++	"PATH=/opt/sbin:/opt/usr/sbin:/opt/bin:/opt/usr/bin:/sbin:/usr/sbin:/bin:/usr/bin" BB_ADDITIONAL_PATH;
+ 
+ 
+ const int const_int_1 = 1;
+diff -ruN busybox-1.23.2.orig/libbb/rtc.c busybox-1.23.2/libbb/rtc.c
+--- busybox-1.23.2.orig/libbb/rtc.c	2015-03-23 06:07:19.000000000 +0300
++++ busybox-1.23.2/libbb/rtc.c	2015-10-16 22:29:23.482835846 +0300
+@@ -8,9 +8,9 @@
+ #include "rtc_.h"
+ 
+ #if ENABLE_FEATURE_HWCLOCK_ADJTIME_FHS
+-# define ADJTIME_PATH "/var/lib/hwclock/adjtime"
++# define ADJTIME_PATH "/opt/var/lib/hwclock/adjtime"
+ #else
+-# define ADJTIME_PATH "/etc/adjtime"
++# define ADJTIME_PATH "/opt/etc/adjtime"
+ #endif
+ 
+ int FAST_FUNC rtc_adjtime_is_utc(void)
+diff -ruN busybox-1.23.2.orig/libbb/setup_environment.c busybox-1.23.2/libbb/setup_environment.c
+--- busybox-1.23.2.orig/libbb/setup_environment.c	2015-03-23 06:06:55.000000000 +0300
++++ busybox-1.23.2/libbb/setup_environment.c	2015-10-16 22:47:06.844965745 +0300
+@@ -40,7 +40,7 @@
+ 	if (!(flags & SETUP_ENV_NO_CHDIR)) {
+ 		if (chdir(pw->pw_dir) != 0) {
+ 			bb_error_msg("can't change directory to '%s'", pw->pw_dir);
+-			xchdir((flags & SETUP_ENV_TO_TMP) ? "/tmp" : "/");
++			xchdir((flags & SETUP_ENV_TO_TMP) ? "/opt/tmp" : "/");
+ 		}
+ 	}
+ 
+diff -ruN busybox-1.23.2.orig/loginutils/add-remove-shell.c busybox-1.23.2/loginutils/add-remove-shell.c
+--- busybox-1.23.2.orig/loginutils/add-remove-shell.c	2015-03-23 06:06:55.000000000 +0300
++++ busybox-1.23.2/loginutils/add-remove-shell.c	2015-10-16 23:14:21.316920954 +0300
+@@ -38,7 +38,7 @@
+ 
+ #include "libbb.h"
+ 
+-#define SHELLS_FILE "/etc/shells"
++#define SHELLS_FILE "/opt/etc/shells"
+ 
+ #define REMOVE_SHELL (ENABLE_REMOVE_SHELL && (!ENABLE_ADD_SHELL || applet_name[0] == 'r'))
+ #define ADD_SHELL    (ENABLE_ADD_SHELL && (!ENABLE_REMOVE_SHELL || applet_name[0] == 'a'))
+diff -ruN busybox-1.23.2.orig/loginutils/adduser.c busybox-1.23.2/loginutils/adduser.c
+--- busybox-1.23.2.orig/loginutils/adduser.c	2015-03-23 06:06:55.000000000 +0300
++++ busybox-1.23.2/loginutils/adduser.c	2015-10-16 23:17:49.979741976 +0300
+@@ -186,7 +186,7 @@
+ 	die_if_bad_username(pw.pw_name);
+ 	if (!pw.pw_dir) {
+ 		/* create string for $HOME if not specified already */
+-		pw.pw_dir = xasprintf("/home/%s", argv[0]);
++		pw.pw_dir = xasprintf("/opt/home/%s", argv[0]);
+ 	}
+ 	pw.pw_passwd = (char *)"x";
+ 	if (opts & OPT_SYSTEM_ACCOUNT) {
+@@ -194,7 +194,7 @@
+ 			usegroup = "nogroup";
+ 		}
+ 		if (!(opts & OPT_SHELL)) {
+-			pw.pw_shell = (char *) "/bin/false";
++			pw.pw_shell = (char *) "/opt/bin/false";
+ 		}
+ 	}
+ 	pw.pw_gid = usegroup ? xgroup2gid(usegroup) : -1; /* exits on failure */
+@@ -251,7 +251,7 @@
+ 			};
+ 			/* Be silent on any errors (like: no /etc/skel) */
+ 			logmode = LOGMODE_NONE;
+-			copy_file("/etc/skel", pw.pw_dir, FILEUTILS_RECUR);
++			copy_file("/opt/etc/skel", pw.pw_dir, FILEUTILS_RECUR);
+ 			logmode = LOGMODE_STDIO;
+ 			chown_main(4, (char**)args);
+ 		}
+diff -ruN busybox-1.23.2.orig/loginutils/getty.c busybox-1.23.2/loginutils/getty.c
+--- busybox-1.23.2.orig/loginutils/getty.c	2015-03-23 06:06:55.000000000 +0300
++++ busybox-1.23.2/loginutils/getty.c	2015-10-16 22:08:28.372540698 +0300
+@@ -54,14 +54,14 @@
+  * and for line editing at the same time.
+  */
+ #undef  _PATH_LOGIN
+-#define _PATH_LOGIN "/bin/login"
++#define _PATH_LOGIN "/opt/bin/login"
+ 
+ /* Displayed before the login prompt.
+  * If ISSUE is not defined, getty will never display the contents of the
+  * /etc/issue file. You will not want to spit out large "issue" files at the
+  * wrong baud rate.
+  */
+-#define ISSUE "/etc/issue"
++#define ISSUE "/opt/etc/issue"
+ 
+ /* Macro to build Ctrl-LETTER. Assumes ASCII dialect */
+ #define CTL(x)          ((x) ^ 0100)
+diff -ruN busybox-1.23.2.orig/loginutils/login.c busybox-1.23.2/loginutils/login.c
+--- busybox-1.23.2.orig/loginutils/login.c	2015-03-23 06:07:19.000000000 +0300
++++ busybox-1.23.2/loginutils/login.c	2015-10-16 23:15:51.774147674 +0300
+@@ -56,7 +56,7 @@
+ 	int c;
+ 	int empty = 1;
+ 
+-	fp = fopen_for_read("/etc/nologin");
++	fp = fopen_for_read("/opt/etc/nologin");
+ 	if (!fp) /* assuming it does not exist */
+ 		return;
+ 
+@@ -82,8 +82,8 @@
+ #if ENABLE_FEATURE_SECURETTY && !ENABLE_PAM
+ static int check_securetty(const char *short_tty)
+ {
+-	char *buf = (char*)"/etc/securetty"; /* any non-NULL is ok */
+-	parser_t *parser = config_open2("/etc/securetty", fopen_for_read);
++	char *buf = (char*)"/opt/etc/securetty"; /* any non-NULL is ok */
++	parser_t *parser = config_open2("/opt/etc/securetty", fopen_for_read);
+ 	while (config_read(parser, &buf, 1, 1, "# \t", PARSE_NORMAL)) {
+ 		if (strcmp(buf, short_tty) == 0)
+ 			break;
+diff -ruN busybox-1.23.2.orig/miscutils/devfsd.c busybox-1.23.2/miscutils/devfsd.c
+--- busybox-1.23.2.orig/miscutils/devfsd.c	2015-03-23 06:07:19.000000000 +0300
++++ busybox-1.23.2/miscutils/devfsd.c	2015-10-16 23:21:09.966421980 +0300
+@@ -123,11 +123,11 @@
+ 
+ #define BUFFER_SIZE 16384
+ #define DEVFSD_VERSION "1.3.25"
+-#define CONFIG_FILE  "/etc/devfsd.conf"
+-#define MODPROBE		"/sbin/modprobe"
++#define CONFIG_FILE  "/opt/etc/devfsd.conf"
++#define MODPROBE		"/opt/sbin/modprobe"
+ #define MODPROBE_SWITCH_1 "-k"
+ #define MODPROBE_SWITCH_2 "-C"
+-#define CONFIG_MODULES_DEVFS "/etc/modules.devfs"
++#define CONFIG_MODULES_DEVFS "/opt/etc/modules.devfs"
+ #define MAX_ARGS     (6 + 1)
+ #define MAX_SUBEXPR  10
+ #define STRING_LENGTH 255
+diff -ruN busybox-1.23.2.orig/miscutils/fbsplash.c busybox-1.23.2/miscutils/fbsplash.c
+--- busybox-1.23.2.orig/miscutils/fbsplash.c	2015-03-23 06:07:19.000000000 +0300
++++ busybox-1.23.2/miscutils/fbsplash.c	2015-10-16 22:48:27.625991003 +0300
+@@ -448,7 +448,7 @@
+ 		if (i == 7) {
+ 			G.bdebug_messages = val;
+ 			if (G.bdebug_messages)
+-				G.logfile_fd = xfopen_for_write("/tmp/fbsplash.log");
++				G.logfile_fd = xfopen_for_write("/opt/tmp/fbsplash.log");
+ 		}
+ #endif
+ 	}
+diff -ruN busybox-1.23.2.orig/miscutils/man.c busybox-1.23.2/miscutils/man.c
+--- busybox-1.23.2.orig/miscutils/man.c	2015-03-23 06:07:19.000000000 +0300
++++ busybox-1.23.2/miscutils/man.c	2015-10-16 23:38:36.412539688 +0300
+@@ -208,7 +208,7 @@
+ 	if (!man_path_list) {
+ 		/* default, may be overridden by /etc/man.conf */
+ 		man_path_list = xzalloc(2 * sizeof(man_path_list[0]));
+-		man_path_list[0] = (char*)"/usr/man";
++		man_path_list[0] = (char*)"/opt/usr/man";
+ 		/* count_mp stays 0.
+ 		 * Thus, man.conf will overwrite man_path_list[0]
+ 		 * if a path is defined there.
+@@ -218,11 +218,11 @@
+ 	/* Parse man.conf[ig] or man_db.conf */
+ 	/* man version 1.6f uses man.config */
+ 	/* man-db implementation of man uses man_db.conf */
+-	parser = config_open2("/etc/man.config", fopen_for_read);
++	parser = config_open2("/opt/etc/man.config", fopen_for_read);
+ 	if (!parser)
+-		parser = config_open2("/etc/man.conf", fopen_for_read);
++		parser = config_open2("/opt/etc/man.conf", fopen_for_read);
+ 	if (!parser)
+-		parser = config_open2("/etc/man_db.conf", fopen_for_read);
++		parser = config_open2("/opt/etc/man_db.conf", fopen_for_read);
+ 
+ 	while (config_read(parser, token, 2, 0, "# \t", PARSE_NORMAL)) {
+ 		if (!token[1])
+diff -ruN busybox-1.23.2.orig/miscutils/microcom.c busybox-1.23.2/miscutils/microcom.c
+--- busybox-1.23.2.orig/miscutils/microcom.c	2015-03-23 06:06:55.000000000 +0300
++++ busybox-1.23.2/miscutils/microcom.c	2015-10-16 22:55:51.160572010 +0300
+@@ -70,7 +70,7 @@
+ 
+ 	// try to create lock file in /var/lock
+ 	device_lock_file = (char *)bb_basename(argv[0]);
+-	device_lock_file = xasprintf("/var/lock/LCK..%s", device_lock_file);
++	device_lock_file = xasprintf("/opt/var/lock/LCK..%s", device_lock_file);
+ 	sfd = open(device_lock_file, O_CREAT | O_WRONLY | O_TRUNC | O_EXCL, 0644);
+ 	if (sfd < 0) {
+ 		// device already locked -> bail out
+diff -ruN busybox-1.23.2.orig/modutils/modprobe.c busybox-1.23.2/modutils/modprobe.c
+--- busybox-1.23.2.orig/modutils/modprobe.c	2015-03-23 06:07:19.000000000 +0300
++++ busybox-1.23.2/modutils/modprobe.c	2015-10-16 22:05:06.865774744 +0300
+@@ -622,8 +622,8 @@
+ 	if (G.probes == NULL)
+ 		return EXIT_SUCCESS;
+ 
+-	read_config("/etc/modprobe.conf");
+-	read_config("/etc/modprobe.d");
++	read_config("/opt/etc/modprobe.conf");
++	read_config("/opt/etc/modprobe.d");
+ 	if (ENABLE_FEATURE_MODUTILS_SYMBOLS && G.need_symbols)
+ 		read_config("modules.symbols");
+ 	load_modules_dep();
+diff -ruN busybox-1.23.2.orig/modutils/modprobe-small.c busybox-1.23.2/modutils/modprobe-small.c
+--- busybox-1.23.2.orig/modutils/modprobe-small.c	2015-03-23 06:07:19.000000000 +0300
++++ busybox-1.23.2/modutils/modprobe-small.c	2015-10-16 23:22:40.067623969 +0300
+@@ -615,7 +615,7 @@
+ 
+ 	options = NULL;
+ 	if (!is_remove) {
+-		char *opt_filename = xasprintf("/etc/modules/%s", name);
++		char *opt_filename = xasprintf("/opt/etc/modules/%s", name);
+ 		options = xmalloc_open_read_close(opt_filename, NULL);
+ 		if (options)
+ 			replace(options, '\n', ' ');
+diff -ruN busybox-1.23.2.orig/networking/dnsd.c busybox-1.23.2/networking/dnsd.c
+--- busybox-1.23.2.orig/networking/dnsd.c	2015-03-23 06:07:19.000000000 +0300
++++ busybox-1.23.2/networking/dnsd.c	2015-10-16 23:27:51.207792461 +0300
+@@ -492,7 +492,7 @@
+ int dnsd_main(int argc UNUSED_PARAM, char **argv)
+ {
+ 	const char *listen_interface = "0.0.0.0";
+-	const char *fileconf = "/etc/dnsd.conf";
++	const char *fileconf = "/opt/etc/dnsd.conf";
+ 	struct dns_entry *conf_data;
+ 	uint32_t conf_ttl = DEFAULT_TTL;
+ 	char *sttl, *sport;
+diff -ruN busybox-1.23.2.orig/networking/httpd.c busybox-1.23.2/networking/httpd.c
+--- busybox-1.23.2.orig/networking/httpd.c	2015-03-23 06:07:19.000000000 +0300
++++ busybox-1.23.2/networking/httpd.c	2015-10-16 23:25:32.605918728 +0300
+@@ -150,7 +150,7 @@
+ 
+ #define HEADER_READ_TIMEOUT 60
+ 
+-static const char DEFAULT_PATH_HTTPD_CONF[] ALIGN1 = "/etc";
++static const char DEFAULT_PATH_HTTPD_CONF[] ALIGN1 = "/opt/etc";
+ static const char HTTPD_CONF[] ALIGN1 = "httpd.conf";
+ static const char HTTP_200[] ALIGN1 = "HTTP/1.0 200 OK\r\n";
+ static const char index_html[] ALIGN1 = "index.html";
+diff -ruN busybox-1.23.2.orig/networking/ifplugd.c busybox-1.23.2/networking/ifplugd.c
+--- busybox-1.23.2.orig/networking/ifplugd.c	2015-03-23 06:06:55.000000000 +0300
++++ busybox-1.23.2/networking/ifplugd.c	2015-10-16 23:25:03.805536228 +0300
+@@ -134,7 +134,7 @@
+ 	G.delay_down     = 5; \
+ 	G.iface          = "eth0"; \
+ 	G.api_mode       = "a"; \
+-	G.script_name    = "/etc/ifplugd/ifplugd.action"; \
++	G.script_name    = "/opt/etc/ifplugd/ifplugd.action"; \
+ } while (0)
+ 
+ 
+diff -ruN busybox-1.23.2.orig/networking/ifupdown.c busybox-1.23.2/networking/ifupdown.c
+--- busybox-1.23.2.orig/networking/ifupdown.c	2015-03-23 06:07:19.000000000 +0300
++++ busybox-1.23.2/networking/ifupdown.c	2015-10-16 22:59:01.735690728 +0300
+@@ -526,17 +526,17 @@
+ 		"dhcpcd -k %iface%",
+ 	},
+ 	{ "dhclient",
+-		"dhclient -pf /var/run/dhclient.%iface%.pid %iface%",
+-		"kill -9 `cat /var/run/dhclient.%iface%.pid` 2>/dev/null",
++		"dhclient -pf /opt/var/run/dhclient.%iface%.pid %iface%",
++		"kill -9 `cat /opt/var/run/dhclient.%iface%.pid` 2>/dev/null",
+ 	},
+ 	{ "pump",
+ 		"pump -i %iface%[[ -h %hostname%]][[ -l %leasehours%]]",
+ 		"pump -i %iface% -k",
+ 	},
+ 	{ "udhcpc",
+-		"udhcpc " UDHCPC_CMD_OPTIONS " -p /var/run/udhcpc.%iface%.pid -i %iface%[[ -H %hostname%]][[ -c %client%]]"
++		"udhcpc " UDHCPC_CMD_OPTIONS " -p /opt/var/run/udhcpc.%iface%.pid -i %iface%[[ -H %hostname%]][[ -c %client%]]"
+ 				"[[ -s %script%]][[ %udhcpc_opts%]]",
+-		"kill `cat /var/run/udhcpc.%iface%.pid` 2>/dev/null",
++		"kill `cat /opt/var/run/udhcpc.%iface%.pid` 2>/dev/null",
+ 	},
+ };
+ # endif /* FEATURE_IFUPDOWN_EXTERNAL_DHCPC */
+@@ -573,7 +573,7 @@
+ 	if (!execute("ifconfig %iface%[[ hw %hwaddress%]] up", ifd, exec))
+ 		return 0;
+ #  endif
+-	return execute("udhcpc " UDHCPC_CMD_OPTIONS " -p /var/run/udhcpc.%iface%.pid "
++	return execute("udhcpc " UDHCPC_CMD_OPTIONS " -p /opt/var/run/udhcpc.%iface%.pid "
+ 			"-i %iface%[[ -H %hostname%]][[ -c %client%]][[ -s %script%]][[ %udhcpc_opts%]]",
+ 			ifd, exec);
+ }
+@@ -613,8 +613,8 @@
+ {
+ 	int result;
+ 	result = execute(
+-		"test -f /var/run/udhcpc.%iface%.pid && "
+-		"kill `cat /var/run/udhcpc.%iface%.pid` 2>/dev/null",
++		"test -f /opt/var/run/udhcpc.%iface%.pid && "
++		"kill `cat /opt/var/run/udhcpc.%iface%.pid` 2>/dev/null",
+ 		ifd, exec);
+ 	/* Also bring the hardware interface down since
+ 	   killing the dhcp client alone doesn't do it.
+@@ -658,13 +658,13 @@
+ static int FAST_FUNC wvdial_up(struct interface_defn_t *ifd, execfn *exec)
+ {
+ 	return execute("start-stop-daemon --start -x wvdial "
+-		"-p /var/run/wvdial.%iface% -b -m --[[ %provider%]]", ifd, exec);
++		"-p /opt/var/run/wvdial.%iface% -b -m --[[ %provider%]]", ifd, exec);
+ }
+ 
+ static int FAST_FUNC wvdial_down(struct interface_defn_t *ifd, execfn *exec)
+ {
+ 	return execute("start-stop-daemon --stop -x wvdial "
+-			"-p /var/run/wvdial.%iface% -s 2", ifd, exec);
++			"-p /opt/var/run/wvdial.%iface% -s 2", ifd, exec);
+ }
+ 
+ static const struct method_t methods[] = {
+@@ -1051,7 +1051,7 @@
+ 		}
+ 	}
+ 
+-	buf = xasprintf("run-parts /etc/network/if-%s.d", opt);
++	buf = xasprintf("run-parts /opt/etc/network/if-%s.d", opt);
+ 	/* heh, we don't bother free'ing it */
+ 	return doit(buf);
+ }
+@@ -1199,7 +1199,7 @@
+ 	int (*cmds)(struct interface_defn_t *);
+ 	struct interfaces_file_t *defn;
+ 	llist_t *target_list = NULL;
+-	const char *interfaces = "/etc/network/interfaces";
++	const char *interfaces = "/opt/etc/network/interfaces";
+ 	bool any_failures = 0;
+ 
+ 	INIT_G();
+diff -ruN busybox-1.23.2.orig/networking/inetd.c busybox-1.23.2/networking/inetd.c
+--- busybox-1.23.2.orig/networking/inetd.c	2015-03-23 06:07:19.000000000 +0300
++++ busybox-1.23.2/networking/inetd.c	2015-10-16 23:23:46.928514198 +0300
+@@ -354,7 +354,7 @@
+ #define INIT_G() do { \
+ 	rlim_ofile_cur = OPEN_MAX; \
+ 	global_queuelen = 128; \
+-	config_filename = "/etc/inetd.conf"; \
++	config_filename = "/opt/etc/inetd.conf"; \
+ } while (0)
+ 
+ #if 1
+diff -ruN busybox-1.23.2.orig/networking/libiproute/rt_names.c busybox-1.23.2/networking/libiproute/rt_names.c
+--- busybox-1.23.2.orig/networking/libiproute/rt_names.c	2015-03-23 06:06:55.000000000 +0300
++++ busybox-1.23.2/networking/libiproute/rt_names.c	2015-10-16 22:13:16.388263471 +0300
+@@ -85,7 +85,7 @@
+ 		return;
+ 	rtnl_rtprot_tab = xzalloc(sizeof(*rtnl_rtprot_tab));
+ 	memcpy(rtnl_rtprot_tab->tab, init_tab, sizeof(init_tab));
+-	rtnl_tab_initialize("/etc/iproute2/rt_protos", rtnl_rtprot_tab->tab);
++	rtnl_tab_initialize("/opt/etc/iproute2/rt_protos", rtnl_rtprot_tab->tab);
+ }
+ 
+ const char* FAST_FUNC rtnl_rtprot_n2a(int id, char *buf)
+@@ -123,7 +123,7 @@
+ 	rtnl_rtscope_tab->tab[254] = "host";
+ 	rtnl_rtscope_tab->tab[253] = "link";
+ 	rtnl_rtscope_tab->tab[200] = "site";
+-	rtnl_tab_initialize("/etc/iproute2/rt_scopes", rtnl_rtscope_tab->tab);
++	rtnl_tab_initialize("/opt/etc/iproute2/rt_scopes", rtnl_rtscope_tab->tab);
+ }
+ 
+ const char* FAST_FUNC rtnl_rtscope_n2a(int id, char *buf)
+@@ -156,7 +156,7 @@
+ 	if (rtnl_rtrealm_tab) return;
+ 	rtnl_rtrealm_tab = xzalloc(sizeof(*rtnl_rtrealm_tab));
+ 	rtnl_rtrealm_tab->tab[0] = "unknown";
+-	rtnl_tab_initialize("/etc/iproute2/rt_realms", rtnl_rtrealm_tab->tab);
++	rtnl_tab_initialize("/opt/etc/iproute2/rt_realms", rtnl_rtrealm_tab->tab);
+ }
+ 
+ int FAST_FUNC rtnl_rtrealm_a2n(uint32_t *id, char *arg)
+@@ -191,7 +191,7 @@
+ 	if (rtnl_rtdsfield_tab) return;
+ 	rtnl_rtdsfield_tab = xzalloc(sizeof(*rtnl_rtdsfield_tab));
+ 	rtnl_rtdsfield_tab->tab[0] = "0";
+-	rtnl_tab_initialize("/etc/iproute2/rt_dsfield", rtnl_rtdsfield_tab->tab);
++	rtnl_tab_initialize("/opt/etc/iproute2/rt_dsfield", rtnl_rtdsfield_tab->tab);
+ }
+ 
+ const char* FAST_FUNC rtnl_dsfield_n2a(int id, char *buf)
+@@ -228,7 +228,7 @@
+ 	rtnl_rttable_tab->tab[255] = "local";
+ 	rtnl_rttable_tab->tab[254] = "main";
+ 	rtnl_rttable_tab->tab[253] = "default";
+-	rtnl_tab_initialize("/etc/iproute2/rt_tables", rtnl_rttable_tab->tab);
++	rtnl_tab_initialize("/opt/etc/iproute2/rt_tables", rtnl_rttable_tab->tab);
+ }
+ 
+ const char* FAST_FUNC rtnl_rttable_n2a(int id, char *buf)
+diff -ruN busybox-1.23.2.orig/networking/nameif.c busybox-1.23.2/networking/nameif.c
+--- busybox-1.23.2.orig/networking/nameif.c	2015-03-23 06:07:19.000000000 +0300
++++ busybox-1.23.2/networking/nameif.c	2015-10-16 23:23:09.500016018 +0300
+@@ -219,7 +219,7 @@
+ int nameif_main(int argc UNUSED_PARAM, char **argv)
+ {
+ 	ethtable_t *clist = NULL;
+-	const char *fname = "/etc/mactab";
++	const char *fname = "/opt/etc/mactab";
+ 	int ctl_sk;
+ 	ethtable_t *ch;
+ 	parser_t *parser;
+diff -ruN busybox-1.23.2.orig/networking/ntpd.c busybox-1.23.2/networking/ntpd.c
+--- busybox-1.23.2.orig/networking/ntpd.c	2015-10-16 11:36:30.000000000 +0300
++++ busybox-1.23.2/networking/ntpd.c	2015-10-16 23:26:37.770783496 +0300
+@@ -2168,14 +2168,14 @@
+ 		parser_t *parser;
+ 		char *token[3];
+ 
+-		parser = config_open("/etc/ntp.conf");
++		parser = config_open("/opt/etc/ntp.conf");
+ 		while (config_read(parser, token, 3, 1, "# \t", PARSE_NORMAL)) {
+ 			if (strcmp(token[0], "server") == 0 && token[1]) {
+ 				add_peers(token[1]);
+ 				continue;
+ 			}
+ 			bb_error_msg("skipping %s:%u: unimplemented command '%s'",
+-				"/etc/ntp.conf", parser->lineno, token[0]
++				"/opt/etc/ntp.conf", parser->lineno, token[0]
+ 			);
+ 		}
+ 		config_close(parser);
+diff -ruN busybox-1.23.2.orig/networking/telnetd.c busybox-1.23.2/networking/telnetd.c
+--- busybox-1.23.2.orig/networking/telnetd.c	2015-10-16 11:36:30.000000000 +0300
++++ busybox-1.23.2/networking/telnetd.c	2015-10-16 22:10:24.062062247 +0300
+@@ -84,8 +84,8 @@
+ } FIX_ALIASING;
+ #define G (*(struct globals*)&bb_common_bufsiz1)
+ #define INIT_G() do { \
+-	G.loginpath = "/bin/login"; \
+-	G.issuefile = "/etc/issue.net"; \
++	G.loginpath = "/opt/bin/login"; \
++	G.issuefile = "/opt/etc/issue.net"; \
+ } while (0)
+ 
+ 
+diff -ruN busybox-1.23.2.orig/networking/udhcp/dhcpd.h busybox-1.23.2/networking/udhcp/dhcpd.h
+--- busybox-1.23.2.orig/networking/udhcp/dhcpd.h	2015-03-23 06:06:55.000000000 +0300
++++ busybox-1.23.2/networking/udhcp/dhcpd.h	2015-10-16 22:15:07.673653018 +0300
+@@ -12,7 +12,7 @@
+ #define DEFAULT_LEASE_TIME      (60*60*24 * 10)
+ #define LEASES_FILE             CONFIG_DHCPD_LEASES_FILE
+ /* Where to find the DHCP server configuration file */
+-#define DHCPD_CONF_FILE         "/etc/udhcpd.conf"
++#define DHCPD_CONF_FILE         "/opt/etc/udhcpd.conf"
+ 
+ 
+ struct static_lease {
+diff -ruN busybox-1.23.2.orig/networking/udhcp/files.c busybox-1.23.2/networking/udhcp/files.c
+--- busybox-1.23.2.orig/networking/udhcp/files.c	2015-03-23 06:06:55.000000000 +0300
++++ busybox-1.23.2/networking/udhcp/files.c	2015-10-16 22:17:13.479200780 +0300
+@@ -75,7 +75,7 @@
+ 	{"offer_time"   , read_u32        , &server_config.offer_time   , "60"},
+ 	{"min_lease"    , read_u32        , &server_config.min_lease_sec, "60"},
+ 	{"lease_file"   , read_str        , &server_config.lease_file   , LEASES_FILE},
+-	{"pidfile"      , read_str        , &server_config.pidfile      , "/var/run/udhcpd.pid"},
++	{"pidfile"      , read_str        , &server_config.pidfile      , "/opt/var/run/udhcpd.pid"},
+ 	{"siaddr"       , udhcp_str2nip   , &server_config.siaddr_nip   , "0.0.0.0"},
+ 	/* keywords with no defaults must be last! */
+ 	{"option"       , udhcp_str2optset, &server_config.options      , ""},
+diff -ruN busybox-1.23.2.orig/printutils/lpr.c busybox-1.23.2/printutils/lpr.c
+--- busybox-1.23.2.orig/printutils/lpr.c	2015-03-23 06:06:55.000000000 +0300
++++ busybox-1.23.2/printutils/lpr.c	2015-10-16 22:49:12.766562729 +0300
+@@ -77,7 +77,7 @@
+ 		LPQ_DELETE      = 1 << 3, // -d: delete job(s)
+ 		LPQ_FORCE       = 1 << 4, // -f: force waiting job(s) to be printed
+ 	};
+-	char tempfile[sizeof("/tmp/lprXXXXXX")];
++	char tempfile[sizeof("/opt/tmp/lprXXXXXX")];
+ 	const char *job_title;
+ 	const char *printer_class = "";   // printer class, max 32 char
+ 	const char *queue;                // name of printer queue
+@@ -172,7 +172,7 @@
+ 
+ 		// if data file is stdin, we need to dump it first
+ 		if (LONE_DASH(*argv)) {
+-			strcpy(tempfile, "/tmp/lprXXXXXX");
++			strcpy(tempfile, "/opt/tmp/lprXXXXXX");
+ 			dfd = xmkstemp(tempfile);
+ 			bb_copyfd_eof(STDIN_FILENO, dfd);
+ 			xlseek(dfd, 0, SEEK_SET);
+diff -ruN busybox-1.23.2.orig/procps/sysctl.c busybox-1.23.2/procps/sysctl.c
+--- busybox-1.23.2.orig/procps/sysctl.c	2015-03-23 06:06:55.000000000 +0300
++++ busybox-1.23.2/procps/sysctl.c	2015-10-16 22:18:55.932604258 +0300
+@@ -266,7 +266,7 @@
+ 	if (opt & FLAG_PRELOAD_FILE) {
+ 		option_mask32 |= FLAG_WRITE;
+ 		/* xchdir("/proc/sys") is inside */
+-		return sysctl_handle_preload_file(*argv ? *argv : "/etc/sysctl.conf");
++		return sysctl_handle_preload_file(*argv ? *argv : "/opt/etc/sysctl.conf");
+ 	}
+ 	xchdir("/proc/sys");
+ 	/* xchroot("/proc/sys") - if you are paranoid */
+diff -ruN busybox-1.23.2.orig/selinux/sestatus.c busybox-1.23.2/selinux/sestatus.c
+--- busybox-1.23.2.orig/selinux/sestatus.c	2015-03-23 06:06:55.000000000 +0300
++++ busybox-1.23.2/selinux/sestatus.c	2015-10-16 23:29:06.256825157 +0300
+@@ -61,7 +61,7 @@
+ 
+ 	pc[0] = fc[0] = NULL;
+ 
+-	parser = config_open("/etc/sestatus.conf");
++	parser = config_open("/opt/etc/sestatus.conf");
+ 	while (config_read(parser, &buf, 1, 1, "# \t", PARSE_NORMAL)) {
+ 		if (strcmp(buf, "[process]") == 0) {
+ 			section = 1;
+diff -ruN busybox-1.23.2.orig/shell/ash.c busybox-1.23.2/shell/ash.c
+--- busybox-1.23.2.orig/shell/ash.c	2015-10-16 11:36:30.000000000 +0300
++++ busybox-1.23.2/shell/ash.c	2015-10-16 23:30:24.681898607 +0300
+@@ -13276,7 +13276,7 @@
+ 		const char *hp;
+ 
+ 		state = 1;
+-		read_profile("/etc/profile");
++		read_profile("/opt/etc/profile");
+  state1:
+ 		state = 2;
+ 		hp = lookupvar("HOME");
+diff -ruN busybox-1.23.2.orig/shell/hush.c busybox-1.23.2/shell/hush.c
+--- busybox-1.23.2.orig/shell/hush.c	2015-03-23 06:07:19.000000000 +0300
++++ busybox-1.23.2/shell/hush.c	2015-10-16 23:29:37.137248480 +0300
+@@ -8014,7 +8014,7 @@
+ 	if (flags & OPT_login) {
+ 		FILE *input;
+ 		debug_printf("sourcing /etc/profile\n");
+-		input = fopen_for_read("/etc/profile");
++		input = fopen_for_read("/opt/etc/profile");
+ 		if (input != NULL) {
+ 			close_on_exec_on(fileno(input));
+ 			install_special_sighandlers();
+diff -ruN busybox-1.23.2.orig/sysklogd/syslogd.c busybox-1.23.2/sysklogd/syslogd.c
+--- busybox-1.23.2.orig/sysklogd/syslogd.c	2015-03-23 06:06:55.000000000 +0300
++++ busybox-1.23.2/sysklogd/syslogd.c	2015-10-16 23:31:30.582796732 +0300
+@@ -182,7 +182,7 @@
+ 
+ static const struct init_globals init_data = {
+ 	.logFile = {
+-		.path = "/var/log/messages",
++		.path = "/opt/var/log/messages",
+ 		.fd = -1,
+ 	},
+ #ifdef SYSLOGD_MARK
+@@ -291,7 +291,7 @@
+ 	char *tok[3];
+ 	parser_t *parser;
+ 
+-	parser = config_open2(file ? file : "/etc/syslog.conf",
++	parser = config_open2(file ? file : "/opt/etc/syslog.conf",
+ 				file ? xfopen_for_read : fopen_for_read);
+ 	if (!parser)
+ 		/* didn't find default /etc/syslog.conf */
+@@ -433,7 +433,7 @@
+ 
+  cfgerr:
+ 	bb_error_msg_and_die("error in '%s' at line %d",
+-			file ? file : "/etc/syslog.conf",
++			file ? file : "/opt/etc/syslog.conf",
+ 			parser->lineno);
+ }
+ #endif
+diff -ruN busybox-1.23.2.orig/util-linux/acpid.c busybox-1.23.2/util-linux/acpid.c
+--- busybox-1.23.2.orig/util-linux/acpid.c	2015-03-23 06:07:19.000000000 +0300
++++ busybox-1.23.2/util-linux/acpid.c	2015-10-16 23:01:37.234091699 +0300
+@@ -229,11 +229,11 @@
+ 	int nfd;
+ 	int opts;
+ 	struct pollfd *pfd;
+-	const char *opt_dir = "/etc/acpi";
++	const char *opt_dir = "/opt/etc/acpi";
+ 	const char *opt_input = "/dev/input/event";
+-	const char *opt_logfile = "/var/log/acpid.log";
+-	const char *opt_action = "/etc/acpid.conf";
+-	const char *opt_map = "/etc/acpi.map";
++	const char *opt_logfile = "/opt/var/log/acpid.log";
++	const char *opt_action = "/opt/etc/acpid.conf";
++	const char *opt_map = "/opt/etc/acpi.map";
+ #if ENABLE_FEATURE_PIDFILE
+ 	const char *opt_pidfile = CONFIG_PID_FILE_PATH "/acpid.pid";
+ #endif
+diff -ruN busybox-1.23.2.orig/util-linux/fbset.c busybox-1.23.2/util-linux/fbset.c
+--- busybox-1.23.2.orig/util-linux/fbset.c	2015-03-23 06:06:55.000000000 +0300
++++ busybox-1.23.2/util-linux/fbset.c	2015-10-16 23:03:07.087434966 +0300
+@@ -30,7 +30,7 @@
+ #include "libbb.h"
+ 
+ #define DEFAULTFBDEV  FB_0
+-#define DEFAULTFBMODE "/etc/fb.modes"
++#define DEFAULTFBMODE "/opt/etc/fb.modes"
+ 
+ /* Stuff stolen from the kernel's fb.h */
+ #define FB_ACTIVATE_ALL 64
+diff -ruN busybox-1.23.2.orig/util-linux/fdisk_osf.c busybox-1.23.2/util-linux/fdisk_osf.c
+--- busybox-1.23.2.orig/util-linux/fdisk_osf.c	2015-03-23 06:07:19.000000000 +0300
++++ busybox-1.23.2/util-linux/fdisk_osf.c	2015-10-16 23:39:59.929657584 +0300
+@@ -41,7 +41,7 @@
+ #define BSD_MAXPARTITIONS 16
+ #endif
+ 
+-#define BSD_LINUX_BOOTDIR "/usr/ucb/mdec"
++#define BSD_LINUX_BOOTDIR "/opt/usr/ucb/mdec"
+ 
+ #if defined(__alpha__) \
+  || defined(__powerpc__) \
+diff -ruN busybox-1.23.2.orig/util-linux/mdev.c busybox-1.23.2/util-linux/mdev.c
+--- busybox-1.23.2.orig/util-linux/mdev.c	2015-03-23 06:07:19.000000000 +0300
++++ busybox-1.23.2/util-linux/mdev.c	2015-10-16 23:05:08.245205987 +0300
+@@ -870,7 +870,7 @@
+ 	int firmware_fd, loading_fd;
+ 
+ 	/* check for /lib/firmware/$FIRMWARE */
+-	xchdir("/lib/firmware");
++	xchdir("/opt/lib/firmware");
+ 	firmware_fd = open(firmware, O_RDONLY); /* can fail */
+ 
+ 	/* check for /sys/$DEVPATH/loading ... give 30 seconds to appear */
+@@ -1021,7 +1021,7 @@
+ 	INIT_G();
+ 
+ #if ENABLE_FEATURE_MDEV_CONF
+-	G.filename = "/etc/mdev.conf";
++	G.filename = "/opt/etc/mdev.conf";
+ #endif
+ 
+ 	/* We can be called as hotplug helper */
+diff -ruN busybox-1.23.2.orig/util-linux/swaponoff.c busybox-1.23.2/util-linux/swaponoff.c
+--- busybox-1.23.2.orig/util-linux/swaponoff.c	2015-03-23 06:07:19.000000000 +0300
++++ busybox-1.23.2/util-linux/swaponoff.c	2015-10-16 22:25:37.367461665 +0300
+@@ -171,7 +171,7 @@
+ {
+ 	struct mntent *m;
+ 	int err = 0;
+-	FILE *f = xfopen_for_read("/etc/fstab");
++	FILE *f = xfopen_for_read("/opt/etc/fstab");
+ 
+ 	while ((m = getmntent(f)) != NULL) {
+ 		if (strcmp(m->mnt_type, MNTTYPE_SWAP) == 0) {
+diff -ruN busybox-1.23.2.orig/util-linux/mount.c busybox-1.23.2/util-linux/mount.c
+--- busybox-1.23.2.orig/util-linux/mount.c	2015-10-17 00:46:40.000000000 +0300
++++ busybox-1.23.2/util-linux/mount.c	2015-10-17 02:02:05.098480583 +0300
+@@ -526,7 +526,7 @@
+ static llist_t *get_block_backed_filesystems(void)
+ {
+ 	static const char filesystems[2][sizeof("/proc/filesystems")] = {
+-		"/etc/filesystems",
++		"/opt/etc/filesystems",
+ 		"/proc/filesystems",
+ 	};
+ 	char *fs, *buf;
+@@ -2126,7 +2126,7 @@
+ 	}
+ 
+ 	// Open either fstab or mtab
+-	fstabname = "/etc/fstab";
++	fstabname = "/opt/etc/fstab";
+ 	if (cmdopt_flags & MS_REMOUNT) {
+ 		// WARNING. I am not sure this matches util-linux's
+ 		// behavior. It's possible util-linux does not
