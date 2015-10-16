@@ -943,13 +943,15 @@ diff -ruN busybox-1.23.2.orig/util-linux/swaponoff.c busybox-1.23.2/util-linux/s
  	while ((m = getmntent(f)) != NULL) {
  		if (strcmp(m->mnt_type, MNTTYPE_SWAP) == 0) {
 diff -ruN busybox-1.23.2.orig/util-linux/mount.c busybox-1.23.2/util-linux/mount.c
---- busybox-1.23.2.orig/util-linux/mount.c	2015-10-17 00:46:40.000000000 +0300
-+++ busybox-1.23.2/util-linux/mount.c	2015-10-17 02:02:05.098480583 +0300
-@@ -526,7 +526,7 @@
+--- busybox-1.23.2.orig/util-linux/mount.c	2015-10-17 02:16:49.000000000 +0300
++++ busybox-1.23.2/util-linux/mount.c	2015-10-17 02:18:17.527748404 +0300
+@@ -525,8 +525,8 @@
+ // Return a list of all block device backed filesystems
  static llist_t *get_block_backed_filesystems(void)
  {
- 	static const char filesystems[2][sizeof("/proc/filesystems")] = {
+-	static const char filesystems[2][sizeof("/proc/filesystems")] = {
 -		"/etc/filesystems",
++	static const char filesystems[2][sizeof("/opt/etc/filesystems")] = {
 +		"/opt/etc/filesystems",
  		"/proc/filesystems",
  	};
