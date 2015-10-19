@@ -1,0 +1,24 @@
+diff -ruN iptables-1.4.12/extensions/libip6t_REJECT.c iptables.new/extensions/libip6t_REJECT.c
+--- iptables-1.4.12/extensions/libip6t_REJECT.c	2014-09-24 12:30:10.000000000 +0400
++++ iptables.new/extensions/libip6t_REJECT.c	2014-09-24 12:41:45.000000000 +0400
+@@ -34,6 +34,9 @@
+ 		IP6T_ICMP6_ADDR_UNREACH, "ICMPv6 address unreachable"},
+ 	{"icmp6-port-unreachable", "port-unreach",
+ 		IP6T_ICMP6_PORT_UNREACH, "ICMPv6 port unreachable"},
++	{"icmp6-source-failed-policy", "source-failed-policy",
++		IP6T_ICMP6_SOURCE_FAILED_POLICY,
++		"ICMPv6 source address failed ingress/eggress policy"},
+ 	{"tcp-reset", "tcp-reset",
+ 		IP6T_TCP_RESET, "TCP RST packet"}
+ };
+diff -ruN iptables-1.4.12/include/linux/netfilter_ipv6/ip6t_REJECT.h iptables.new/include/linux/netfilter_ipv6/ip6t_REJECT.h
+--- iptables-1.4.12/include/linux/netfilter_ipv6/ip6t_REJECT.h	2014-09-24 12:30:14.000000000 +0400
++++ iptables.new/include/linux/netfilter_ipv6/ip6t_REJECT.h	2014-09-24 12:40:05.000000000 +0400
+@@ -8,5 +8,6 @@
+ 	IP6T_ICMP6_ADDR_UNREACH,
+ 	IP6T_ICMP6_PORT_UNREACH,
++	IP6T_ICMP6_SOURCE_FAILED_POLICY,
+	IP6T_ICMP6_ECHOREPLY,
+ 	IP6T_TCP_RESET
+ };
+ 

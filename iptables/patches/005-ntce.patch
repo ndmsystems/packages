@@ -1,0 +1,162 @@
+diff --git a/extensions/libxt_NTCE.c b/extensions/libxt_NTCE.c
+new file mode 100644
+index 0000000..95da9e5
+--- /dev/null
++++ b/extensions/libxt_NTCE.c
+@@ -0,0 +1,75 @@
++#include <stdbool.h>
++#include <stdio.h>
++#include <xtables.h>
++
++struct xt_ntce_v0 {
++	uint32_t threshold;
++};
++
++enum {
++	O_THRESHOLD = 0,
++};
++
++static void NTCE_help(void)
++{
++	printf(
++		"NTCE target options:\n"
++		"  --threshold value                   How many packets to process in flow\n");
++}
++
++static const struct xt_option_entry NTCE_opts[] = {
++	{.name = "threshold", .id = O_THRESHOLD, .type = XTTYPE_UINT32, .flags = XTOPT_MAND},
++	XTOPT_TABLEEND,
++};
++
++static void NTCE_parse(struct xt_option_call *cb)
++{
++	struct xt_ntce_v0 *ntceinfo = cb->data;
++
++	xtables_option_parse(cb);
++	switch (cb->entry->id) {
++	case O_THRESHOLD:
++		ntceinfo->threshold = cb->val.u32;
++		break;
++	default:
++		xtables_error(PARAMETER_PROBLEM,
++				"NTCE target: doesn't support option --%s",
++				cb->entry->name);
++	}
++}
++
++static void NTCE_print(const void *ip,
++                          const struct xt_entry_target *target, int numeric)
++{
++	const struct xt_ntce_v0 *ntceinfo =
++		(const struct xt_ntce_v0 *)target->data;
++	printf(" NTCE threshold %u", ntceinfo->threshold);
++}
++
++static void NTCE_save(const void *ip, const struct xt_entry_target *target)
++{
++	const struct xt_ntce_v0 *ntceinfo = (const void *)target->data;
++
++	printf(" --threshold %u", ntceinfo->threshold);
++}
++
++static struct xtables_target ntce_tg_reg[] = {
++	{
++		.version       = XTABLES_VERSION,
++		.name          = "NTCE",
++		.revision      = 0,
++		.family        = NFPROTO_IPV4,
++		.size          = XT_ALIGN(sizeof(struct xt_ntce_v0)),
++		.userspacesize = XT_ALIGN(sizeof(struct xt_ntce_v0)),
++		.help          = NTCE_help,
++		.print         = NTCE_print,
++		.save          = NTCE_save,
++		.x6_parse      = NTCE_parse,
++		.x6_options    = NTCE_opts,
++	},
++};
++
++void _init(void)
++{
++	xtables_register_targets(ntce_tg_reg, ARRAY_SIZE(ntce_tg_reg));
++}
+diff --git a/extensions/libxt_NTCEIN.c b/extensions/libxt_NTCEIN.c
+new file mode 100644
+index 0000000..bcabf9a
+--- /dev/null
++++ b/extensions/libxt_NTCEIN.c
+@@ -0,0 +1,75 @@
++#include <stdbool.h>
++#include <stdio.h>
++#include <xtables.h>
++
++struct xt_ntcein_v0 {
++	uint32_t threshold;
++};
++
++enum {
++	O_THRESHOLD = 0,
++};
++
++static void NTCE_help(void)
++{
++	printf(
++		"NTCEIN target options:\n"
++		"  --threshold value                   How many packets to process in flow\n");
++}
++
++static const struct xt_option_entry NTCE_opts[] = {
++	{.name = "threshold", .id = O_THRESHOLD, .type = XTTYPE_UINT32, .flags = XTOPT_MAND},
++	XTOPT_TABLEEND,
++};
++
++static void NTCE_parse(struct xt_option_call *cb)
++{
++	struct xt_ntcein_v0 *ntceinfo = cb->data;
++
++	xtables_option_parse(cb);
++	switch (cb->entry->id) {
++	case O_THRESHOLD:
++		ntceinfo->threshold = cb->val.u32;
++		break;
++	default:
++		xtables_error(PARAMETER_PROBLEM,
++				"NTCEIN target: doesn't support option --%s",
++				cb->entry->name);
++	}
++}
++
++static void NTCE_print(const void *ip,
++                          const struct xt_entry_target *target, int numeric)
++{
++	const struct xt_ntcein_v0 *ntceinfo =
++		(const struct xt_ntcein_v0 *)target->data;
++	printf(" NTCEIN threshold %u", ntceinfo->threshold);
++}
++
++static void NTCE_save(const void *ip, const struct xt_entry_target *target)
++{
++	const struct xt_ntcein_v0 *ntceinfo = (const void *)target->data;
++
++	printf(" --threshold %u", ntceinfo->threshold);
++}
++
++static struct xtables_target ntce_tg_reg[] = {
++	{
++		.version       = XTABLES_VERSION,
++		.name          = "NTCEIN",
++		.revision      = 0,
++		.family        = NFPROTO_IPV4,
++		.size          = XT_ALIGN(sizeof(struct xt_ntcein_v0)),
++		.userspacesize = XT_ALIGN(sizeof(struct xt_ntcein_v0)),
++		.help          = NTCE_help,
++		.print         = NTCE_print,
++		.save          = NTCE_save,
++		.x6_parse      = NTCE_parse,
++		.x6_options    = NTCE_opts,
++	},
++};
++
++void _init(void)
++{
++	xtables_register_targets(ntce_tg_reg, ARRAY_SIZE(ntce_tg_reg));
++}
