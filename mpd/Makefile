@@ -35,7 +35,7 @@ define Package/mpd/Default
   CATEGORY:=Sound
   TITLE:=Music Player Daemon
   URL:=http://www.musicpd.org/
-  DEPENDS:= +glib2 +libcurl +libpthread +libmpdclient $(ICONV_DEPENDS) \
+  DEPENDS:= +libstdcpp +glib2 +libcurl +libpthread +libmpdclient $(ICONV_DEPENDS) \
 	    +libflac +libmad +libvorbisidec +alsa-lib \
             +boost +boost-container +libexpat
 endef
