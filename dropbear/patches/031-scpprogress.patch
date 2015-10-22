@@ -1,0 +1,12 @@
+diff -ruN dropbear-2015.68.orig/Makefile dropbear-2015.68/Makefile
+--- dropbear-2015.68.orig/Makefile	2015-10-22 00:46:55.000000000 +0300
++++ dropbear-2015.68/Makefile	2015-10-22 15:06:20.980258920 +0300
+@@ -13,6 +13,8 @@
+ 	PROGRAMS=dropbear dbclient dropbearkey dropbearconvert scp
+ endif
+ 
++SCPPROGRESS=1
++
+ STATIC_LTC=libtomcrypt/libtomcrypt.a
+ STATIC_LTM=libtommath/libtommath.a
+ 

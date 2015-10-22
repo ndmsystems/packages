@@ -106,6 +106,7 @@ define Package/base-files/install
 	ln -sfn /tmp/group $(1)/etc/group
 	ln -sfn /tmp/TZ $(1)/etc/TZ
 	ln -sfn /tmp/resolv.conf $(1)/etc/resolv.conf
+	ln -sfn /opt/lib/functions.sh $(1)/etc/functions.sh
 	
 	chmod 1777 $(1)/tmp
 	$(INSTALL_DIR) $(1)/flash
