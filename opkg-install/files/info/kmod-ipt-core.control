@@ -1,0 +1,28 @@
+Package: kmod-ipt-core
+Version: 2.6.36-1
+Depends: kernel
+Provides: 
+Source: package/kernel
+Section: kernel
+Submenu: Netfilter Extensions
+Status: unknown hold not-installed
+Essential: no
+Priority: optional
+Preset: 
+Hidden: 
+Sort-Order: 
+Master-Package: 
+Maintainer: NDMS Developers Team <support@ndmsystems.com>
+Architecture: all
+Installed-Size: 128
+Description:  Netfilter core kernel modules
+ Includes:
+ - comment
+ - limit
+ - LOG
+ - mac
+ - multiport
+ - REJECT
+ - TCPMSS
+Script:  
+@@

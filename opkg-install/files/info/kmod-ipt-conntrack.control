@@ -1,0 +1,26 @@
+Package: kmod-ipt-conntrack
+Version: 2.6.36-1
+Depends: kernel, kmod-ipt-core
+Provides: 
+Source: package/kernel
+Section: kernel
+Submenu: Netfilter Extensions
+Status: unknown hold not-installed
+Essential: no
+Priority: optional
+Preset: 
+Hidden: 
+Sort-Order: 
+Master-Package: 
+Maintainer: NDMS Developers Team <support@ndmsystems.com>
+Architecture: all
+Installed-Size: 128
+Description:  Netfilter (IPv4) kernel modules for connection tracking
+ Includes:
+ - conntrack
+ - defrag
+ - iptables_raw
+ - NOTRACK
+ - state
+Script:  
+@@

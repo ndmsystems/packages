@@ -1,0 +1,21 @@
+Package: kmod-usb-net-wdm-ncm
+Version: 2.6.36-1
+Depends: kernel, kmod-usb-net
+Provides: 
+Source: package/kernel
+Section: kernel
+Submenu: USB Support
+Status: unknown hold not-installed
+Essential: no
+Priority: optional
+Preset: 
+Hidden: 
+Sort-Order: 
+Master-Package: 
+Maintainer: NDMS Developers Team <support@ndmsystems.com>
+Architecture: all
+Installed-Size: 128
+Description:  This driver provides support for USB WDM class and
+ NCM protocol used by Huawei NCM and CDC MBIM drivers.
+Script:  
+@@

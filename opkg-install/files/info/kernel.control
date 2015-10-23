@@ -1,0 +1,20 @@
+Package: kernel
+Version: 2.6.36-1
+Depends:
+Provides: 
+Source: package/kernel
+Section: sys
+Submenu: 
+Status: unknown hold not-installed
+Essential: no
+Priority: optional
+Preset: 
+Hidden: 
+Sort-Order: 
+Master-Package: 
+Maintainer: NDMS Developers Team <support@ndmsystems.com>
+Architecture: all
+Installed-Size: 128
+Description:  Virtual kernel package
+Script:  
+@@

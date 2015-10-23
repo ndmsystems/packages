@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 PKG_NAME:=libstdcpp
 PKG_RELEASE:=1
-VERSION:=6.0
+PKG_VERSION:=6.0
 
 PKG_LICENSE:=GPL-3.0-with-GCC-exception
 

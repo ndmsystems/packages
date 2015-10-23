@@ -1,0 +1,45 @@
+Package: kmod-usb-net
+Version: 2.6.36-1
+Depends: kernel, kmod-usb-core
+Provides: 
+Source: package/kernel
+Section: kernel
+Submenu: USB Support
+Status: unknown hold not-installed
+Essential: no
+Priority: optional
+Preset: 
+Hidden: 
+Sort-Order: 
+Master-Package: 
+Maintainer: NDMS Developers Team <support@ndmsystems.com>
+Architecture: all
+Installed-Size: 128
+Description:  This driver supports several kinds of network links over USB,
+ with "minidrivers" built around a common network driver core
+ that supports deep queues for efficient transfers.  (This gives
+ better performance with small packets and at high speeds).
+ 
+ The USB host runs "usbnet", and the other end of the link might be:
+ 
+ - Another USB host, when using USB "network" or "data transfer"
+ cables.  These are often used to network laptops to PCs, like
+ "Laplink" parallel cables or some motherboards.  These rely
+ on specialized chips from many suppliers.
+ 
+ - An intelligent USB gadget, perhaps embedding a Linux system.
+ These include PDAs running Linux (iPaq, Yopy, Zaurus, and
+ others), and devices that interoperate using the standard
+ CDC-Ethernet specification (including many cable modems).
+ 
+ - Network adapter hardware (like those for 10/100 Ethernet) which
+ uses this driver framework.
+ 
+ The link will appear with a name like "usb0", when the link is
+ a two-node link, or "eth0" for most CDC-Ethernet devices.  Those
+ two-node links are most easily managed with Ethernet Bridging
+ (CONFIG_BRIDGE) instead of routing.
+ 
+ The module will be called usbnet.
+Script:  
+@@

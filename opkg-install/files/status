@@ -1,0 +1,279 @@
+Package: kernel
+Version: 2.6.36-1
+Depends:
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-nls-base
+Version: 2.6.36-1
+Depends: kernel
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-usb-core
+Version: 2.6.36-1
+Depends: kernel, kmod-nls-base
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-scsi-core
+Version: 2.6.36-1
+Depends: kernel
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-ipt-core
+Version: 2.6.36-1
+Depends: kernel
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-sched
+Version: 2.6.36-1
+Depends: kernel
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-ipv6
+Version: 2.6.36-1
+Depends: kernel
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-crypto-core
+Version: 2.6.36-1
+Depends: kernel
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514279
+Auto-Installed: yes
+
+Package: kmod-crypto-arc4
+Version: 2.6.36-1
+Depends: kernel, kmod-crypto-core
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514279
+Auto-Installed: yes
+
+Package: kmod-crypto-sha1
+Version: 2.6.36-1
+Depends: kernel, kmod-crypto-core
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514279
+Auto-Installed: yes
+
+Package: kmod-ppp
+Version: 2.6.36-1
+Depends: kernel
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-tun
+Version: 2.6.36-1
+Depends: kernel
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-fs-ext2
+Version: 2.6.36-1
+Depends: kernel
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-fs-ext3
+Version: 2.6.36-1
+Depends: kernel
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-fs-jffs2
+Version: 2.6.36-1
+Depends: kernel
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-ipt-nat
+Version: 2.6.36-1
+Depends: kernel, kmod-ipt-core, kmod-ipt-conntrack
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-ipt-conntrack
+Version: 2.6.36-1
+Depends: kernel, kmod-ipt-core
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-nfnetlink
+Version: 2.6.36-1
+Depends: kernel, kmod-ipt-core
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-ip6tables
+Version: 2.6.36-1
+Depends: kernel, kmod-ipv6, kmod-ipt-core, kmod-ipt-conntrack
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-iptunnel4
+Version: 2.6.36-1
+Depends: kernel
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-iptunnel6
+Version: 2.6.36-1
+Depends: kernel, kmod-ipv6
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-usb-storage
+Version: 2.6.36-1
+Depends: kernel, kmod-scsi-core, kmod-usb-core
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-usb-printer
+Version: 2.6.36-1
+Depends: kernel, kmod-usb-core
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-usb-serial
+Version: 2.6.36-1
+Depends: kernel, kmod-usb-core
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-usb-acm
+Version: 2.6.36-1
+Depends: kernel, kmod-usb-core
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-usb-net
+Version: 2.6.36-1
+Depends: kernel, kmod-usb-core
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-usb-net-cdc-ether
+Version: 2.6.36-1
+Depends: kernel, kmod-usb-core
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-usb-net-wdm-ncm
+Version: 2.6.36-1
+Depends: kernel, kmod-usb-core
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-usb-net-rndis
+Version: 2.6.36-1
+Depends: kernel, kmod-usb-net, kmod-usb-net-cdc-ether
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-usb-serial-wwan
+Version: 2.6.36-1
+Depends: kernel, kmod-usb-serial
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: kmod-loop
+Version: 2.6.36-1
+Depends: kernel
+Provides:
+Status: install hold unpacked
+Architecture: all
+Installed-Time: 1445514529
+Auto-Installed: yes
+
