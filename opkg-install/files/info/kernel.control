@@ -1,6 +1,6 @@
 Package: kernel
-Version: 2.6.36-1
-Depends:
+Version: @@FULL_VER@@
+Depends: libc
 Provides: 
 Source: package/kernel
 Section: sys
@@ -13,7 +13,7 @@ Hidden:
 Sort-Order: 
 Master-Package: 
 Maintainer: NDMS Developers Team <support@ndmsystems.com>
-Architecture: all
+Architecture: @@BOARD@@
 Installed-Size: 128
 Description:  Virtual kernel package
 Script:  

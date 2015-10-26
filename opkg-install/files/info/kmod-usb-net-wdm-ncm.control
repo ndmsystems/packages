@@ -1,5 +1,5 @@
 Package: kmod-usb-net-wdm-ncm
-Version: 2.6.36-1
+Version: @@VER@@
 Depends: kernel, kmod-usb-net
 Provides: 
 Source: package/kernel

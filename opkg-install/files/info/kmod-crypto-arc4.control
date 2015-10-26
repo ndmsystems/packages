@@ -1,5 +1,5 @@
 Package: kmod-crypto-arc4
-Version: 2.6.36-1
+Version: @@VER@@
 Depends: kernel, kmod-crypto-core
 Provides: 
 Source: package/kernel

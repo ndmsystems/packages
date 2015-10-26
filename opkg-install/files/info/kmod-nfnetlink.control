@@ -1,5 +1,5 @@
 Package: kmod-nfnetlink
-Version: 2.6.36-1
+Version: @@VER@@
 Depends: kernel, kmod-ipt-core
 Provides: 
 Source: package/kernel

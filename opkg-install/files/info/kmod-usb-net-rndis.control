@@ -1,5 +1,5 @@
 Package: kmod-usb-net-rndis
-Version: 2.6.36-1
+Version: @@VER@@
 Depends: kernel, kmod-usb-net, kmod-usb-net-cdc-ether
 Provides: 
 Source: package/kernel

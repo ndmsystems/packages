@@ -1,5 +1,5 @@
 Package: kmod-ip6tables
-Version: 2.6.36-1
+Version: @@VER@@
 Depends: kernel, kmod-ipv6, kmod-ipt-core, kmod-ipt-conntrack
 Provides: 
 Source: package/kernel

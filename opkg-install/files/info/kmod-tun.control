@@ -1,5 +1,5 @@
 Package: kmod-tun
-Version: 2.6.36-1
+Version: @@VER@@
 Depends: kernel
 Provides: 
 Source: package/kernel

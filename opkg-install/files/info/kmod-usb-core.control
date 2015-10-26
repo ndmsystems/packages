@@ -1,5 +1,5 @@
 Package: kmod-usb-core
-Version: 2.6.36-1
+Version: @@VER@@
 Depends: kernel, kmod-nls-base
 Provides: 
 Source: package/kernel

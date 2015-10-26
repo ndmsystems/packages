@@ -1,5 +1,5 @@
 Package: kmod-usb-storage
-Version: 2.6.36-1
+Version: @@VER@@
 Depends: kernel, kmod-scsi-core, kmod-usb-core
 Provides: 
 Source: package/kernel

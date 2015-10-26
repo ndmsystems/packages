@@ -1,5 +1,5 @@
 Package: kmod-usb-net
-Version: 2.6.36-1
+Version: @@VER@@
 Depends: kernel, kmod-usb-core
 Provides: 
 Source: package/kernel

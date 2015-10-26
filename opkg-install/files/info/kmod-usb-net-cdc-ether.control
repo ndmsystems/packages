@@ -1,5 +1,5 @@
 Package: kmod-usb-net-cdc-ether
-Version: 2.6.36-1
+Version: @@VER@@
 Depends: kernel, kmod-usb-net
 Provides: 
 Source: package/kernel
