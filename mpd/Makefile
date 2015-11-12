@@ -183,12 +183,15 @@ ifeq ($(BUILD_VARIANT),mini)
 endif
 
 define Package/mpd/install
+	$(INSTALL_DIR) $(1)/var/music
 	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_DIR) $(1)/etc/default/usb_services/sound
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/mpd $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/etc
-	$(INSTALL_CONF) $(PKG_BUILD_DIR)/doc/mpdconf.example $(1)/etc/mpd.conf
+	$(INSTALL_CONF) ./files/mpdconf.example $(1)/etc/mpd.conf
 	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./files/mpd.init $(1)/etc/init.d/mpd
+	$(INSTALL_BIN) ./files/mpd.init $(1)/etc/init.d/S04mpd
+	ln -sfn ../../../init.d/S04mpd $(1)/etc/default/usb_services/sound/S04mpd
 endef
 
 define Package/mpd-full/install

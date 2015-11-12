@@ -6,28 +6,50 @@ if [ "$DROPBEAR_ENABLE" = "no" ]; then
     exit
 fi
 
-if [ -n "`pidof dropbear`" ]; then 
-    killall dropbear 2>/dev/null
-fi
+stop() {
+	killall dropbear 2>/dev/null
+}
 
-if [ ! -d /opt/etc/dropbear ]; then
-	mkdir /opt/etc/dropbear
-fi
+start() {
+	if [ -n "`pidof dropbear`" ]; then 
+		killall dropbear 2>/dev/null
+	fi
 
-if [ ! -f /opt/etc/dropbear/dropbear_dss_host_key ]; then
-	dropbearkey -t dss -f /opt/etc/dropbear/dropbear_dss_host_key
-fi
+	if [ ! -d /opt/etc/dropbear ]; then
+		mkdir /opt/etc/dropbear
+	fi
 
-if [ ! -f /opt/etc/dropbear/dropbear_rsa_host_key ]; then
-	dropbearkey -t rsa -f /opt/etc/dropbear/dropbear_rsa_host_key
-fi
+	if [ ! -f /opt/etc/dropbear/dropbear_dss_host_key ]; then
+		dropbearkey -t dss -f /opt/etc/dropbear/dropbear_dss_host_key
+	fi
 
-if [ ! -f /opt/etc/dropbear/dropbear_ecdsa_host_key ]; then
-	dropbearkey -t ecdsa -f /opt/etc/dropbear/dropbear_ecdsa_host_key
-fi
+	if [ ! -f /opt/etc/dropbear/dropbear_rsa_host_key ]; then
+		dropbearkey -t rsa -f /opt/etc/dropbear/dropbear_rsa_host_key
+	fi
 
-if [ -n "$DROPBEAR_PORT" ]; then
-    dropbear -p $DROPBEAR_PORT
-else
-    dropbear
-fi
+	if [ ! -f /opt/etc/dropbear/dropbear_ecdsa_host_key ]; then
+		dropbearkey -t ecdsa -f /opt/etc/dropbear/dropbear_ecdsa_host_key
+	fi
+
+	if [ -n "$DROPBEAR_PORT" ]; then
+		dropbear -p $DROPBEAR_PORT
+	else
+		dropbear
+	fi
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		stop
+		start
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+		;;
+esac

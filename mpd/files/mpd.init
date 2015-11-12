@@ -1,26 +1,41 @@
-#!/bin/sh /etc/rc.common
-# Copyright (C) 2007-2014 OpenWrt.org
+#!/opt/bin/sh
+# Copyright (C) 2015 NDM Systems, McMCC
 
-START=93
+export TZ=`cat /etc/TZ | tail -n 1`
 
-USE_PROCD=1
+CONFIGFILE=/opt/etc/mpd.conf
 
-PROG=/usr/bin/mpd
-CONFIGFILE=/etc/mpd.conf
-NICEPRIO=-10
-
-#TODO: Add uci config - nice, config
-
-start_service() {
+start() {
 	#create mpd directories from config
-	local pld=`grep ^playlist_directory "$CONFIGFILE" | cut -d "\"" -f 2 | sed "s/~/\/root/g"`
+	pld=`grep ^playlist_directory "$CONFIGFILE" | cut -d "\"" -f 2 | sed "s/~/\/root/g"`
 	if [ ! -d $pld ]; then
-		mkdir -m 0755 -p $pld
+		mkdir -m 0755 -p $pld 2>/dev/null
 	fi
-
-	procd_open_instance
-	procd_set_param command "$PROG" --no-daemon "$CONFIGFILE"
-	# Give MPD some real-time priority
-	procd_set_param nice "$NICEPRIO"
-	procd_close_instance
+	mus=`grep ^music_directory "$CONFIGFILE" | cut -d "\"" -f 2 | sed "s/~/\/root/g"`
+	if [ ! -d $mus ]; then
+		mkdir -m 0755 -p $mus 2>/dev/null
+	fi
+	mpd
 }
+
+stop() {
+	killall -15 mpd 2>/dev/null
+	sleep 1
+	killall -9 mpd 2>/dev/null
+}
+
+case "$1" in
+	start)
+	    start
+	    ;;
+	stop)
+	    stop
+	    ;;
+	restart)
+	    stop
+	    start
+	    ;;
+	*)
+	    echo "Usage: $0 {start|stop|restart}"
+	    ;;
+esac

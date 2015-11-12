@@ -1,0 +1,12 @@
+diff -ruN alsa-lib-1.0.29.orig/src/conf/alsa.conf alsa-lib-1.0.29/src/conf/alsa.conf
+--- alsa-lib-1.0.29.orig/src/conf/alsa.conf	2015-02-26 15:34:52.000000000 +0300
++++ alsa-lib-1.0.29/src/conf/alsa.conf	2015-11-10 23:42:25.093486297 +0300
+@@ -15,7 +15,7 @@
+ 					"/alsa.conf.d/"
+ 				]
+ 			}
+-			"/etc/asound.conf"
++			"/opt/etc/asound.conf"
+ 			"~/.asoundrc"
+ 		]
+ 		errors false

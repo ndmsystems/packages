@@ -51,7 +51,7 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/etc/default/
 	$(INSTALL_BIN) ./files/dropbear $(1)/etc/default/dropbear
 	$(INSTALL_DIR) $(1)/etc/init.d/
-	$(INSTALL_BIN) ./files/S51dropbear $(1)/etc/init.d/S51dropbear
+	$(INSTALL_BIN) ./files/S51dropbear $(1)/etc/init.d/S01dropbear
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))

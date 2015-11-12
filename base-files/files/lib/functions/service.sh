@@ -66,7 +66,7 @@ ssd="$ssd -K${SERVICE_SIG:+ -s $SERVICE_SIG}"
 	}
 	name="${SERVICE_NAME:-${exec##*/}}"
 	[ -z "$SERVICE_USE_PID$SERVICE_WRITE_PID$SERVICE_PID_FILE" ] \
-		|| ssd="$ssd -p ${SERVICE_PID_FILE:-/var/run/$name.pid}"
+		|| ssd="$ssd -p ${SERVICE_PID_FILE:-/opt/var/run/$name.pid}"
 	[ -z "$SERVICE_MATCH_NAME" ] || ssd="$ssd -n $name"
 	ssd="$ssd${SERVICE_UID:+ -c $SERVICE_UID${SERVICE_GID:+:$SERVICE_GID}}"
 	[ -z "$SERVICE_MATCH_EXEC$start" ] || ssd="$ssd -x $exec"

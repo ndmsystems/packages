@@ -36,7 +36,7 @@ define Build/Configure
 endef
 
 define Build/Compile
-	$(TARGET_CC) $(TARGET_CFLAGS) -c $(PKG_BUILD_DIR)/iconv.c -o $(PKG_BUILD_DIR)/iconv.o -I$(PKG_BUILD_DIR)/include $(FPIC)
+	$(TARGET_CC) $(TARGET_CFLAGS) -DALL_CHARSETS -c $(PKG_BUILD_DIR)/iconv.c -o $(PKG_BUILD_DIR)/iconv.o -I$(PKG_BUILD_DIR)/include $(FPIC)
 	$(TARGET_CROSS)ar rcs $(PKG_BUILD_DIR)/libiconv.a $(PKG_BUILD_DIR)/iconv.o
 endef
 
@@ -65,7 +65,7 @@ define Host/Configure
 endef
 
 define Host/Compile
-	$(HOSTCC) -c src/iconv.c -o $(HOST_BUILD_DIR)/iconv.o -Isrc/include -fPIC
+	$(HOSTCC) -DALL_CHARSETS -c src/iconv.c -o $(HOST_BUILD_DIR)/iconv.o -Isrc/include -fPIC
 	ar rcs $(HOST_BUILD_DIR)/libiconv.a $(HOST_BUILD_DIR)/iconv.o
 endef
 

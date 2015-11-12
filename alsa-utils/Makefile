@@ -64,12 +64,18 @@ endef
 
 define Package/alsa-utils/install
 	$(INSTALL_DIR) $(1)/usr/{s,}bin
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_DIR) $(1)/var/lock
+	$(INSTALL_DIR) $(1)/var/run
+	$(INSTALL_DIR) $(1)/var/lib/alsa
+	$(INSTALL_DIR) $(1)/etc/default/usb_services/sound
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/amixer $(1)/usr/bin/
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/alsamixer $(1)/usr/bin/
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/aplay $(1)/usr/bin/
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/arecord $(1)/usr/bin/
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/sbin/alsactl $(1)/usr/sbin/
-
+	$(INSTALL_BIN) ./files/alsactl.init $(1)/etc/init.d/S04alsactl
+	ln -sfn ../../../init.d/S04alsactl $(1)/etc/default/usb_services/sound/S04alsactl
 	$(INSTALL_DIR) $(1)/usr/share/alsa/init
 	$(INSTALL_DATA) \
 	    $(PKG_INSTALL_ODIR)/usr/share/alsa/init/* \

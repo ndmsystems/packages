@@ -36,7 +36,7 @@ define Package/alsa-lib
   CATEGORY:=Libraries
   TITLE:=ALSA (Advanced Linux Sound Architecture) library
   URL:=http://www.alsa-project.org/
-  DEPENDS:=+kmod-sound-core +libpthread +librt
+  DEPENDS:=+kmod-sound-core +kmod-usb-audio +libpthread +librt
 endef
 
 define Package/alsa-lib/description
@@ -82,7 +82,9 @@ define Build/InstallDev
 endef
 
 define Package/alsa-lib/install
+	$(INSTALL_DIR) $(1)/etc
 	$(INSTALL_DIR) $(1)/usr/lib
+	$(INSTALL_DATA) ./files/asound.conf $(1)/etc/
 	$(CP) \
 		$(PKG_INSTALL_DIR)/usr/lib/libasound.so.* \
 		$(1)/usr/lib/

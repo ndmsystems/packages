@@ -1,0 +1,44 @@
+#!/opt/bin/sh
+# Copyright (C) 2015 NDM Systems, McMCC
+
+export LANG=C
+export PATH=/opt/bin:/opt/sbin:/opt/usr/bin:/opt/usr/sbin:/bin:/sbin:/usr/bin:/usr/sbin
+export LD_LIBRARY_PATH=/opt/lib:/opt/usr/lib:/lib:/usr/lib
+
+. /opt/lib/functions.sh
+
+
+if [ -f /etc/fstab ]; then
+	mount -a
+fi
+
+start() {
+	chmod -R 777 /dev/*
+	load_opt_modules
+	sleep 1
+	chmod -R 777 /dev/*
+	apps_start
+	chmod -R 777 /dev/*
+}
+
+stop() {
+	apps_stop
+	sleep 1
+	unload_opt_modules
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		stop
+		start
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+		;;
+esac
