@@ -26,17 +26,20 @@ stop() {
 services() {
 	if [ "$1" = "$usb_devname" ]; then
 		sleep 1
-		if [ -d /sys/$usb_devpath ]; then
-			start
-		else
-			stop
-		fi
+		case "$2" in
+			start)
+				start
+				;;
+			stop)
+				stop
+				;;
+		esac
 	fi
 }
 
 case "$usb_subsystem" in
 	sound)
-		services audio
+		services audio $1
 		;;
 esac
 
