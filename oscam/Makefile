@@ -9,7 +9,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=oscam
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 PKG_SOURCE_URL:=http://www.streamboard.tv/svn/oscam/trunk
 PKG_REV:=$(shell svn info ${PKG_SOURCE_URL} | sed -ne's/^Last Changed Rev: //p')
@@ -29,7 +29,7 @@ define Package/oscam
   CATEGORY:=Network
   TITLE:=Open Source Conditional Access Module
   URL:=http://www.streamboard.tv/oscam/wiki/BuildingOscam
-  DEPENDS:=+libopenssl +libpcsclite +libusb-1.0
+  DEPENDS:=+libopenssl +libpcsclite +libusb-1.0 +ccid +pcscd
 endef
 
 define Package/list-smargo
