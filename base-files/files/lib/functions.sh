@@ -5,6 +5,23 @@ INITD="/opt/etc/init.d"
 
 export LANG=C
 
+append() {
+	local var="$1"
+	local value="$2"
+	local sep="${3:- }"
+
+	eval "export ${NO_EXPORT:+-n} -- \"$var=\${$var:+\${$var}\${value:+\$sep}}\$value\""
+}
+
+list_contains() {
+	local var="$1"
+	local str="$2"
+	local val
+
+	eval "val=\" \${$var} \""
+	[ "${val%% $str *}" != "$val" ]
+}
+
 load_modules() {
 	[ -d /opt/etc/modules.d ] && {
 		cd /opt/etc/modules.d

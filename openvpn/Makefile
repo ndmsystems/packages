@@ -10,7 +10,7 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=openvpn
 
 PKG_VERSION:=2.3.6
-PKG_RELEASE:=5
+PKG_RELEASE:=6
 
 PKG_SOURCE_URL:=http://swupdate.openvpn.net/community/releases
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
@@ -60,10 +60,10 @@ CONFIG_OPENVPN_NOSSL:=y
 endif
 
 CONFIGURE_VARS += \
-	IFCONFIG=/sbin/ifconfig \
-	ROUTE=/sbin/route \
-	IPROUTE=/usr/sbin/ip \
-	NETSTAT=/sbin/netstat
+	IFCONFIG=/opt/sbin/ifconfig \
+	ROUTE=/opt/sbin/route \
+	IPROUTE=/opt/usr/sbin/ip \
+	NETSTAT=/opt/sbin/netstat
 
 define Build/Configure
 	$(call Build/Configure/Default, \
@@ -93,7 +93,7 @@ define Build/Configure
 endef
 
 define Package/openvpn-$(BUILD_VARIANT)/conffiles
-/etc/config/openvpn
+/opt/etc/config/openvpn
 endef
 
 define Package/openvpn-$(BUILD_VARIANT)/install

@@ -1,0 +1,11 @@
+#!/opt/bin/sh /opt/etc/rc.common
+
+START=94
+
+start () {
+	service_start /opt/usr/bin/oscam -b -c /opt/etc/oscam &
+}
+
+stop () {
+	service_stop /opt/usr/bin/oscam
+}

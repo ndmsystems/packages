@@ -11,7 +11,7 @@ PKG_NAME:=openvpn-easy-rsa
 
 PKG_REV:=ff5bfd1dd8e548cb24d302742af3894f893ef92f
 PKG_VERSION:=2013-01-30
-PKG_RELEASE=2
+PKG_RELEASE=3
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/OpenVPN/easy-rsa.git
@@ -32,9 +32,9 @@ define Package/openvpn-easy-rsa
 endef
 
 define Package/openvpn-easy-rsa/conffiles
-/etc/easy-rsa/keys/serial
-/etc/easy-rsa/keys/index.txt
-/etc/easy-rsa/vars
+/opt/etc/easy-rsa/keys/serial
+/opt/etc/easy-rsa/keys/index.txt
+/opt/etc/easy-rsa/vars
 endef
 
 define Build/Configure

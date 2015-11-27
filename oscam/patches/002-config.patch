@@ -1,0 +1,41 @@
+diff -ruN oscam-keenopt.orig/config.h oscam-keenopt/config.h
+--- oscam-keenopt.orig/config.h	2015-11-26 22:11:45.000000000 +0300
++++ oscam-keenopt/config.h	2015-11-26 22:11:05.000000000 +0300
+@@ -22,7 +22,7 @@
+ //#define IPV6SUPPORT 1
+ #define MODULE_MONITOR 1
+ 
+-//#define MODULE_CAMD33 1
++#define MODULE_CAMD33 1
+ #define MODULE_CAMD35 1
+ #define MODULE_CAMD35_TCP 1
+ #define MODULE_NEWCAMD 1
+@@ -61,10 +61,14 @@
+ #define CARDREADER_DB2COM 1
+ #define CARDREADER_STINGER 1
+ 
++#define WITH_PCSC 1
++
+ #ifdef WITH_PCSC
+ #define CARDREADER_PCSC 1
+ #endif
+ 
++#define WITH_LIBUSB 1
++
+ #ifdef WITH_LIBUSB
+ #define CARDREADER_SMART 1
+ #endif
+@@ -82,11 +86,11 @@
+ #endif
+ 
+ #ifdef WITH_STAPI
+-#define CARDREADER_STAPI 1
++//#define CARDREADER_STAPI 1
+ #endif
+ 
+ #ifdef WITH_STAPI5
+-#define CARDREADER_STAPI5 1
++//#define CARDREADER_STAPI5 1
+ #endif
+ 
+ #endif // WITH_CARDREADER

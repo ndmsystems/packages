@@ -1,0 +1,71 @@
+diff -ruN pcsc-lite-1.8.14.orig/src/hotplug.h pcsc-lite-1.8.14/src/hotplug.h
+--- pcsc-lite-1.8.14.orig/src/hotplug.h	2015-04-10 21:30:14.000000000 +0300
++++ pcsc-lite-1.8.14/src/hotplug.h	2015-11-26 22:44:55.624082803 +0300
+@@ -41,7 +41,7 @@
+ #define __hotplug_h__
+ 
+ #ifndef PCSCLITE_HP_DROPDIR
+-#define PCSCLITE_HP_DROPDIR		"/usr/local/pcsc/drivers/"
++#define PCSCLITE_HP_DROPDIR		"/opt/usr/share/pcsc/drivers/"
+ #endif
+ 
+ #define PCSCLITE_HP_MANUKEY_NAME	"ifdVendorID"
+diff -ruN pcsc-lite-1.8.14.orig/src/spy/libpcscspy.c pcsc-lite-1.8.14/src/spy/libpcscspy.c
+--- pcsc-lite-1.8.14.orig/src/spy/libpcscspy.c	2015-04-10 21:30:14.000000000 +0300
++++ pcsc-lite-1.8.14/src/spy/libpcscspy.c	2015-11-26 22:41:41.721456695 +0300
+@@ -341,8 +341,8 @@
+  * library and not from the framework.
+  * Just copying the framework in /tmp does solve the problem.
+  */
+-#define LIBPCSC_NOSPY "/tmp/PCSC"
+-#define LIBPCSC "/tmp/PCSC"
++#define LIBPCSC_NOSPY "/opt/tmp/PCSC"
++#define LIBPCSC "/opt/tmp/PCSC"
+ #else
+ #define LIBPCSC_NOSPY "libpcsclite_nospy.so.1"
+ #define LIBPCSC "libpcsclite.so.1"
+@@ -420,7 +420,7 @@
+ 		/* check if we can log */
+ 		home = getenv("HOME");
+ 		if (NULL == home)
+-			home = "/tmp";
++			home = "/opt/tmp";
+ 
+ 		snprintf(log_pipe, sizeof log_pipe, "%s/pcsc-spy", home);
+ 		Log_fd = open(log_pipe, O_WRONLY);
+diff -ruN pcsc-lite-1.8.14.orig/src/utils.c pcsc-lite-1.8.14/src/utils.c
+--- pcsc-lite-1.8.14.orig/src/utils.c	2015-04-10 21:30:14.000000000 +0300
++++ pcsc-lite-1.8.14/src/utils.c	2015-11-26 22:46:34.961419550 +0300
+@@ -116,7 +116,7 @@
+  * and has already claimed the USB device. In that case RFAddReader() fails
+  * and I get a user support request
+  */
+-#define OPENCT_FILE "/var/run/openct/status"
++#define OPENCT_FILE "/opt/var/run/openct/status"
+ int CheckForOpenCT(void)
+ {
+ 	struct stat buf;
+diff -ruN pcsc-lite-1.8.14.orig/src/winscard.c pcsc-lite-1.8.14/src/winscard.c
+--- pcsc-lite-1.8.14.orig/src/winscard.c	2015-04-10 21:30:14.000000000 +0300
++++ pcsc-lite-1.8.14/src/winscard.c	2015-11-26 22:42:21.826001993 +0300
+@@ -129,7 +129,7 @@
+ #define TRUE 1
+ #endif
+ 
+-#define PROFILE_FILE "/tmp/pcscd_profile"
++#define PROFILE_FILE "/opt/tmp/pcscd_profile"
+ #include <stdio.h>
+ #include <sys/time.h>
+ #include <errno.h>
+diff -ruN pcsc-lite-1.8.14.orig/src/winscard_clnt.c pcsc-lite-1.8.14/src/winscard_clnt.c
+--- pcsc-lite-1.8.14.orig/src/winscard_clnt.c	2015-08-05 13:56:08.000000000 +0300
++++ pcsc-lite-1.8.14/src/winscard_clnt.c	2015-11-26 22:42:46.994343585 +0300
+@@ -180,7 +180,7 @@
+ 
+ #ifdef DO_PROFILE
+ 
+-#define PROFILE_FILE "/tmp/pcsc_profile"
++#define PROFILE_FILE "/opt/tmp/pcsc_profile"
+ #include <stdio.h>
+ #include <sys/time.h>
+ 
