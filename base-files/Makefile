@@ -50,6 +50,9 @@ define Package/base-files/description
 endef
 
 define Build/Prepare
+	if [ -d $(PKG_BUILD_DIR) ]; then \
+		rm -rf $(PKG_BUILD_DIR); \
+	fi
 	mkdir -p $(PKG_BUILD_DIR)
 endef
 
