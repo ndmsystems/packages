@@ -1,0 +1,38 @@
+#!/opt/bin/sh
+# Copyright (C) 2015 NDM Systems, McMCC
+
+NAME=ympd
+DAEMON=/opt/usr/sbin/$NAME
+CONFIGFILE=/opt/etc/default/$NAME
+PIDFILE=/opt/var/run/$NAME.pid
+MPD_HOST=localhost
+MPD_PORT=6600
+WEB_PORT=8080
+
+# Read configuration variable file if it is present
+[ -r $CONFIGFILE ] && . $CONFIGFILE
+DAEMON_OPT="--webport $WEB_PORT --host $MPD_HOST --port $MPD_PORT"
+
+do_start() {
+	start-stop-daemon --start --background --quiet --pidfile $PIDFILE --make-pidfile --exec $DAEMON -- $DAEMON_OPT
+}
+
+do_stop() {
+	start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile $PIDFILE --name $NAME
+}
+
+case "$1" in
+	start)
+	    do_start
+	    ;;
+	stop)
+	    do_stop
+	    ;;
+	restart)
+	    do_stop
+	    do_start
+	    ;;
+	*)
+	    echo "Usage: $0 {start|stop|restart}"
+	    ;;
+esac
