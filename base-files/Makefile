@@ -31,6 +31,7 @@ define Package/base-files/description
 endef
 
 define Build/Prepare
+	[ -d $(PKG_BUILD_DIR) ] && rm -rf $(PKG_BUILD_DIR)
 	mkdir -p $(PKG_BUILD_DIR)
 endef
 
