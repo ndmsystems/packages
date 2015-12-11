@@ -1,6 +1,7 @@
 #
 # Copyright (C) 2007-2012 OpenWrt.org
 # Copyright (C) 2010 Vertical Communications
+# Copyright (C) 2015 NDM Systems, McMCC
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -13,17 +14,7 @@ include $(INCLUDE_DIR)/version.mk
 PKG_NAME:=base-files
 PKG_RELEASE:=121
 
-PKG_FILE_DEPENDS:=$(PLATFORM_DIR)/ $(GENERIC_PLATFORM_DIR)/base-files/
-PKG_BUILD_DEPENDS:=opkg/host
-
 include $(INCLUDE_DIR)/package.mk
-
-ifneq ($(DUMP),1)
-  TARGET:=-$(BOARD)
-  ifneq ($(wildcard $(PLATFORM_DIR)/base-files-$(PROFILE) $(PLATFORM_SUBDIR)/base-files-$(PROFILE)),)
-    TARGET:=$(TARGET)-$(PROFILE)
-  endif
-endif
 
 define Package/base-files
   SECTION:=base
@@ -35,31 +26,17 @@ define Package/base-files
   PKGARCH:=all
 endef
 
-# define Package/base-files/conffiles
-# /etc/inittab
-# /etc/group
-# /etc/passwd
-# /etc/profile
-# /etc/shells
-# /etc/sysctl.conf
-# $(call $(TARGET)/conffiles)
-# endef
-
 define Package/base-files/description
  This package contains a base filesystem and system scripts for OpenWrt.
 endef
 
 define Build/Prepare
-	if [ -d $(PKG_BUILD_DIR) ]; then \
-		rm -rf $(PKG_BUILD_DIR); \
-	fi
 	mkdir -p $(PKG_BUILD_DIR)
 endef
 
-define Build/Compile/Default
-
+define Build/Compile
+	#nothing to do
 endef
-Build/Compile = $(Build/Compile/Default)
 
 define Package/base-files/install
 	$(CP) ./files/* $(1)/
@@ -125,9 +102,5 @@ define Package/base-files/conffiles
 /opt/etc/sysctl.conf
 /opt/usr/share/udhcpc/default.script
 endef
-
-ifneq ($(DUMP),1)
-  -include $(PLATFORM_DIR)/base-files.mk
-endif
 
 $(eval $(call BuildPackage,base-files))

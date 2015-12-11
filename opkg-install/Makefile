@@ -7,7 +7,7 @@ include $(INCLUDE_DIR)/kernel.mk
 
 PKG_NAME:=opkg-install
 PKG_RELEASE:=1
-PKG_VERSION:=1.0
+PKG_VERSION:=1.1
 VER:=$(LINUX_VERSION)-$(LINUX_RELEASE)
 FULL_VER:=$(VER)-$(LINUX_VERMAGIC)
 
@@ -38,11 +38,15 @@ define Build/Compile
 		echo "Status: install ok installed" >> $(PKG_BUILD_DIR)/status; \
 		echo "Essential: yes" >> $(PKG_BUILD_DIR)/status; \
 		grep -e "^Architecture:" control >> $(PKG_BUILD_DIR)/status; \
-		if [ "$$$$ipkg" = "opkg" ]; then \
-			CMD5=`tar xzf data.tar.gz ./etc/opkg.conf -O | md5sum | awk -F" " '{print $$$$1}'`; \
+		tar xzf control.tar.gz ./conffiles 2> /dev/null; \
+		if [ -f ./conffiles ]; then \
 			echo "Conffiles:" >> $(PKG_BUILD_DIR)/status; \
-			echo " /opt/etc/opkg.conf $$$$CMD5" >> $(PKG_BUILD_DIR)/status; \
-			echo "/etc/opkg.conf" > $(PKG_BUILD_DIR)/info/$$$${ipkg}.conffiles; \
+			for conf in `cat ./conffiles`; do \
+				CONF=`echo $$$$conf | sed -e 's#^/opt/##g'`; \
+				CMD5=`tar xzf data.tar.gz ./$$$$CONF -O | md5sum | awk -F" " '{print $$$$1}'`; \
+				echo " $$$$conf $$$$CMD5" >> $(PKG_BUILD_DIR)/status; \
+			done; \
+			mv -f ./conffiles $(PKG_BUILD_DIR)/info/$$$${ipkg}.conffiles; \
 		fi; \
 		echo "Installed-Time: 1445514529" >> $(PKG_BUILD_DIR)/status; \
 		echo "Auto-Installed: yes" >> $(PKG_BUILD_DIR)/status; \
