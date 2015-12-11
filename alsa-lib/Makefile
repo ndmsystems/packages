@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=alsa-lib
 PKG_VERSION:=1.0.29
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=ftp://ftp.alsa-project.org/pub/lib/ \
@@ -104,6 +104,11 @@ define Package/alsa-lib/install
 	$(CP) \
 		$(PKG_INSTALL_ODIR)/usr/share/alsa/cards/* \
 		$(1)/usr/share/alsa/cards/
+endef
+
+define Package/alsa-lib/conffiles
+/opt/usr/share/alsa/alsa.conf
+/opt/etc/asound.conf
 endef
 
 $(eval $(call BuildPackage,alsa-lib))

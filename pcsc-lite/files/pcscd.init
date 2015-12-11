@@ -1,5 +1,6 @@
 #!/opt/bin/sh /opt/etc/rc.common
 # Copyright (C) 2009-2011 OpenWrt.org
+# Copyright (C) 2015 NDM Systems, McMCC
 
 START=50
 

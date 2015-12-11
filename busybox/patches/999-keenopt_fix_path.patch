@@ -1,6 +1,6 @@
-diff -ruN busybox-1.23.2.orig/archival/dpkg.c busybox-1.23.2/archival/dpkg.c
---- busybox-1.23.2.orig/archival/dpkg.c	2015-03-23 06:07:18.000000000 +0300
-+++ busybox-1.23.2/archival/dpkg.c	2015-10-16 22:55:18.136006446 +0300
+diff -ruN busybox-1.24.1.orig/archival/dpkg.c busybox-1.24.1/archival/dpkg.c
+--- busybox-1.24.1.orig/archival/dpkg.c	2015-10-11 16:31:49.000000000 +0300
++++ busybox-1.24.1/archival/dpkg.c	2015-12-09 11:10:38.119263177 +0300
 @@ -813,8 +813,8 @@
  /* This could do with a cleanup */
  static void write_status_file(deb_file_t **deb_file)
@@ -88,7 +88,7 @@ diff -ruN busybox-1.23.2.orig/archival/dpkg.c busybox-1.23.2/archival/dpkg.c
  	remove_file_array(remove_files, exclude_files);
  	free_array(exclude_files);
  
-@@ -1528,7 +1528,7 @@
+@@ -1539,7 +1539,7 @@
  	FILE *fp;
  	char *filename, *line;
  
@@ -97,7 +97,7 @@ diff -ruN busybox-1.23.2.orig/archival/dpkg.c busybox-1.23.2/archival/dpkg.c
  	fp = fopen_for_read(filename);
  	free(filename);
  	if (fp != NULL) {
-@@ -1648,7 +1648,7 @@
+@@ -1659,7 +1659,7 @@
  	}
  
  	/* Extract control.tar.gz to /var/lib/dpkg/info/<package>.filename */
@@ -106,7 +106,7 @@ diff -ruN busybox-1.23.2.orig/archival/dpkg.c busybox-1.23.2/archival/dpkg.c
  	archive_handle = init_archive_deb_ar(deb_file->filename);
  	init_archive_deb_control(archive_handle);
  
-@@ -1688,7 +1688,7 @@
+@@ -1699,7 +1699,7 @@
  	unpack_ar_archive(archive_handle);
  
  	/* Create the list file */
@@ -115,7 +115,7 @@ diff -ruN busybox-1.23.2.orig/archival/dpkg.c busybox-1.23.2/archival/dpkg.c
  	out_stream = xfopen_for_write(list_filename);
  	archive_handle->dpkg__sub_archive->passed = llist_rev(archive_handle->dpkg__sub_archive->passed);
  	while (archive_handle->dpkg__sub_archive->passed) {
-@@ -1782,7 +1782,7 @@
+@@ -1793,7 +1793,7 @@
  	}
  
  /*	puts("(Reading database ... xxxxx files and directories installed.)"); */
@@ -124,9 +124,9 @@ diff -ruN busybox-1.23.2.orig/archival/dpkg.c busybox-1.23.2/archival/dpkg.c
  
  	/* if the list action was given print the installed packages and exit */
  	if (opt & OPT_list_installed) {
-diff -ruN busybox-1.23.2.orig/debianutils/mktemp.c busybox-1.23.2/debianutils/mktemp.c
---- busybox-1.23.2.orig/debianutils/mktemp.c	2015-03-23 06:06:55.000000000 +0300
-+++ busybox-1.23.2/debianutils/mktemp.c	2015-10-16 22:41:17.336486327 +0300
+diff -ruN busybox-1.24.1.orig/debianutils/mktemp.c busybox-1.24.1/debianutils/mktemp.c
+--- busybox-1.24.1.orig/debianutils/mktemp.c	2015-10-24 03:24:35.000000000 +0300
++++ busybox-1.24.1/debianutils/mktemp.c	2015-12-09 11:10:38.119263177 +0300
 @@ -69,7 +69,7 @@
  
  	path = getenv("TMPDIR");
@@ -136,9 +136,9 @@ diff -ruN busybox-1.23.2.orig/debianutils/mktemp.c busybox-1.23.2/debianutils/mk
  
  	opt_complementary = "?1"; /* 1 argument max */
  	opts = getopt32(argv, "dqtp:u", &path);
-diff -ruN busybox-1.23.2.orig/e2fsprogs/fsck.c busybox-1.23.2/e2fsprogs/fsck.c
---- busybox-1.23.2.orig/e2fsprogs/fsck.c	2015-03-23 06:07:18.000000000 +0300
-+++ busybox-1.23.2/e2fsprogs/fsck.c	2015-10-16 22:23:31.729462627 +0300
+diff -ruN busybox-1.24.1.orig/e2fsprogs/fsck.c busybox-1.24.1/e2fsprogs/fsck.c
+--- busybox-1.24.1.orig/e2fsprogs/fsck.c	2015-10-24 03:24:35.000000000 +0300
++++ busybox-1.24.1/e2fsprogs/fsck.c	2015-12-09 11:10:38.119263177 +0300
 @@ -1059,7 +1059,7 @@
  	 * so we are scanning it anyway */
  	fstab = getenv("FSTAB_FILE");
@@ -148,57 +148,9 @@ diff -ruN busybox-1.23.2.orig/e2fsprogs/fsck.c busybox-1.23.2/e2fsprogs/fsck.c
  	load_fs_info(fstab);
  
  	/*interactive = (num_devices == 1) | serialize;*/
-diff -ruN busybox-1.23.2.orig/e2fsprogs/old_e2fsprogs/blkid/blkidP.h busybox-1.23.2/e2fsprogs/old_e2fsprogs/blkid/blkidP.h
---- busybox-1.23.2.orig/e2fsprogs/old_e2fsprogs/blkid/blkidP.h	2015-03-23 06:06:55.000000000 +0300
-+++ busybox-1.23.2/e2fsprogs/old_e2fsprogs/blkid/blkidP.h	2015-10-16 23:07:27.779199987 +0300
-@@ -103,7 +103,7 @@
- extern char *blkid_strdup(const char *s);
- extern char *blkid_strndup(const char *s, const int length);
- 
--#define BLKID_CACHE_FILE "/etc/blkid.tab"
-+#define BLKID_CACHE_FILE "/opt/etc/blkid.tab"
- extern const char *blkid_devdirs[];
- 
- #define BLKID_ERR_IO	 5
-diff -ruN busybox-1.23.2.orig/e2fsprogs/old_e2fsprogs/ext2fs/ismounted.c busybox-1.23.2/e2fsprogs/old_e2fsprogs/ext2fs/ismounted.c
---- busybox-1.23.2.orig/e2fsprogs/old_e2fsprogs/ext2fs/ismounted.c	2015-03-23 06:06:55.000000000 +0300
-+++ busybox-1.23.2/e2fsprogs/old_e2fsprogs/ext2fs/ismounted.c	2015-10-16 22:42:26.901384975 +0300
-@@ -168,7 +168,7 @@
- 	errcode_t	retval;
- 
- #ifdef DEBUG
--	retval = check_mntent_file("/tmp/mtab", file, mount_flags,
-+	retval = check_mntent_file("/opt/tmp/mtab", file, mount_flags,
- 				   mtpt, mtlen);
- 	if (retval == 0)
- 		return 0;
-diff -ruN busybox-1.23.2.orig/e2fsprogs/old_e2fsprogs/fsck.c busybox-1.23.2/e2fsprogs/old_e2fsprogs/fsck.c
---- busybox-1.23.2.orig/e2fsprogs/old_e2fsprogs/fsck.c	2015-03-23 06:06:55.000000000 +0300
-+++ busybox-1.23.2/e2fsprogs/old_e2fsprogs/fsck.c	2015-10-16 22:23:57.633883697 +0300
-@@ -46,7 +46,7 @@
- #include "libbb.h"
- 
- #ifndef _PATH_MNTTAB
--#define _PATH_MNTTAB    "/etc/fstab"
-+#define _PATH_MNTTAB    "/opt/etc/fstab"
- #endif
- 
- /*
-diff -ruN busybox-1.23.2.orig/e2fsprogs/old_e2fsprogs/util.c busybox-1.23.2/e2fsprogs/old_e2fsprogs/util.c
---- busybox-1.23.2.orig/e2fsprogs/old_e2fsprogs/util.c	2015-03-23 06:06:55.000000000 +0300
-+++ busybox-1.23.2/e2fsprogs/old_e2fsprogs/util.c	2015-10-16 23:43:50.112729909 +0300
-@@ -253,7 +253,7 @@
- {
- 	char *oldpath = getenv("PATH");
- 	/* Update our PATH to include /sbin  */
--#define PATH_SET "/sbin"
-+#define PATH_SET "/opt/sbin"
- 	if (oldpath)
- 		oldpath = xasprintf("%s:%s", PATH_SET, oldpath);
- 	 else
-diff -ruN busybox-1.23.2.orig/editors/diff.c busybox-1.23.2/editors/diff.c
---- busybox-1.23.2.orig/editors/diff.c	2015-03-23 06:07:18.000000000 +0300
-+++ busybox-1.23.2/editors/diff.c	2015-10-16 22:27:53.005514636 +0300
+diff -ruN busybox-1.24.1.orig/editors/diff.c busybox-1.24.1/editors/diff.c
+--- busybox-1.24.1.orig/editors/diff.c	2015-10-11 16:31:50.000000000 +0300
++++ busybox-1.24.1/editors/diff.c	2015-12-09 11:10:38.123263269 +0300
 @@ -734,7 +734,7 @@
  		 * When we meet non-seekable file, we must make a temp copy.
  		 */
@@ -208,10 +160,10 @@ diff -ruN busybox-1.23.2.orig/editors/diff.c busybox-1.23.2/editors/diff.c
  			int fd_tmp = xmkstemp(name);
  
  			unlink(name);
-diff -ruN busybox-1.23.2.orig/include/libbb.h busybox-1.23.2/include/libbb.h
---- busybox-1.23.2.orig/include/libbb.h	2015-10-16 11:36:30.000000000 +0300
-+++ busybox-1.23.2/include/libbb.h	2015-10-16 22:34:54.675440698 +0300
-@@ -97,16 +97,16 @@
+diff -ruN busybox-1.24.1.orig/include/libbb.h busybox-1.24.1/include/libbb.h
+--- busybox-1.24.1.orig/include/libbb.h	2015-12-09 11:08:32.000000000 +0300
++++ busybox-1.24.1/include/libbb.h	2015-12-09 11:10:38.123263269 +0300
+@@ -120,16 +120,16 @@
  #endif
  /* Just in case libc doesn't define some of these... */
  #ifndef _PATH_PASSWD
@@ -232,7 +184,7 @@ diff -ruN busybox-1.23.2.orig/include/libbb.h busybox-1.23.2/include/libbb.h
  #endif
  #if defined __FreeBSD__ || defined __OpenBSD__
  # include <netinet/in.h>
-@@ -1761,14 +1761,14 @@
+@@ -1798,14 +1798,14 @@
  
  /* Busybox mount uses either /proc/mounts or /etc/mtab to
   * get the list of currently mounted filesystems */
@@ -249,7 +201,7 @@ diff -ruN busybox-1.23.2.orig/include/libbb.h busybox-1.23.2/include/libbb.h
  
  #define bb_dev_null "/dev/null"
  extern const char bb_busybox_exec_path[] ALIGN1;
-@@ -1776,7 +1776,7 @@
+@@ -1813,7 +1813,7 @@
   * but I want to save a few bytes here */
  extern const char bb_PATH_root_path[] ALIGN1; /* "PATH=/sbin:/usr/sbin:/bin:/usr/bin" */
  #define bb_default_root_path (bb_PATH_root_path + sizeof("PATH"))
@@ -257,10 +209,10 @@ diff -ruN busybox-1.23.2.orig/include/libbb.h busybox-1.23.2/include/libbb.h
 +#define bb_default_path      (bb_PATH_root_path + sizeof("PATH=/opt/sbin:/opt/usr/sbin:/sbin:/usr/sbin"))
  
  extern const int const_int_0;
- extern const int const_int_1;
-diff -ruN busybox-1.23.2.orig/init/bootchartd.c busybox-1.23.2/init/bootchartd.c
---- busybox-1.23.2.orig/init/bootchartd.c	2015-03-23 06:06:55.000000000 +0300
-+++ busybox-1.23.2/init/bootchartd.c	2015-10-16 22:46:23.180410295 +0300
+ //extern const int const_int_1;
+diff -ruN busybox-1.24.1.orig/init/bootchartd.c busybox-1.24.1/init/bootchartd.c
+--- busybox-1.24.1.orig/init/bootchartd.c	2015-07-13 05:18:47.000000000 +0300
++++ busybox-1.24.1/init/bootchartd.c	2015-12-09 11:10:38.123263269 +0300
 @@ -184,7 +184,7 @@
  
  static char *make_tempdir(void)
@@ -291,9 +243,9 @@ diff -ruN busybox-1.23.2.orig/init/bootchartd.c busybox-1.23.2/init/bootchartd.c
  		while (config_read(parser, token, 2, 0, "#=", PARSE_NORMAL & ~PARSE_COLLAPSE)) {
  			if (strcmp(token[0], "SAMPLE_PERIOD") == 0 && token[1])
  				sample_period_us = atof(token[1]) * 1000000;
-diff -ruN busybox-1.23.2.orig/libbb/appletlib.c busybox-1.23.2/libbb/appletlib.c
---- busybox-1.23.2.orig/libbb/appletlib.c	2015-03-23 06:07:19.000000000 +0300
-+++ busybox-1.23.2/libbb/appletlib.c	2015-10-16 23:12:52.847714404 +0300
+diff -ruN busybox-1.24.1.orig/libbb/appletlib.c busybox-1.24.1/libbb/appletlib.c
+--- busybox-1.24.1.orig/libbb/appletlib.c	2015-10-24 03:24:35.000000000 +0300
++++ busybox-1.24.1/libbb/appletlib.c	2015-12-09 11:10:38.123263269 +0300
 @@ -271,7 +271,7 @@
  static void parse_config_file(void)
  {
@@ -303,9 +255,9 @@ diff -ruN busybox-1.23.2.orig/libbb/appletlib.c busybox-1.23.2/libbb/appletlib.c
  
  	struct suid_config_t *sct_head;
  	int applet_no;
-diff -ruN busybox-1.23.2.orig/libbb/messages.c busybox-1.23.2/libbb/messages.c
---- busybox-1.23.2.orig/libbb/messages.c	2015-03-23 06:06:55.000000000 +0300
-+++ busybox-1.23.2/libbb/messages.c	2015-10-16 22:36:39.220840605 +0300
+diff -ruN busybox-1.24.1.orig/libbb/messages.c busybox-1.24.1/libbb/messages.c
+--- busybox-1.24.1.orig/libbb/messages.c	2015-10-24 03:24:35.000000000 +0300
++++ busybox-1.24.1/libbb/messages.c	2015-12-09 11:10:38.123263269 +0300
 @@ -40,7 +40,7 @@
  /* util-linux manpage says /sbin:/bin:/usr/sbin:/usr/bin,
   * but I want to save a few bytes here. Check libbb.h before changing! */
@@ -314,10 +266,10 @@ diff -ruN busybox-1.23.2.orig/libbb/messages.c busybox-1.23.2/libbb/messages.c
 +	"PATH=/opt/sbin:/opt/usr/sbin:/opt/bin:/opt/usr/bin:/sbin:/usr/sbin:/bin:/usr/bin" BB_ADDITIONAL_PATH;
  
  
- const int const_int_1 = 1;
-diff -ruN busybox-1.23.2.orig/libbb/rtc.c busybox-1.23.2/libbb/rtc.c
---- busybox-1.23.2.orig/libbb/rtc.c	2015-03-23 06:07:19.000000000 +0300
-+++ busybox-1.23.2/libbb/rtc.c	2015-10-16 22:29:23.482835846 +0300
+ //const int const_int_1 = 1;
+diff -ruN busybox-1.24.1.orig/libbb/rtc.c busybox-1.24.1/libbb/rtc.c
+--- busybox-1.24.1.orig/libbb/rtc.c	2015-07-13 05:18:47.000000000 +0300
++++ busybox-1.24.1/libbb/rtc.c	2015-12-09 11:10:38.123263269 +0300
 @@ -8,9 +8,9 @@
  #include "rtc_.h"
  
@@ -330,9 +282,9 @@ diff -ruN busybox-1.23.2.orig/libbb/rtc.c busybox-1.23.2/libbb/rtc.c
  #endif
  
  int FAST_FUNC rtc_adjtime_is_utc(void)
-diff -ruN busybox-1.23.2.orig/libbb/setup_environment.c busybox-1.23.2/libbb/setup_environment.c
---- busybox-1.23.2.orig/libbb/setup_environment.c	2015-03-23 06:06:55.000000000 +0300
-+++ busybox-1.23.2/libbb/setup_environment.c	2015-10-16 22:47:06.844965745 +0300
+diff -ruN busybox-1.24.1.orig/libbb/setup_environment.c busybox-1.24.1/libbb/setup_environment.c
+--- busybox-1.24.1.orig/libbb/setup_environment.c	2015-07-13 05:18:47.000000000 +0300
++++ busybox-1.24.1/libbb/setup_environment.c	2015-12-09 11:10:38.123263269 +0300
 @@ -40,7 +40,7 @@
  	if (!(flags & SETUP_ENV_NO_CHDIR)) {
  		if (chdir(pw->pw_dir) != 0) {
@@ -342,9 +294,9 @@ diff -ruN busybox-1.23.2.orig/libbb/setup_environment.c busybox-1.23.2/libbb/set
  		}
  	}
  
-diff -ruN busybox-1.23.2.orig/loginutils/add-remove-shell.c busybox-1.23.2/loginutils/add-remove-shell.c
---- busybox-1.23.2.orig/loginutils/add-remove-shell.c	2015-03-23 06:06:55.000000000 +0300
-+++ busybox-1.23.2/loginutils/add-remove-shell.c	2015-10-16 23:14:21.316920954 +0300
+diff -ruN busybox-1.24.1.orig/loginutils/add-remove-shell.c busybox-1.24.1/loginutils/add-remove-shell.c
+--- busybox-1.24.1.orig/loginutils/add-remove-shell.c	2015-10-24 03:24:35.000000000 +0300
++++ busybox-1.24.1/loginutils/add-remove-shell.c	2015-12-09 11:10:38.123263269 +0300
 @@ -38,7 +38,7 @@
  
  #include "libbb.h"
@@ -354,10 +306,19 @@ diff -ruN busybox-1.23.2.orig/loginutils/add-remove-shell.c busybox-1.23.2/login
  
  #define REMOVE_SHELL (ENABLE_REMOVE_SHELL && (!ENABLE_ADD_SHELL || applet_name[0] == 'r'))
  #define ADD_SHELL    (ENABLE_ADD_SHELL && (!ENABLE_REMOVE_SHELL || applet_name[0] == 'a'))
-diff -ruN busybox-1.23.2.orig/loginutils/adduser.c busybox-1.23.2/loginutils/adduser.c
---- busybox-1.23.2.orig/loginutils/adduser.c	2015-03-23 06:06:55.000000000 +0300
-+++ busybox-1.23.2/loginutils/adduser.c	2015-10-16 23:17:49.979741976 +0300
-@@ -186,7 +186,7 @@
+diff -ruN busybox-1.24.1.orig/loginutils/adduser.c busybox-1.24.1/loginutils/adduser.c
+--- busybox-1.24.1.orig/loginutils/adduser.c	2015-10-24 03:24:36.000000000 +0300
++++ busybox-1.24.1/loginutils/adduser.c	2015-12-09 11:10:38.123263269 +0300
+@@ -153,7 +153,7 @@
+ 	char *p;
+ 	unsigned opts;
+ 	char *uid;
+-	const char *skel = "/etc/skel";
++	const char *skel = "/opt/etc/skel";
+ 
+ #if ENABLE_FEATURE_ADDUSER_LONG_OPTIONS
+ 	applet_long_options = adduser_longopts;
+@@ -190,7 +190,7 @@
  	die_if_bad_username(pw.pw_name);
  	if (!pw.pw_dir) {
  		/* create string for $HOME if not specified already */
@@ -366,7 +327,7 @@ diff -ruN busybox-1.23.2.orig/loginutils/adduser.c busybox-1.23.2/loginutils/add
  	}
  	pw.pw_passwd = (char *)"x";
  	if (opts & OPT_SYSTEM_ACCOUNT) {
-@@ -194,7 +194,7 @@
+@@ -198,7 +198,7 @@
  			usegroup = "nogroup";
  		}
  		if (!(opts & OPT_SHELL)) {
@@ -375,18 +336,9 @@ diff -ruN busybox-1.23.2.orig/loginutils/adduser.c busybox-1.23.2/loginutils/add
  		}
  	}
  	pw.pw_gid = usegroup ? xgroup2gid(usegroup) : -1; /* exits on failure */
-@@ -251,7 +251,7 @@
- 			};
- 			/* Be silent on any errors (like: no /etc/skel) */
- 			logmode = LOGMODE_NONE;
--			copy_file("/etc/skel", pw.pw_dir, FILEUTILS_RECUR);
-+			copy_file("/opt/etc/skel", pw.pw_dir, FILEUTILS_RECUR);
- 			logmode = LOGMODE_STDIO;
- 			chown_main(4, (char**)args);
- 		}
-diff -ruN busybox-1.23.2.orig/loginutils/getty.c busybox-1.23.2/loginutils/getty.c
---- busybox-1.23.2.orig/loginutils/getty.c	2015-03-23 06:06:55.000000000 +0300
-+++ busybox-1.23.2/loginutils/getty.c	2015-10-16 22:08:28.372540698 +0300
+diff -ruN busybox-1.24.1.orig/loginutils/getty.c busybox-1.24.1/loginutils/getty.c
+--- busybox-1.24.1.orig/loginutils/getty.c	2015-10-24 03:24:36.000000000 +0300
++++ busybox-1.24.1/loginutils/getty.c	2015-12-09 11:10:38.123263269 +0300
 @@ -54,14 +54,14 @@
   * and for line editing at the same time.
   */
@@ -404,9 +356,9 @@ diff -ruN busybox-1.23.2.orig/loginutils/getty.c busybox-1.23.2/loginutils/getty
  
  /* Macro to build Ctrl-LETTER. Assumes ASCII dialect */
  #define CTL(x)          ((x) ^ 0100)
-diff -ruN busybox-1.23.2.orig/loginutils/login.c busybox-1.23.2/loginutils/login.c
---- busybox-1.23.2.orig/loginutils/login.c	2015-03-23 06:07:19.000000000 +0300
-+++ busybox-1.23.2/loginutils/login.c	2015-10-16 23:15:51.774147674 +0300
+diff -ruN busybox-1.24.1.orig/loginutils/login.c busybox-1.24.1/loginutils/login.c
+--- busybox-1.24.1.orig/loginutils/login.c	2015-10-24 03:24:36.000000000 +0300
++++ busybox-1.24.1/loginutils/login.c	2015-12-09 11:10:38.123263269 +0300
 @@ -56,7 +56,7 @@
  	int c;
  	int empty = 1;
@@ -427,9 +379,9 @@ diff -ruN busybox-1.23.2.orig/loginutils/login.c busybox-1.23.2/loginutils/login
  	while (config_read(parser, &buf, 1, 1, "# \t", PARSE_NORMAL)) {
  		if (strcmp(buf, short_tty) == 0)
  			break;
-diff -ruN busybox-1.23.2.orig/miscutils/devfsd.c busybox-1.23.2/miscutils/devfsd.c
---- busybox-1.23.2.orig/miscutils/devfsd.c	2015-03-23 06:07:19.000000000 +0300
-+++ busybox-1.23.2/miscutils/devfsd.c	2015-10-16 23:21:09.966421980 +0300
+diff -ruN busybox-1.24.1.orig/miscutils/devfsd.c busybox-1.24.1/miscutils/devfsd.c
+--- busybox-1.24.1.orig/miscutils/devfsd.c	2015-10-12 00:48:15.000000000 +0300
++++ busybox-1.24.1/miscutils/devfsd.c	2015-12-09 11:10:38.123263269 +0300
 @@ -123,11 +123,11 @@
  
  #define BUFFER_SIZE 16384
@@ -445,9 +397,9 @@ diff -ruN busybox-1.23.2.orig/miscutils/devfsd.c busybox-1.23.2/miscutils/devfsd
  #define MAX_ARGS     (6 + 1)
  #define MAX_SUBEXPR  10
  #define STRING_LENGTH 255
-diff -ruN busybox-1.23.2.orig/miscutils/fbsplash.c busybox-1.23.2/miscutils/fbsplash.c
---- busybox-1.23.2.orig/miscutils/fbsplash.c	2015-03-23 06:07:19.000000000 +0300
-+++ busybox-1.23.2/miscutils/fbsplash.c	2015-10-16 22:48:27.625991003 +0300
+diff -ruN busybox-1.24.1.orig/miscutils/fbsplash.c busybox-1.24.1/miscutils/fbsplash.c
+--- busybox-1.24.1.orig/miscutils/fbsplash.c	2015-07-13 05:18:47.000000000 +0300
++++ busybox-1.24.1/miscutils/fbsplash.c	2015-12-09 11:10:38.123263269 +0300
 @@ -448,7 +448,7 @@
  		if (i == 7) {
  			G.bdebug_messages = val;
@@ -457,9 +409,9 @@ diff -ruN busybox-1.23.2.orig/miscutils/fbsplash.c busybox-1.23.2/miscutils/fbsp
  		}
  #endif
  	}
-diff -ruN busybox-1.23.2.orig/miscutils/man.c busybox-1.23.2/miscutils/man.c
---- busybox-1.23.2.orig/miscutils/man.c	2015-03-23 06:07:19.000000000 +0300
-+++ busybox-1.23.2/miscutils/man.c	2015-10-16 23:38:36.412539688 +0300
+diff -ruN busybox-1.24.1.orig/miscutils/man.c busybox-1.24.1/miscutils/man.c
+--- busybox-1.24.1.orig/miscutils/man.c	2015-07-13 05:18:47.000000000 +0300
++++ busybox-1.24.1/miscutils/man.c	2015-12-09 11:10:38.123263269 +0300
 @@ -208,7 +208,7 @@
  	if (!man_path_list) {
  		/* default, may be overridden by /etc/man.conf */
@@ -484,9 +436,9 @@ diff -ruN busybox-1.23.2.orig/miscutils/man.c busybox-1.23.2/miscutils/man.c
  
  	while (config_read(parser, token, 2, 0, "# \t", PARSE_NORMAL)) {
  		if (!token[1])
-diff -ruN busybox-1.23.2.orig/miscutils/microcom.c busybox-1.23.2/miscutils/microcom.c
---- busybox-1.23.2.orig/miscutils/microcom.c	2015-03-23 06:06:55.000000000 +0300
-+++ busybox-1.23.2/miscutils/microcom.c	2015-10-16 22:55:51.160572010 +0300
+diff -ruN busybox-1.24.1.orig/miscutils/microcom.c busybox-1.24.1/miscutils/microcom.c
+--- busybox-1.24.1.orig/miscutils/microcom.c	2015-07-13 05:18:47.000000000 +0300
++++ busybox-1.24.1/miscutils/microcom.c	2015-12-09 11:10:38.127263361 +0300
 @@ -70,7 +70,7 @@
  
  	// try to create lock file in /var/lock
@@ -496,10 +448,10 @@ diff -ruN busybox-1.23.2.orig/miscutils/microcom.c busybox-1.23.2/miscutils/micr
  	sfd = open(device_lock_file, O_CREAT | O_WRONLY | O_TRUNC | O_EXCL, 0644);
  	if (sfd < 0) {
  		// device already locked -> bail out
-diff -ruN busybox-1.23.2.orig/modutils/modprobe.c busybox-1.23.2/modutils/modprobe.c
---- busybox-1.23.2.orig/modutils/modprobe.c	2015-03-23 06:07:19.000000000 +0300
-+++ busybox-1.23.2/modutils/modprobe.c	2015-10-16 22:05:06.865774744 +0300
-@@ -622,8 +622,8 @@
+diff -ruN busybox-1.24.1.orig/modutils/modprobe.c busybox-1.24.1/modutils/modprobe.c
+--- busybox-1.24.1.orig/modutils/modprobe.c	2015-10-11 16:31:51.000000000 +0300
++++ busybox-1.24.1/modutils/modprobe.c	2015-12-09 11:10:38.127263361 +0300
+@@ -653,8 +653,8 @@
  	if (G.probes == NULL)
  		return EXIT_SUCCESS;
  
@@ -510,10 +462,10 @@ diff -ruN busybox-1.23.2.orig/modutils/modprobe.c busybox-1.23.2/modutils/modpro
  	if (ENABLE_FEATURE_MODUTILS_SYMBOLS && G.need_symbols)
  		read_config("modules.symbols");
  	load_modules_dep();
-diff -ruN busybox-1.23.2.orig/modutils/modprobe-small.c busybox-1.23.2/modutils/modprobe-small.c
---- busybox-1.23.2.orig/modutils/modprobe-small.c	2015-03-23 06:07:19.000000000 +0300
-+++ busybox-1.23.2/modutils/modprobe-small.c	2015-10-16 23:22:40.067623969 +0300
-@@ -615,7 +615,7 @@
+diff -ruN busybox-1.24.1.orig/modutils/modprobe-small.c busybox-1.24.1/modutils/modprobe-small.c
+--- busybox-1.24.1.orig/modutils/modprobe-small.c	2015-07-13 05:18:47.000000000 +0300
++++ busybox-1.24.1/modutils/modprobe-small.c	2015-12-09 11:10:38.127263361 +0300
+@@ -645,7 +645,7 @@
  
  	options = NULL;
  	if (!is_remove) {
@@ -522,9 +474,9 @@ diff -ruN busybox-1.23.2.orig/modutils/modprobe-small.c busybox-1.23.2/modutils/
  		options = xmalloc_open_read_close(opt_filename, NULL);
  		if (options)
  			replace(options, '\n', ' ');
-diff -ruN busybox-1.23.2.orig/networking/dnsd.c busybox-1.23.2/networking/dnsd.c
---- busybox-1.23.2.orig/networking/dnsd.c	2015-03-23 06:07:19.000000000 +0300
-+++ busybox-1.23.2/networking/dnsd.c	2015-10-16 23:27:51.207792461 +0300
+diff -ruN busybox-1.24.1.orig/networking/dnsd.c busybox-1.24.1/networking/dnsd.c
+--- busybox-1.24.1.orig/networking/dnsd.c	2015-07-13 05:18:47.000000000 +0300
++++ busybox-1.24.1/networking/dnsd.c	2015-12-09 11:10:38.127263361 +0300
 @@ -492,7 +492,7 @@
  int dnsd_main(int argc UNUSED_PARAM, char **argv)
  {
@@ -534,9 +486,9 @@ diff -ruN busybox-1.23.2.orig/networking/dnsd.c busybox-1.23.2/networking/dnsd.c
  	struct dns_entry *conf_data;
  	uint32_t conf_ttl = DEFAULT_TTL;
  	char *sttl, *sport;
-diff -ruN busybox-1.23.2.orig/networking/httpd.c busybox-1.23.2/networking/httpd.c
---- busybox-1.23.2.orig/networking/httpd.c	2015-03-23 06:07:19.000000000 +0300
-+++ busybox-1.23.2/networking/httpd.c	2015-10-16 23:25:32.605918728 +0300
+diff -ruN busybox-1.24.1.orig/networking/httpd.c busybox-1.24.1/networking/httpd.c
+--- busybox-1.24.1.orig/networking/httpd.c	2015-10-24 03:27:41.000000000 +0300
++++ busybox-1.24.1/networking/httpd.c	2015-12-09 11:10:38.127263361 +0300
 @@ -150,7 +150,7 @@
  
  #define HEADER_READ_TIMEOUT 60
@@ -546,10 +498,10 @@ diff -ruN busybox-1.23.2.orig/networking/httpd.c busybox-1.23.2/networking/httpd
  static const char HTTPD_CONF[] ALIGN1 = "httpd.conf";
  static const char HTTP_200[] ALIGN1 = "HTTP/1.0 200 OK\r\n";
  static const char index_html[] ALIGN1 = "index.html";
-diff -ruN busybox-1.23.2.orig/networking/ifplugd.c busybox-1.23.2/networking/ifplugd.c
---- busybox-1.23.2.orig/networking/ifplugd.c	2015-03-23 06:06:55.000000000 +0300
-+++ busybox-1.23.2/networking/ifplugd.c	2015-10-16 23:25:03.805536228 +0300
-@@ -134,7 +134,7 @@
+diff -ruN busybox-1.24.1.orig/networking/ifplugd.c busybox-1.24.1/networking/ifplugd.c
+--- busybox-1.24.1.orig/networking/ifplugd.c	2015-10-11 16:31:51.000000000 +0300
++++ busybox-1.24.1/networking/ifplugd.c	2015-12-09 11:10:38.127263361 +0300
+@@ -148,7 +148,7 @@
  	G.delay_down     = 5; \
  	G.iface          = "eth0"; \
  	G.api_mode       = "a"; \
@@ -558,9 +510,9 @@ diff -ruN busybox-1.23.2.orig/networking/ifplugd.c busybox-1.23.2/networking/ifp
  } while (0)
  
  
-diff -ruN busybox-1.23.2.orig/networking/ifupdown.c busybox-1.23.2/networking/ifupdown.c
---- busybox-1.23.2.orig/networking/ifupdown.c	2015-03-23 06:07:19.000000000 +0300
-+++ busybox-1.23.2/networking/ifupdown.c	2015-10-16 22:59:01.735690728 +0300
+diff -ruN busybox-1.24.1.orig/networking/ifupdown.c busybox-1.24.1/networking/ifupdown.c
+--- busybox-1.24.1.orig/networking/ifupdown.c	2015-09-03 05:15:55.000000000 +0300
++++ busybox-1.24.1/networking/ifupdown.c	2015-12-09 11:10:38.127263361 +0300
 @@ -526,17 +526,17 @@
  		"dhcpcd -k %iface%",
  	},
@@ -637,9 +589,9 @@ diff -ruN busybox-1.23.2.orig/networking/ifupdown.c busybox-1.23.2/networking/if
  	bool any_failures = 0;
  
  	INIT_G();
-diff -ruN busybox-1.23.2.orig/networking/inetd.c busybox-1.23.2/networking/inetd.c
---- busybox-1.23.2.orig/networking/inetd.c	2015-03-23 06:07:19.000000000 +0300
-+++ busybox-1.23.2/networking/inetd.c	2015-10-16 23:23:46.928514198 +0300
+diff -ruN busybox-1.24.1.orig/networking/inetd.c busybox-1.24.1/networking/inetd.c
+--- busybox-1.24.1.orig/networking/inetd.c	2015-10-24 03:24:36.000000000 +0300
++++ busybox-1.24.1/networking/inetd.c	2015-12-09 11:10:38.127263361 +0300
 @@ -354,7 +354,7 @@
  #define INIT_G() do { \
  	rlim_ofile_cur = OPEN_MAX; \
@@ -649,57 +601,9 @@ diff -ruN busybox-1.23.2.orig/networking/inetd.c busybox-1.23.2/networking/inetd
  } while (0)
  
  #if 1
-diff -ruN busybox-1.23.2.orig/networking/libiproute/rt_names.c busybox-1.23.2/networking/libiproute/rt_names.c
---- busybox-1.23.2.orig/networking/libiproute/rt_names.c	2015-03-23 06:06:55.000000000 +0300
-+++ busybox-1.23.2/networking/libiproute/rt_names.c	2015-10-16 22:13:16.388263471 +0300
-@@ -85,7 +85,7 @@
- 		return;
- 	rtnl_rtprot_tab = xzalloc(sizeof(*rtnl_rtprot_tab));
- 	memcpy(rtnl_rtprot_tab->tab, init_tab, sizeof(init_tab));
--	rtnl_tab_initialize("/etc/iproute2/rt_protos", rtnl_rtprot_tab->tab);
-+	rtnl_tab_initialize("/opt/etc/iproute2/rt_protos", rtnl_rtprot_tab->tab);
- }
- 
- const char* FAST_FUNC rtnl_rtprot_n2a(int id, char *buf)
-@@ -123,7 +123,7 @@
- 	rtnl_rtscope_tab->tab[254] = "host";
- 	rtnl_rtscope_tab->tab[253] = "link";
- 	rtnl_rtscope_tab->tab[200] = "site";
--	rtnl_tab_initialize("/etc/iproute2/rt_scopes", rtnl_rtscope_tab->tab);
-+	rtnl_tab_initialize("/opt/etc/iproute2/rt_scopes", rtnl_rtscope_tab->tab);
- }
- 
- const char* FAST_FUNC rtnl_rtscope_n2a(int id, char *buf)
-@@ -156,7 +156,7 @@
- 	if (rtnl_rtrealm_tab) return;
- 	rtnl_rtrealm_tab = xzalloc(sizeof(*rtnl_rtrealm_tab));
- 	rtnl_rtrealm_tab->tab[0] = "unknown";
--	rtnl_tab_initialize("/etc/iproute2/rt_realms", rtnl_rtrealm_tab->tab);
-+	rtnl_tab_initialize("/opt/etc/iproute2/rt_realms", rtnl_rtrealm_tab->tab);
- }
- 
- int FAST_FUNC rtnl_rtrealm_a2n(uint32_t *id, char *arg)
-@@ -191,7 +191,7 @@
- 	if (rtnl_rtdsfield_tab) return;
- 	rtnl_rtdsfield_tab = xzalloc(sizeof(*rtnl_rtdsfield_tab));
- 	rtnl_rtdsfield_tab->tab[0] = "0";
--	rtnl_tab_initialize("/etc/iproute2/rt_dsfield", rtnl_rtdsfield_tab->tab);
-+	rtnl_tab_initialize("/opt/etc/iproute2/rt_dsfield", rtnl_rtdsfield_tab->tab);
- }
- 
- const char* FAST_FUNC rtnl_dsfield_n2a(int id, char *buf)
-@@ -228,7 +228,7 @@
- 	rtnl_rttable_tab->tab[255] = "local";
- 	rtnl_rttable_tab->tab[254] = "main";
- 	rtnl_rttable_tab->tab[253] = "default";
--	rtnl_tab_initialize("/etc/iproute2/rt_tables", rtnl_rttable_tab->tab);
-+	rtnl_tab_initialize("/opt/etc/iproute2/rt_tables", rtnl_rttable_tab->tab);
- }
- 
- const char* FAST_FUNC rtnl_rttable_n2a(int id, char *buf)
-diff -ruN busybox-1.23.2.orig/networking/nameif.c busybox-1.23.2/networking/nameif.c
---- busybox-1.23.2.orig/networking/nameif.c	2015-03-23 06:07:19.000000000 +0300
-+++ busybox-1.23.2/networking/nameif.c	2015-10-16 23:23:09.500016018 +0300
+diff -ruN busybox-1.24.1.orig/networking/nameif.c busybox-1.24.1/networking/nameif.c
+--- busybox-1.24.1.orig/networking/nameif.c	2015-07-13 05:18:47.000000000 +0300
++++ busybox-1.24.1/networking/nameif.c	2015-12-09 11:10:38.127263361 +0300
 @@ -219,7 +219,7 @@
  int nameif_main(int argc UNUSED_PARAM, char **argv)
  {
@@ -709,10 +613,10 @@ diff -ruN busybox-1.23.2.orig/networking/nameif.c busybox-1.23.2/networking/name
  	int ctl_sk;
  	ethtable_t *ch;
  	parser_t *parser;
-diff -ruN busybox-1.23.2.orig/networking/ntpd.c busybox-1.23.2/networking/ntpd.c
---- busybox-1.23.2.orig/networking/ntpd.c	2015-10-16 11:36:30.000000000 +0300
-+++ busybox-1.23.2/networking/ntpd.c	2015-10-16 23:26:37.770783496 +0300
-@@ -2168,14 +2168,14 @@
+diff -ruN busybox-1.24.1.orig/networking/ntpd.c busybox-1.24.1/networking/ntpd.c
+--- busybox-1.24.1.orig/networking/ntpd.c	2015-12-09 11:08:32.000000000 +0300
++++ busybox-1.24.1/networking/ntpd.c	2015-12-09 11:10:38.127263361 +0300
+@@ -2177,14 +2177,14 @@
  		parser_t *parser;
  		char *token[3];
  
@@ -729,9 +633,9 @@ diff -ruN busybox-1.23.2.orig/networking/ntpd.c busybox-1.23.2/networking/ntpd.c
  			);
  		}
  		config_close(parser);
-diff -ruN busybox-1.23.2.orig/networking/telnetd.c busybox-1.23.2/networking/telnetd.c
---- busybox-1.23.2.orig/networking/telnetd.c	2015-10-16 11:36:30.000000000 +0300
-+++ busybox-1.23.2/networking/telnetd.c	2015-10-16 22:10:24.062062247 +0300
+diff -ruN busybox-1.24.1.orig/networking/telnetd.c busybox-1.24.1/networking/telnetd.c
+--- busybox-1.24.1.orig/networking/telnetd.c	2015-12-09 11:08:32.000000000 +0300
++++ busybox-1.24.1/networking/telnetd.c	2015-12-09 11:10:38.127263361 +0300
 @@ -84,8 +84,8 @@
  } FIX_ALIASING;
  #define G (*(struct globals*)&bb_common_bufsiz1)
@@ -743,9 +647,9 @@ diff -ruN busybox-1.23.2.orig/networking/telnetd.c busybox-1.23.2/networking/tel
  } while (0)
  
  
-diff -ruN busybox-1.23.2.orig/networking/udhcp/dhcpd.h busybox-1.23.2/networking/udhcp/dhcpd.h
---- busybox-1.23.2.orig/networking/udhcp/dhcpd.h	2015-03-23 06:06:55.000000000 +0300
-+++ busybox-1.23.2/networking/udhcp/dhcpd.h	2015-10-16 22:15:07.673653018 +0300
+diff -ruN busybox-1.24.1.orig/networking/udhcp/dhcpd.h busybox-1.24.1/networking/udhcp/dhcpd.h
+--- busybox-1.24.1.orig/networking/udhcp/dhcpd.h	2015-07-13 05:18:47.000000000 +0300
++++ busybox-1.24.1/networking/udhcp/dhcpd.h	2015-12-09 11:10:38.127263361 +0300
 @@ -12,7 +12,7 @@
  #define DEFAULT_LEASE_TIME      (60*60*24 * 10)
  #define LEASES_FILE             CONFIG_DHCPD_LEASES_FILE
@@ -755,9 +659,9 @@ diff -ruN busybox-1.23.2.orig/networking/udhcp/dhcpd.h busybox-1.23.2/networking
  
  
  struct static_lease {
-diff -ruN busybox-1.23.2.orig/networking/udhcp/files.c busybox-1.23.2/networking/udhcp/files.c
---- busybox-1.23.2.orig/networking/udhcp/files.c	2015-03-23 06:06:55.000000000 +0300
-+++ busybox-1.23.2/networking/udhcp/files.c	2015-10-16 22:17:13.479200780 +0300
+diff -ruN busybox-1.24.1.orig/networking/udhcp/files.c busybox-1.24.1/networking/udhcp/files.c
+--- busybox-1.24.1.orig/networking/udhcp/files.c	2015-07-13 05:18:47.000000000 +0300
++++ busybox-1.24.1/networking/udhcp/files.c	2015-12-09 11:10:38.131263453 +0300
 @@ -75,7 +75,7 @@
  	{"offer_time"   , read_u32        , &server_config.offer_time   , "60"},
  	{"min_lease"    , read_u32        , &server_config.min_lease_sec, "60"},
@@ -767,9 +671,9 @@ diff -ruN busybox-1.23.2.orig/networking/udhcp/files.c busybox-1.23.2/networking
  	{"siaddr"       , udhcp_str2nip   , &server_config.siaddr_nip   , "0.0.0.0"},
  	/* keywords with no defaults must be last! */
  	{"option"       , udhcp_str2optset, &server_config.options      , ""},
-diff -ruN busybox-1.23.2.orig/printutils/lpr.c busybox-1.23.2/printutils/lpr.c
---- busybox-1.23.2.orig/printutils/lpr.c	2015-03-23 06:06:55.000000000 +0300
-+++ busybox-1.23.2/printutils/lpr.c	2015-10-16 22:49:12.766562729 +0300
+diff -ruN busybox-1.24.1.orig/printutils/lpr.c busybox-1.24.1/printutils/lpr.c
+--- busybox-1.24.1.orig/printutils/lpr.c	2015-10-24 03:24:36.000000000 +0300
++++ busybox-1.24.1/printutils/lpr.c	2015-12-09 11:10:38.131263453 +0300
 @@ -77,7 +77,7 @@
  		LPQ_DELETE      = 1 << 3, // -d: delete job(s)
  		LPQ_FORCE       = 1 << 4, // -f: force waiting job(s) to be printed
@@ -788,9 +692,9 @@ diff -ruN busybox-1.23.2.orig/printutils/lpr.c busybox-1.23.2/printutils/lpr.c
  			dfd = xmkstemp(tempfile);
  			bb_copyfd_eof(STDIN_FILENO, dfd);
  			xlseek(dfd, 0, SEEK_SET);
-diff -ruN busybox-1.23.2.orig/procps/sysctl.c busybox-1.23.2/procps/sysctl.c
---- busybox-1.23.2.orig/procps/sysctl.c	2015-03-23 06:06:55.000000000 +0300
-+++ busybox-1.23.2/procps/sysctl.c	2015-10-16 22:18:55.932604258 +0300
+diff -ruN busybox-1.24.1.orig/procps/sysctl.c busybox-1.24.1/procps/sysctl.c
+--- busybox-1.24.1.orig/procps/sysctl.c	2015-07-13 05:18:47.000000000 +0300
++++ busybox-1.24.1/procps/sysctl.c	2015-12-09 11:10:38.131263453 +0300
 @@ -266,7 +266,7 @@
  	if (opt & FLAG_PRELOAD_FILE) {
  		option_mask32 |= FLAG_WRITE;
@@ -800,9 +704,9 @@ diff -ruN busybox-1.23.2.orig/procps/sysctl.c busybox-1.23.2/procps/sysctl.c
  	}
  	xchdir("/proc/sys");
  	/* xchroot("/proc/sys") - if you are paranoid */
-diff -ruN busybox-1.23.2.orig/selinux/sestatus.c busybox-1.23.2/selinux/sestatus.c
---- busybox-1.23.2.orig/selinux/sestatus.c	2015-03-23 06:06:55.000000000 +0300
-+++ busybox-1.23.2/selinux/sestatus.c	2015-10-16 23:29:06.256825157 +0300
+diff -ruN busybox-1.24.1.orig/selinux/sestatus.c busybox-1.24.1/selinux/sestatus.c
+--- busybox-1.24.1.orig/selinux/sestatus.c	2015-07-13 05:18:47.000000000 +0300
++++ busybox-1.24.1/selinux/sestatus.c	2015-12-09 11:10:38.131263453 +0300
 @@ -61,7 +61,7 @@
  
  	pc[0] = fc[0] = NULL;
@@ -812,10 +716,10 @@ diff -ruN busybox-1.23.2.orig/selinux/sestatus.c busybox-1.23.2/selinux/sestatus
  	while (config_read(parser, &buf, 1, 1, "# \t", PARSE_NORMAL)) {
  		if (strcmp(buf, "[process]") == 0) {
  			section = 1;
-diff -ruN busybox-1.23.2.orig/shell/ash.c busybox-1.23.2/shell/ash.c
---- busybox-1.23.2.orig/shell/ash.c	2015-10-16 11:36:30.000000000 +0300
-+++ busybox-1.23.2/shell/ash.c	2015-10-16 23:30:24.681898607 +0300
-@@ -13276,7 +13276,7 @@
+diff -ruN busybox-1.24.1.orig/shell/ash.c busybox-1.24.1/shell/ash.c
+--- busybox-1.24.1.orig/shell/ash.c	2015-10-24 03:24:36.000000000 +0300
++++ busybox-1.24.1/shell/ash.c	2015-12-09 11:10:38.131263453 +0300
+@@ -13158,7 +13158,7 @@
  		const char *hp;
  
  		state = 1;
@@ -824,10 +728,10 @@ diff -ruN busybox-1.23.2.orig/shell/ash.c busybox-1.23.2/shell/ash.c
   state1:
  		state = 2;
  		hp = lookupvar("HOME");
-diff -ruN busybox-1.23.2.orig/shell/hush.c busybox-1.23.2/shell/hush.c
---- busybox-1.23.2.orig/shell/hush.c	2015-03-23 06:07:19.000000000 +0300
-+++ busybox-1.23.2/shell/hush.c	2015-10-16 23:29:37.137248480 +0300
-@@ -8014,7 +8014,7 @@
+diff -ruN busybox-1.24.1.orig/shell/hush.c busybox-1.24.1/shell/hush.c
+--- busybox-1.24.1.orig/shell/hush.c	2015-10-12 00:48:15.000000000 +0300
++++ busybox-1.24.1/shell/hush.c	2015-12-09 11:10:38.135263544 +0300
+@@ -8033,7 +8033,7 @@
  	if (flags & OPT_login) {
  		FILE *input;
  		debug_printf("sourcing /etc/profile\n");
@@ -836,9 +740,9 @@ diff -ruN busybox-1.23.2.orig/shell/hush.c busybox-1.23.2/shell/hush.c
  		if (input != NULL) {
  			close_on_exec_on(fileno(input));
  			install_special_sighandlers();
-diff -ruN busybox-1.23.2.orig/sysklogd/syslogd.c busybox-1.23.2/sysklogd/syslogd.c
---- busybox-1.23.2.orig/sysklogd/syslogd.c	2015-03-23 06:06:55.000000000 +0300
-+++ busybox-1.23.2/sysklogd/syslogd.c	2015-10-16 23:31:30.582796732 +0300
+diff -ruN busybox-1.24.1.orig/sysklogd/syslogd.c busybox-1.24.1/sysklogd/syslogd.c
+--- busybox-1.24.1.orig/sysklogd/syslogd.c	2015-10-24 03:24:36.000000000 +0300
++++ busybox-1.24.1/sysklogd/syslogd.c	2015-12-09 11:10:38.135263544 +0300
 @@ -182,7 +182,7 @@
  
  static const struct init_globals init_data = {
@@ -848,7 +752,7 @@ diff -ruN busybox-1.23.2.orig/sysklogd/syslogd.c busybox-1.23.2/sysklogd/syslogd
  		.fd = -1,
  	},
  #ifdef SYSLOGD_MARK
-@@ -291,7 +291,7 @@
+@@ -290,7 +290,7 @@
  	char *tok[3];
  	parser_t *parser;
  
@@ -857,7 +761,7 @@ diff -ruN busybox-1.23.2.orig/sysklogd/syslogd.c busybox-1.23.2/sysklogd/syslogd
  				file ? xfopen_for_read : fopen_for_read);
  	if (!parser)
  		/* didn't find default /etc/syslog.conf */
-@@ -433,7 +433,7 @@
+@@ -432,7 +432,7 @@
  
   cfgerr:
  	bb_error_msg_and_die("error in '%s' at line %d",
@@ -866,10 +770,10 @@ diff -ruN busybox-1.23.2.orig/sysklogd/syslogd.c busybox-1.23.2/sysklogd/syslogd
  			parser->lineno);
  }
  #endif
-diff -ruN busybox-1.23.2.orig/util-linux/acpid.c busybox-1.23.2/util-linux/acpid.c
---- busybox-1.23.2.orig/util-linux/acpid.c	2015-03-23 06:07:19.000000000 +0300
-+++ busybox-1.23.2/util-linux/acpid.c	2015-10-16 23:01:37.234091699 +0300
-@@ -229,11 +229,11 @@
+diff -ruN busybox-1.24.1.orig/util-linux/acpid.c busybox-1.24.1/util-linux/acpid.c
+--- busybox-1.24.1.orig/util-linux/acpid.c	2015-07-13 05:18:47.000000000 +0300
++++ busybox-1.24.1/util-linux/acpid.c	2015-12-09 11:10:38.135263544 +0300
+@@ -227,11 +227,11 @@
  	int nfd;
  	int opts;
  	struct pollfd *pfd;
@@ -885,9 +789,9 @@ diff -ruN busybox-1.23.2.orig/util-linux/acpid.c busybox-1.23.2/util-linux/acpid
  #if ENABLE_FEATURE_PIDFILE
  	const char *opt_pidfile = CONFIG_PID_FILE_PATH "/acpid.pid";
  #endif
-diff -ruN busybox-1.23.2.orig/util-linux/fbset.c busybox-1.23.2/util-linux/fbset.c
---- busybox-1.23.2.orig/util-linux/fbset.c	2015-03-23 06:06:55.000000000 +0300
-+++ busybox-1.23.2/util-linux/fbset.c	2015-10-16 23:03:07.087434966 +0300
+diff -ruN busybox-1.24.1.orig/util-linux/fbset.c busybox-1.24.1/util-linux/fbset.c
+--- busybox-1.24.1.orig/util-linux/fbset.c	2015-07-30 04:05:46.000000000 +0300
++++ busybox-1.24.1/util-linux/fbset.c	2015-12-09 11:10:38.135263544 +0300
 @@ -30,7 +30,7 @@
  #include "libbb.h"
  
@@ -897,9 +801,9 @@ diff -ruN busybox-1.23.2.orig/util-linux/fbset.c busybox-1.23.2/util-linux/fbset
  
  /* Stuff stolen from the kernel's fb.h */
  #define FB_ACTIVATE_ALL 64
-diff -ruN busybox-1.23.2.orig/util-linux/fdisk_osf.c busybox-1.23.2/util-linux/fdisk_osf.c
---- busybox-1.23.2.orig/util-linux/fdisk_osf.c	2015-03-23 06:07:19.000000000 +0300
-+++ busybox-1.23.2/util-linux/fdisk_osf.c	2015-10-16 23:39:59.929657584 +0300
+diff -ruN busybox-1.24.1.orig/util-linux/fdisk_osf.c busybox-1.24.1/util-linux/fdisk_osf.c
+--- busybox-1.24.1.orig/util-linux/fdisk_osf.c	2015-07-13 05:18:47.000000000 +0300
++++ busybox-1.24.1/util-linux/fdisk_osf.c	2015-12-09 11:10:38.135263544 +0300
 @@ -41,7 +41,7 @@
  #define BSD_MAXPARTITIONS 16
  #endif
@@ -909,9 +813,9 @@ diff -ruN busybox-1.23.2.orig/util-linux/fdisk_osf.c busybox-1.23.2/util-linux/f
  
  #if defined(__alpha__) \
   || defined(__powerpc__) \
-diff -ruN busybox-1.23.2.orig/util-linux/mdev.c busybox-1.23.2/util-linux/mdev.c
---- busybox-1.23.2.orig/util-linux/mdev.c	2015-03-23 06:07:19.000000000 +0300
-+++ busybox-1.23.2/util-linux/mdev.c	2015-10-16 23:05:08.245205987 +0300
+diff -ruN busybox-1.24.1.orig/util-linux/mdev.c busybox-1.24.1/util-linux/mdev.c
+--- busybox-1.24.1.orig/util-linux/mdev.c	2015-10-24 03:24:36.000000000 +0300
++++ busybox-1.24.1/util-linux/mdev.c	2015-12-09 11:10:38.135263544 +0300
 @@ -870,7 +870,7 @@
  	int firmware_fd, loading_fd;
  
@@ -921,7 +825,7 @@ diff -ruN busybox-1.23.2.orig/util-linux/mdev.c busybox-1.23.2/util-linux/mdev.c
  	firmware_fd = open(firmware, O_RDONLY); /* can fail */
  
  	/* check for /sys/$DEVPATH/loading ... give 30 seconds to appear */
-@@ -1021,7 +1021,7 @@
+@@ -1035,7 +1035,7 @@
  	INIT_G();
  
  #if ENABLE_FEATURE_MDEV_CONF
@@ -930,22 +834,10 @@ diff -ruN busybox-1.23.2.orig/util-linux/mdev.c busybox-1.23.2/util-linux/mdev.c
  #endif
  
  	/* We can be called as hotplug helper */
-diff -ruN busybox-1.23.2.orig/util-linux/swaponoff.c busybox-1.23.2/util-linux/swaponoff.c
---- busybox-1.23.2.orig/util-linux/swaponoff.c	2015-03-23 06:07:19.000000000 +0300
-+++ busybox-1.23.2/util-linux/swaponoff.c	2015-10-16 22:25:37.367461665 +0300
-@@ -171,7 +171,7 @@
- {
- 	struct mntent *m;
- 	int err = 0;
--	FILE *f = xfopen_for_read("/etc/fstab");
-+	FILE *f = xfopen_for_read("/opt/etc/fstab");
- 
- 	while ((m = getmntent(f)) != NULL) {
- 		if (strcmp(m->mnt_type, MNTTYPE_SWAP) == 0) {
-diff -ruN busybox-1.23.2.orig/util-linux/mount.c busybox-1.23.2/util-linux/mount.c
---- busybox-1.23.2.orig/util-linux/mount.c	2015-10-17 02:16:49.000000000 +0300
-+++ busybox-1.23.2/util-linux/mount.c	2015-10-17 02:18:17.527748404 +0300
-@@ -525,8 +525,8 @@
+diff -ruN busybox-1.24.1.orig/util-linux/mount.c busybox-1.24.1/util-linux/mount.c
+--- busybox-1.24.1.orig/util-linux/mount.c	2015-12-09 11:08:32.000000000 +0300
++++ busybox-1.24.1/util-linux/mount.c	2015-12-09 11:10:38.135263544 +0300
+@@ -624,8 +624,8 @@
  // Return a list of all block device backed filesystems
  static llist_t *get_block_backed_filesystems(void)
  {
@@ -956,12 +848,33 @@ diff -ruN busybox-1.23.2.orig/util-linux/mount.c busybox-1.23.2/util-linux/mount
  		"/proc/filesystems",
  	};
  	char *fs, *buf;
-@@ -2126,7 +2126,7 @@
- 	}
+@@ -2130,7 +2130,7 @@
+ 	char *O_optmatch = NULL;
+ 	char *storage_path;
+ 	llist_t *lst_o = NULL;
+-	const char *fstabname = "/etc/fstab";
++	const char *fstabname = "/opt/etc/fstab";
+ 	FILE *fstab;
+ 	int i, j;
+ 	int rc = EXIT_SUCCESS;
+@@ -2227,7 +2227,7 @@
  
+ 	// A malicious user could overmount /usr without this.
+ 	if (ENABLE_FEATURE_MOUNT_OTHERTAB && nonroot)
+-		fstabname = "/etc/fstab";
++		fstabname = "/opt/etc/fstab";
  	// Open either fstab or mtab
--	fstabname = "/etc/fstab";
-+	fstabname = "/opt/etc/fstab";
  	if (cmdopt_flags & MS_REMOUNT) {
  		// WARNING. I am not sure this matches util-linux's
- 		// behavior. It's possible util-linux does not
+diff -ruN busybox-1.24.1.orig/util-linux/swaponoff.c busybox-1.24.1/util-linux/swaponoff.c
+--- busybox-1.24.1.orig/util-linux/swaponoff.c	2015-07-13 05:18:47.000000000 +0300
++++ busybox-1.24.1/util-linux/swaponoff.c	2015-12-09 11:10:38.135263544 +0300
+@@ -179,7 +179,7 @@
+ {
+ 	struct mntent *m;
+ 	int err = 0;
+-	FILE *f = xfopen_for_read("/etc/fstab");
++	FILE *f = xfopen_for_read("/opt/etc/fstab");
+ 
+ 	while ((m = getmntent(f)) != NULL) {
+ 		if (strcmp(m->mnt_type, MNTTYPE_SWAP) == 0) {

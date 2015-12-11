@@ -1,5 +1,6 @@
 #
 # Copyright (C) 2009-2012 OpenWrt.org
+# Copyright (C) 2015 NDM Systems, McMCC
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -9,7 +10,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=pcsc-lite
 PKG_VERSION:=1.8.14
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=https://alioth.debian.org/frs/download.php/file/4138

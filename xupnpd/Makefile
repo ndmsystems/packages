@@ -11,7 +11,7 @@ PKG_NAME:=xupnpd
 PKG_REV:=397
 PKG_VERSION:=$(PKG_REV)
 PKG_MD5SUM:=51a240d97416bba183091a9fad5b1531
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 PKG_LICENSE:=GPLv2
 
 PKG_SOURCE_PROTO:=svn
@@ -51,15 +51,14 @@ define Package/xupnpd
 endef
 
 define Package/xupnpd/conffiles
-/usr/share/xupnpd/xupnpd.lua
+/opt/usr/share/xupnpd/xupnpd.lua
 endef
-
 
 define Package/xupnpd/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/xupnpd $(1)/usr/bin
 	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./files/xupnpd.init $(1)/etc/init.d/xupnpd.init
+	$(INSTALL_BIN) ./files/xupnpd.init $(1)/etc/init.d/S02xupnpd
 	$(INSTALL_DIR) $(1)/usr/share/xupnpd
 	$(CP) $(PKG_BUILD_DIR)/*.lua $(1)/usr/share/xupnpd
 	$(INSTALL_DIR) $(1)/usr/share/xupnpd/ui

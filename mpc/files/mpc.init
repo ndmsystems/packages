@@ -1,0 +1,51 @@
+#!/opt/bin/sh
+# Copyright (C) 2015 NDM Systems, McMCC
+
+export TZ=`cat /etc/TZ | tail -n 1`
+
+CONFIGFILE=/opt/etc/default/mpc
+LOCK=/opt/var/lock/mpc.lock
+
+MPD_HOST=localhost
+MPD_PORT=6600
+AUTOPLAY=no
+AUTOLOADPLS=no
+
+[ -r $CONFIGFILE ] && . $CONFIGFILE
+
+export MPD_HOST=$MPD_HOST
+export MPD_PORT=$MPD_PORT
+
+MPDCONF=/opt/etc/mpd.conf
+PLAYLISTS=`grep ^playlist_directory $MPDCONF |  cut -d"\"" -f2`
+
+start() {
+	[ -f $LOCK ] && exit
+	touch $LOCK
+	mpc clear
+	[ -n "$PLAYLISTS" ] && [ "$AUTOLOADSPLS" = "yes" ] && mpc lsplaylist | mpc -w load
+	[ "$AUTOPLAY" = "yes" ] && mpc -w play
+	rm -rf $LOCK
+}
+
+stop() {
+	[ -f $LOCK ] && exit
+	mpc stop
+	mpc clear
+}
+
+case "$1" in
+	start)
+	    start&
+	    ;;
+	stop)
+	    stop
+	    ;;
+	restart)
+	    stop
+	    start&
+	    ;;
+	*)
+	    echo "Usage: $0 {start|stop|restart}"
+	    ;;
+esac

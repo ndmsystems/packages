@@ -1,0 +1,176 @@
+diff -ruN bash-4.3.orig/config.h.in bash-4.3/config.h.in
+--- bash-4.3.orig/config.h.in	2013-06-30 01:35:33.000000000 +0400
++++ bash-4.3/config.h.in	2015-12-09 09:35:25.827107099 +0300
+@@ -229,7 +229,7 @@
+ 
+ /* System paths */
+ 
+-#define DEFAULT_MAIL_DIRECTORY "/usr/spool/mail"
++#define DEFAULT_MAIL_DIRECTORY "/opt/var/spool/mail"
+ 
+ /* Characteristics of the system's header files and libraries that affect
+    the compilation environment. */
+diff -ruN bash-4.3.orig/config-top.h bash-4.3/config-top.h
+--- bash-4.3.orig/config-top.h	2012-08-19 04:51:30.000000000 +0400
++++ bash-4.3/config-top.h	2015-12-09 09:34:13.197169418 +0300
+@@ -59,14 +59,14 @@
+ /* The default value of the PATH variable. */
+ #ifndef DEFAULT_PATH_VALUE
+ #define DEFAULT_PATH_VALUE \
+-  "/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:."
++  "/opt/usr/local/bin:/opt/usr/local/sbin:/opt/usr/bin:/opt/usr/sbin:/opt/bin:/opt/sbin:/bin:/sbin."
+ #endif
+ 
+ /* The value for PATH when invoking `command -p'.  This is only used when
+    the Posix.2 confstr () function, or CS_PATH define are not present. */
+ #ifndef STANDARD_UTILS_PATH
+ #define STANDARD_UTILS_PATH \
+-  "/bin:/usr/bin:/sbin:/usr/sbin:/etc:/usr/etc"
++  "/opt/bin:/opt/usr/bin:/opt/sbin:/opt/usr/sbin:/opt/etc:/opt/usr/etc:/bin:/sbin:/etc"
+ #endif
+ 
+ /* Default primary and secondary prompt strings. */
+diff -ruN bash-4.3.orig/error.c bash-4.3/error.c
+--- bash-4.3.orig/error.c	2014-01-17 17:09:33.000000000 +0400
++++ bash-4.3/error.c	2015-12-09 09:56:02.405107168 +0300
+@@ -408,7 +408,7 @@
+   static FILE *tracefp = (FILE *)NULL;
+ 
+   if (tracefp == NULL)
+-    tracefp = fopen("/tmp/bash-trace.log", "a+");
++    tracefp = fopen("/opt/tmp/bash-trace.log", "a+");
+ 
+   if (tracefp == NULL)
+     tracefp = stderr;
+diff -ruN bash-4.3.orig/lib/malloc/stats.c bash-4.3/lib/malloc/stats.c
+--- bash-4.3.orig/lib/malloc/stats.c	2008-09-07 07:46:34.000000000 +0400
++++ bash-4.3/lib/malloc/stats.c	2015-12-09 09:48:21.748369050 +0300
+@@ -134,7 +134,7 @@
+   _print_malloc_stats (s, fp);
+ }
+ 
+-#define TRACEROOT "/var/tmp/maltrace/stats."
++#define TRACEROOT "/opt/var/tmp/maltrace/stats."
+ 
+ void
+ trace_malloc_stats (s, fn)
+diff -ruN bash-4.3.orig/lib/malloc/trace.c bash-4.3/lib/malloc/trace.c
+--- bash-4.3.orig/lib/malloc/trace.c	2008-08-12 18:27:11.000000000 +0400
++++ bash-4.3/lib/malloc/trace.c	2015-12-09 09:48:05.963932945 +0300
+@@ -108,7 +108,7 @@
+ #endif
+ }
+ 
+-#define TRACEROOT "/var/tmp/maltrace/trace."
++#define TRACEROOT "/opt/var/tmp/maltrace/trace."
+ 
+ void
+ malloc_set_tracefn (s, fn)
+diff -ruN bash-4.3.orig/lib/readline/rlconf.h bash-4.3/lib/readline/rlconf.h
+--- bash-4.3.orig/lib/readline/rlconf.h	2012-01-18 19:14:33.000000000 +0400
++++ bash-4.3/lib/readline/rlconf.h	2015-12-09 09:50:02.459152406 +0300
+@@ -43,7 +43,7 @@
+ #define DEFAULT_INPUTRC "~/.inputrc"
+ 
+ /* The ultimate last-ditch filenname for an init file -- system-wide. */
+-#define SYS_INPUTRC "/etc/inputrc"
++#define SYS_INPUTRC "/opt/etc/inputrc"
+ 
+ /* If defined, expand tabs to spaces. */
+ #define DISPLAY_TABS
+diff -ruN bash-4.3.orig/lib/readline/util.c bash-4.3/lib/readline/util.c
+--- bash-4.3.orig/lib/readline/util.c	2013-09-02 21:36:12.000000000 +0400
++++ bash-4.3/lib/readline/util.c	2015-12-09 09:47:06.410287966 +0300
+@@ -515,7 +515,7 @@
+ 
+   if (_rl_tracefp)
+     fclose (_rl_tracefp);
+-  sprintf (fnbuf, "/var/tmp/rltrace.%ld", (long)getpid());
++  sprintf (fnbuf, "/opt/var/tmp/rltrace.%ld", (long)getpid());
+   unlink(fnbuf);
+   _rl_tracefp = fopen (fnbuf, "w+");
+   return _rl_tracefp != 0;
+diff -ruN bash-4.3.orig/lib/sh/tmpfile.c bash-4.3/lib/sh/tmpfile.c
+--- bash-4.3.orig/lib/sh/tmpfile.c	2013-12-19 02:50:13.000000000 +0400
++++ bash-4.3/lib/sh/tmpfile.c	2015-12-09 09:46:12.604802418 +0300
+@@ -69,15 +69,15 @@
+     return sys_tmpdir;
+ #endif
+ 
+-  sys_tmpdir = "/tmp";
++  sys_tmpdir = "/opt/tmp";
+   if (file_iswdir (sys_tmpdir))
+     return sys_tmpdir;
+ 
+-  sys_tmpdir = "/var/tmp";
++  sys_tmpdir = "/opt/var/tmp";
+   if (file_iswdir (sys_tmpdir))
+     return sys_tmpdir;
+ 
+-  sys_tmpdir = "/usr/tmp";
++  sys_tmpdir = "/opt/usr/tmp";
+   if (file_iswdir (sys_tmpdir))
+     return sys_tmpdir;
+ 
+diff -ruN bash-4.3.orig/pathnames.h.in bash-4.3/pathnames.h.in
+--- bash-4.3.orig/pathnames.h.in	2009-01-04 22:32:40.000000000 +0300
++++ bash-4.3/pathnames.h.in	2015-12-09 09:36:51.533416223 +0300
+@@ -25,7 +25,7 @@
+ #define DEFAULT_HOSTS_FILE "/etc/hosts"
+ 
+ /* The default login shell startup file. */
+-#define SYS_PROFILE "/etc/profile"
++#define SYS_PROFILE "/opt/etc/profile"
+ 
+ /* The default location of the bash debugger initialization/startup file. */
+ #define DEBUGGER_START_FILE	"@DEBUGGER_START_FILE@"
+diff -ruN bash-4.3.orig/shell.c bash-4.3/shell.c
+--- bash-4.3.orig/shell.c	2015-12-09 09:27:47.000000000 +0300
++++ bash-4.3/shell.c	2015-12-09 09:54:40.154831868 +0300
+@@ -336,12 +336,12 @@
+ {
+   struct stat sb;
+ 
+-  if (stat ("/tmp", &sb) < 0)
+-    internal_warning (_("could not find /tmp, please create!"));
++  if (stat ("/opt/tmp", &sb) < 0)
++    internal_warning (_("could not find /opt/tmp, please create!"));
+   else
+     {
+       if (S_ISDIR (sb.st_mode) == 0)
+-	internal_warning (_("/tmp must be a valid directory name"));
++	internal_warning (_("/opt/tmp must be a valid directory name"));
+     }
+ }
+ #endif /* __CYGWIN__ */
+@@ -1683,15 +1683,15 @@
+ 	  current_user.user_name = savestring (entry->pw_name);
+ 	  current_user.shell = (entry->pw_shell && entry->pw_shell[0])
+ 				? savestring (entry->pw_shell)
+-				: savestring ("/bin/sh");
++				: savestring ("/opt/bin/sh");
+ 	  current_user.home_dir = savestring (entry->pw_dir);
+ 	}
+       else
+ 	{
+ 	  current_user.user_name = _("I have no name!");
+ 	  current_user.user_name = savestring (current_user.user_name);
+-	  current_user.shell = savestring ("/bin/sh");
+-	  current_user.home_dir = savestring ("/");
++	  current_user.shell = savestring ("/opt/bin/sh");
++	  current_user.home_dir = savestring ("/opt");
+ 	}
+       endpwent ();
+     }
+diff -ruN bash-4.3.orig/support/man2html.c bash-4.3/support/man2html.c
+--- bash-4.3.orig/support/man2html.c	2013-02-27 18:45:02.000000000 +0400
++++ bash-4.3/support/man2html.c	2015-12-09 09:51:55.802286203 +0300
+@@ -280,7 +280,7 @@
+ static char NEWLINE[2] = "\n";
+ static char idxlabel[6] = "ixAAA";
+ 
+-#define INDEXFILE "/tmp/manindex.list"
++#define INDEXFILE "/opt/tmp/manindex.list"
+ 
+ static char *fname;
+ static FILE *idxfile;

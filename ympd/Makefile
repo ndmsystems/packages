@@ -47,4 +47,8 @@ define Package/ympd/install
 	ln -sfn ../../../init.d/S04ympd $(1)/etc/default/usb_services/sound/S04ympd
 endef
 
+define Package/ympd/conffiles
+/opt/etc/default/ympd
+endef
+
 $(eval $(call BuildPackage,ympd))

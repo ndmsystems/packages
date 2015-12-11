@@ -1,0 +1,4 @@
+MPD_HOST=localhost
+MPD_PORT=6600
+AUTOPLAY=yes
+AUTOLOADPLS=yes

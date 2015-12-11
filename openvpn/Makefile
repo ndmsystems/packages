@@ -10,7 +10,7 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=openvpn
 
 PKG_VERSION:=2.3.6
-PKG_RELEASE:=6
+PKG_RELEASE:=7
 
 PKG_SOURCE_URL:=http://swupdate.openvpn.net/community/releases
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
@@ -94,6 +94,8 @@ endef
 
 define Package/openvpn-$(BUILD_VARIANT)/conffiles
 /opt/etc/config/openvpn
+/opt/etc/config/client.conf
+/opt/etc/config/server.conf
 endef
 
 define Package/openvpn-$(BUILD_VARIANT)/install
@@ -110,7 +112,7 @@ define Package/openvpn-$(BUILD_VARIANT)/install
 
 	$(INSTALL_BIN) \
 		files/openvpn.init \
-		$(1)/etc/init.d/openvpn
+		$(1)/etc/init.d/S01openvpn
 
 	$(INSTALL_CONF) files/client.conf \
 		$(1)/etc/config/

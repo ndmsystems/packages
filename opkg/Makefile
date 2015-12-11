@@ -12,7 +12,7 @@ PKG_NAME:=opkg
 PKG_REV:=618
 PKG_VERSION:=$(PKG_REV)
 PKG_MD5SUM:=d6087a26ff5cf6b86bd159e8aca9f650
-PKG_RELEASE:=2
+PKG_RELEASE:=3
 PKG_LICENSE:=GPLv2
 
 PKG_SOURCE_PROTO:=svn
@@ -50,7 +50,7 @@ define Package/opkg/description
 endef
 
 define Package/opkg/conffiles
-/etc/opkg.conf
+/opt/etc/opkg.conf
 endef
 
 TARGET_CFLAGS += $(if $(CONFIG_GCC_VERSION_4_3)$(CONFIG_GCC_VERSION_4_4),-Wno-array-bounds)

@@ -1,0 +1,94 @@
+diff -ruN fish-1.23.1.orig/configure fish-1.23.1/configure
+--- fish-1.23.1.orig/configure	2009-03-08 17:46:47.000000000 +0300
++++ fish-1.23.1/configure	2015-12-10 13:39:56.000000000 +0300
+@@ -3093,12 +3093,12 @@
+ else
+ 
+       	  if test "$cross_compiling" = yes; then
+-  { { echo "$as_me:$LINENO: error: cannot run test program while cross compiling
+-See \`config.log' for more details." >&5
+-echo "$as_me: error: cannot run test program while cross compiling
+-See \`config.log' for more details." >&2;}
+-   { (exit 1); exit 1; }; }
+-else
++#  { { echo "$as_me:$LINENO: error: cannot run test program while cross compiling
++#See \`config.log' for more details." >&5
++#echo "$as_me: error: cannot run test program while cross compiling
++#See \`config.log' for more details." >&2;}
++#   { (exit 1); exit 1; }; }
++#else
+   cat >conftest.$ac_ext <<_ACEOF
+ /* confdefs.h.  */
+ _ACEOF
+@@ -3214,12 +3214,12 @@
+ { echo "$as_me:$LINENO: checking if we are compiling against glibc" >&5
+ echo $ECHO_N "checking if we are compiling against glibc... $ECHO_C" >&6; }
+ if test "$cross_compiling" = yes; then
+-  { { echo "$as_me:$LINENO: error: cannot run test program while cross compiling
+-See \`config.log' for more details." >&5
+-echo "$as_me: error: cannot run test program while cross compiling
+-See \`config.log' for more details." >&2;}
+-   { (exit 1); exit 1; }; }
+-else
++#  { { echo "$as_me:$LINENO: error: cannot run test program while cross compiling
++#See \`config.log' for more details." >&5
++#echo "$as_me: error: cannot run test program while cross compiling
++#See \`config.log' for more details." >&2;}
++#   { (exit 1); exit 1; }; }
++#else
+   cat >conftest.$ac_ext <<_ACEOF
+ 
+ 		/* confdefs.h.  */
+@@ -3608,10 +3608,10 @@
+ if test "${ac_cv_file__proc_self_stat+set}" = set; then
+   echo $ECHO_N "(cached) $ECHO_C" >&6
+ else
+-  test "$cross_compiling" = yes &&
+-  { { echo "$as_me:$LINENO: error: cannot check for file existence when cross compiling" >&5
+-echo "$as_me: error: cannot check for file existence when cross compiling" >&2;}
+-   { (exit 1); exit 1; }; }
++#  test "$cross_compiling" = yes &&
++#  { { echo "$as_me:$LINENO: error: cannot check for file existence when cross compiling" >&5
++#echo "$as_me: error: cannot check for file existence when cross compiling" >&2;}
++#   { (exit 1); exit 1; }; }
+ if test -r "/proc/self/stat"; then
+   ac_cv_file__proc_self_stat=yes
+ else
+@@ -6304,12 +6304,12 @@
+ { echo "$as_me:$LINENO: checking if realpath accepts null for its second argument" >&5
+ echo $ECHO_N "checking if realpath accepts null for its second argument... $ECHO_C" >&6; }
+ if test "$cross_compiling" = yes; then
+-  { { echo "$as_me:$LINENO: error: cannot run test program while cross compiling
+-See \`config.log' for more details." >&5
+-echo "$as_me: error: cannot run test program while cross compiling
+-See \`config.log' for more details." >&2;}
+-   { (exit 1); exit 1; }; }
+-else
++#  { { echo "$as_me:$LINENO: error: cannot run test program while cross compiling
++#See \`config.log' for more details." >&5
++#echo "$as_me: error: cannot run test program while cross compiling
++#See \`config.log' for more details." >&2;}
++#   { (exit 1); exit 1; }; }
++#else
+   cat >conftest.$ac_ext <<_ACEOF
+ 
+ 		/* confdefs.h.  */
+@@ -6474,12 +6474,12 @@
+ 	{ echo "$as_me:$LINENO: checking if fwprintf is broken" >&5
+ echo $ECHO_N "checking if fwprintf is broken... $ECHO_C" >&6; }
+ 	if test "$cross_compiling" = yes; then
+-  { { echo "$as_me:$LINENO: error: cannot run test program while cross compiling
+-See \`config.log' for more details." >&5
+-echo "$as_me: error: cannot run test program while cross compiling
+-See \`config.log' for more details." >&2;}
+-   { (exit 1); exit 1; }; }
+-else
++#  { { echo "$as_me:$LINENO: error: cannot run test program while cross compiling
++#See \`config.log' for more details." >&5
++#echo "$as_me: error: cannot run test program while cross compiling
++#See \`config.log' for more details." >&2;}
++#   { (exit 1); exit 1; }; }
++#else
+   cat >conftest.$ac_ext <<_ACEOF
+ 
+ 			/* confdefs.h.  */

@@ -8,6 +8,7 @@ include $(INCLUDE_DIR)/package-defaults.mk
 PKG_NAME:=dropbear
 PKG_VERSION:=2015.68
 PKG_MD5SUM:=7664ac10f7cc2301c530eb80c756fc5d
+PKG_RELEASE:=1
 PKG_LICENSE:=MIT
 
 PKG_SOURCE_URL:=https://dropbear.nl/mirror/releases
@@ -47,6 +48,7 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/dropbear{,convert,key} $(1)/sbin/
 	$(INSTALL_DIR) $(1)/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/dbclient $(1)/bin/
+	ln -sf dbclient $(1)/bin/ssh
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/scp $(1)/bin/
 	$(INSTALL_DIR) $(1)/etc/default/
 	$(INSTALL_BIN) ./files/dropbear $(1)/etc/default/dropbear

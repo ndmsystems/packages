@@ -1,5 +1,6 @@
 #
 # Copyright (C) 2007-2015 OpenWrt.org
+# Copyright (C) 2015 NDM Systems, McMCC
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -8,12 +9,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=mpd
-PKG_VERSION:=0.19.10
-PKG_RELEASE:=2
+PKG_VERSION:=0.19.11
+PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=http://www.musicpd.org/download/mpd/0.19/
-PKG_MD5SUM:=da4bc3e47afd0faf9e7a67168e012102
+PKG_MD5SUM:=78935f6c464b67e19b4dc65bdb80319e
 PKG_MAINTAINER:=Ted Hess <thess@kitschensync.net>
 
 PKG_LICENSE:=GPL-2.0
@@ -200,6 +201,14 @@ endef
 
 define Package/mpd-mini/install
 $(call Package/mpd/install,$1)
+endef
+
+define Package/mpd-full/conffiles
+/opt/etc/mpd.conf
+endef
+
+define Package/mpd-mini/conffiles
+/opt/etc/mpd.conf
 endef
 
 $(eval $(call BuildPackage,mpd-full))

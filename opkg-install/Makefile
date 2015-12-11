@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2015 KeenOpt.RU
+# Copyright (C) 2015 NDM Systems, McMCC
 #
 
 include $(TOPDIR)/rules.mk

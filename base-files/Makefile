@@ -11,7 +11,7 @@ include $(INCLUDE_DIR)/kernel.mk
 include $(INCLUDE_DIR)/version.mk
 
 PKG_NAME:=base-files
-PKG_RELEASE:=120
+PKG_RELEASE:=121
 
 PKG_FILE_DEPENDS:=$(PLATFORM_DIR)/ $(GENERIC_PLATFORM_DIR)/base-files/
 PKG_BUILD_DEPENDS:=opkg/host
@@ -31,7 +31,7 @@ define Package/base-files
   DEPENDS:=+libc
   TITLE:=Base filesystem for OpenWrt
   URL:=http://openwrt.org/
-  VERSION:=$(PKG_RELEASE)-$(REVISION)
+  VERSION:=$(PKG_RELEASE)-keenopt
   PKGARCH:=all
 endef
 
@@ -117,6 +117,13 @@ define Package/base-files/install
 	ln -sf $(CONFIG_TARGET_ROOTFS_PATH) $(1)/flash/rootfs-image
 	ln -sf $(CONFIG_TARGET_FLASH_PATH) $(1)/flash/startup-config
 	$(call Package/base-files/install-target,$(1))
+endef
+
+define Package/base-files/conffiles
+/opt/etc/profile
+/opt/etc/shells
+/opt/etc/sysctl.conf
+/opt/usr/share/udhcpc/default.script
 endef
 
 ifneq ($(DUMP),1)

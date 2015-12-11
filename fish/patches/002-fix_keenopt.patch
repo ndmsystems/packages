@@ -1,0 +1,122 @@
+diff -ruN fish-1.23.1.orig/env.c fish-1.23.1/env.c
+--- fish-1.23.1.orig/env.c	2009-03-08 17:46:47.000000000 +0300
++++ fish-1.23.1/env.c	2015-12-10 14:26:16.089095423 +0300
+@@ -61,7 +61,7 @@
+ /**
+    Command used to start fishd
+ */
+-#define FISHD_CMD L"fishd ^/tmp/fishd.log.%s"
++#define FISHD_CMD L"fishd ^/opt/tmp/fishd.log.%s"
+ 
+ /**
+    Value denoting a null string
+diff -ruN fish-1.23.1.orig/env_universal.c fish-1.23.1/env_universal.c
+--- fish-1.23.1.orig/env_universal.c	2009-03-08 17:46:47.000000000 +0300
++++ fish-1.23.1/env_universal.c	2015-12-10 14:25:47.520446778 +0300
+@@ -102,7 +102,7 @@
+ 	if( wdir )
+ 		dir = wcs2str(wdir );
+ 	else
+-		dir = strdup("/tmp");
++		dir = strdup("/opt/tmp");
+ 	
+ 	if( wuname )
+ 		uname = wcs2str(wuname );
+diff -ruN fish-1.23.1.orig/fallback.c fish-1.23.1/fallback.c
+--- fish-1.23.1.orig/fallback.c	2009-03-08 17:46:47.000000000 +0300
++++ fish-1.23.1/fallback.c	2015-12-10 14:18:43.554828363 +0300
+@@ -1095,7 +1095,7 @@
+ }
+ 
+ #endif
+-
++#if 0
+ #ifndef HAVE_GETTEXT
+ 
+ char * gettext (const char * msgid)
+@@ -1124,7 +1124,7 @@
+ 	return (char *)msgid;
+ }
+ 
+-
++#endif
+ #endif
+ 
+ #ifndef HAVE__NL_MSG_CAT_CNTR
+diff -ruN fish-1.23.1.orig/fallback.h fish-1.23.1/fallback.h
+--- fish-1.23.1.orig/fallback.h	2009-03-08 17:46:47.000000000 +0300
++++ fish-1.23.1/fallback.h	2015-12-10 14:18:19.878291792 +0300
+@@ -365,7 +365,7 @@
+ int futimes( int fd, const struct timeval *times );
+ 
+ #endif
+-
++#if 0
+ #ifndef HAVE_GETTEXT
+ 
+ /**
+@@ -395,7 +395,7 @@
+ 		   int category );
+ 
+ #endif
+-
++#endif
+ #ifndef HAVE__NL_MSG_CAT_CNTR
+ 
+ /**
+diff -ruN fish-1.23.1.orig/fishd.c fish-1.23.1/fishd.c
+--- fish-1.23.1.orig/fishd.c	2009-03-08 17:46:47.000000000 +0300
++++ fish-1.23.1/fishd.c	2015-12-10 14:25:04.715474993 +0300
+@@ -152,7 +152,7 @@
+ 
+ 	if( dir == NULL )
+ 	{
+-		dir = "/tmp";
++		dir = "/opt/tmp";
+ 	}
+ 
+ 	if( uname == NULL )
+diff -ruN fish-1.23.1.orig/mimedb.c fish-1.23.1/mimedb.c
+--- fish-1.23.1.orig/mimedb.c	2009-03-08 17:46:47.000000000 +0300
++++ fish-1.23.1/mimedb.c	2015-12-10 14:23:11.960915772 +0300
+@@ -325,7 +325,7 @@
+ 
+ 	xdg_data_dirs = getenv ("XDG_DATA_DIRS");
+ 	if (xdg_data_dirs == NULL)
+-		xdg_data_dirs = "/usr/local/share/:/usr/share/";
++		xdg_data_dirs = "/opt/usr/local/share/:/opt/usr/share/";
+ 
+ 	ptr = xdg_data_dirs;
+ 
+diff -ruN fish-1.23.1.orig/path.c fish-1.23.1/path.c
+--- fish-1.23.1.orig/path.c	2009-03-08 17:46:47.000000000 +0300
++++ fish-1.23.1/path.c	2015-12-10 14:22:15.947644797 +0300
+@@ -68,13 +68,13 @@
+ 		path = env_get(L"PATH");
+ 		if( path == 0 )
+ 		{
+-			if( contains( PREFIX L"/bin", L"/bin", L"/usr/bin" ) )
++			if( contains( PREFIX L"/bin", L"/opt/bin", L"/opt/usr/bin" ) )
+ 			{
+-				path = L"/bin" ARRAY_SEP_STR L"/usr/bin";
++				path = L"/opt/bin" ARRAY_SEP_STR L"/opt/usr/bin";
+ 			}
+ 			else
+ 			{
+-				path = L"/bin" ARRAY_SEP_STR L"/usr/bin" ARRAY_SEP_STR PREFIX L"/bin";
++				path = L"/opt/bin" ARRAY_SEP_STR L"/opt/usr/bin" ARRAY_SEP_STR PREFIX L"/bin";
+ 			}
+ 		}
+ 		
+diff -ruN fish-1.23.1.orig/xdgmime.c fish-1.23.1/xdgmime.c
+--- fish-1.23.1.orig/xdgmime.c	2009-03-08 17:46:47.000000000 +0300
++++ fish-1.23.1/xdgmime.c	2015-12-10 14:20:08.972764767 +0300
+@@ -207,7 +207,7 @@
+ 
+   xdg_data_dirs = getenv ("XDG_DATA_DIRS");
+   if (xdg_data_dirs == NULL)
+-    xdg_data_dirs = "/usr/local/share/:/usr/share/";
++    xdg_data_dirs = "/opt/usr/local/share/:/opt/usr/share/";
+ 
+   ptr = xdg_data_dirs;
+ 
