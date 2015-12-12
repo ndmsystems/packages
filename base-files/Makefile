@@ -36,7 +36,8 @@ define Build/Prepare
 endef
 
 define Build/Compile
-	#nothing to do
+	[ -d $(PKG_BUILD_DIR) ] && rm -rf $(PKG_BUILD_DIR)
+	mkdir -p $(PKG_BUILD_DIR)
 endef
 
 define Package/base-files/install
@@ -98,10 +99,10 @@ define Package/base-files/install
 endef
 
 define Package/base-files/conffiles
-/opt/etc/profile
-/opt/etc/shells
-/opt/etc/sysctl.conf
-/opt/usr/share/udhcpc/default.script
+/etc/profile
+/etc/shells
+/etc/sysctl.conf
+/usr/share/udhcpc/default.script
 endef
 
 $(eval $(call BuildPackage,base-files))

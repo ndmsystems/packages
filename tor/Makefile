@@ -47,7 +47,7 @@ $(call Package/tor/Default)
 endef
 
 define Package/tor/conffiles
-/opt/etc/tor/torrc
+/etc/tor/torrc
 endef
 
 CONFIGURE_ARGS += \

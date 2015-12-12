@@ -12,7 +12,7 @@ PKG_NAME:=opkg
 PKG_REV:=618
 PKG_VERSION:=$(PKG_REV)
 PKG_MD5SUM:=d6087a26ff5cf6b86bd159e8aca9f650
-PKG_RELEASE:=3
+PKG_RELEASE:=4
 PKG_LICENSE:=GPLv2
 
 PKG_SOURCE_PROTO:=svn
@@ -23,6 +23,7 @@ PKG_SOURCE:=$(PKG_SOURCE_SUBDIR).tar.gz
 PKG_FIXUP:=autoreconf
 PKG_REMOVE_FILES = autogen.sh aclocal.m4
 
+PKG_BUILD_DEPENDS += opkg/host
 PKG_BUILD_PARALLEL:=1
 HOST_BUILD_PARALLEL:=1
 PKG_INSTALL:=1
@@ -50,7 +51,7 @@ define Package/opkg/description
 endef
 
 define Package/opkg/conffiles
-/opt/etc/opkg.conf
+/etc/opkg.conf
 endef
 
 TARGET_CFLAGS += $(if $(CONFIG_GCC_VERSION_4_3)$(CONFIG_GCC_VERSION_4_4),-Wno-array-bounds)
@@ -99,5 +100,5 @@ define Host/Install
 	$(INSTALL_BIN) $(HOST_BUILD_DIR)/src/opkg-cl $(STAGING_DIR_HOST)/bin/opkg
 endef
 
-$(eval $(call BuildPackage,opkg))
 $(eval $(call HostBuild))
+$(eval $(call BuildPackage,opkg))

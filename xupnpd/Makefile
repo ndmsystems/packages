@@ -51,7 +51,7 @@ define Package/xupnpd
 endef
 
 define Package/xupnpd/conffiles
-/opt/usr/share/xupnpd/xupnpd.lua
+/usr/share/xupnpd/xupnpd.lua
 endef
 
 define Package/xupnpd/install

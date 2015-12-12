@@ -42,8 +42,7 @@ define Build/Compile
 		if [ -f ./conffiles ]; then \
 			echo "Conffiles:" >> $(PKG_BUILD_DIR)/status; \
 			for conf in `cat ./conffiles`; do \
-				CONF=`echo $$$$conf | sed -e 's#^/opt/##g'`; \
-				CMD5=`tar xzf data.tar.gz ./$$$$CONF -O | md5sum | awk -F" " '{print $$$$1}'`; \
+				CMD5=`tar xzf data.tar.gz .$$$$conf -O | md5sum | awk -F" " '{print $$$$1}'`; \
 				echo " $$$$conf $$$$CMD5" >> $(PKG_BUILD_DIR)/status; \
 			done; \
 			mv -f ./conffiles $(PKG_BUILD_DIR)/info/$$$${ipkg}.conffiles; \

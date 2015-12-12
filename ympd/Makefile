@@ -48,7 +48,7 @@ define Package/ympd/install
 endef
 
 define Package/ympd/conffiles
-/opt/etc/default/ympd
+/etc/default/ympd
 endef
 
 $(eval $(call BuildPackage,ympd))

@@ -61,7 +61,7 @@ define Package/mpc/install
 endef
 
 define Package/mpc/conffiles
-/opt/etc/default/mpc
+/etc/default/mpc
 endef
 
 $(eval $(call BuildPackage,mpc))

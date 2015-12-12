@@ -59,7 +59,7 @@ fi
 endef
 
 define Package/fish/conffiles
-/opt/etc/config.fish
+/etc/config.fish
 endef
 
 $(eval $(call BuildPackage,fish))

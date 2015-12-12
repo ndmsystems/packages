@@ -107,8 +107,8 @@ define Package/alsa-lib/install
 endef
 
 define Package/alsa-lib/conffiles
-/opt/usr/share/alsa/alsa.conf
-/opt/etc/asound.conf
+/usr/share/alsa/alsa.conf
+/etc/asound.conf
 endef
 
 $(eval $(call BuildPackage,alsa-lib))

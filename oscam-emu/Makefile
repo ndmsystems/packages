@@ -54,9 +54,9 @@ define Build/Compile
 endef
 
 define Package/oscam-emu/conffiles
-	/opt/etc/oscam/oscam.conf
-	/opt/etc/oscam/oscam.server
-	/opt/etc/oscam/oscam.user
+/etc/oscam/oscam.conf
+/etc/oscam/oscam.server
+/etc/oscam/oscam.user
 endef
 
 define Package/oscam-emu/install

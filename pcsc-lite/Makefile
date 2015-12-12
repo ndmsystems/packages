@@ -91,7 +91,7 @@ define Package/libpcsclite/install
 endef
 
 define Package/pcscd/conffiles
-/opt/etc/reader.conf.d/reader.conf
+/etc/reader.conf.d/reader.conf
 endef
 
 define Package/pcscd/install

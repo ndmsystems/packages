@@ -204,11 +204,11 @@ $(call Package/mpd/install,$1)
 endef
 
 define Package/mpd-full/conffiles
-/opt/etc/mpd.conf
+/etc/mpd.conf
 endef
 
 define Package/mpd-mini/conffiles
-/opt/etc/mpd.conf
+/etc/mpd.conf
 endef
 
 $(eval $(call BuildPackage,mpd-full))
