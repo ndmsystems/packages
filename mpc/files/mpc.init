@@ -23,7 +23,7 @@ start() {
 	[ -f $LOCK ] && exit
 	touch $LOCK
 	mpc clear
-	[ -n "$PLAYLISTS" ] && [ "$AUTOLOADSPLS" = "yes" ] && mpc lsplaylist | mpc -w load
+	[ -n "$PLAYLISTS" ] && [ "$AUTOLOADPLS" = "yes" ] && mpc lsplaylist | mpc -w load
 	[ "$AUTOPLAY" = "yes" ] && mpc -w play
 	rm -rf $LOCK
 }

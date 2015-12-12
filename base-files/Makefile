@@ -12,7 +12,7 @@ include $(INCLUDE_DIR)/kernel.mk
 include $(INCLUDE_DIR)/version.mk
 
 PKG_NAME:=base-files
-PKG_RELEASE:=121
+PKG_RELEASE:=122
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -81,7 +81,10 @@ define Package/base-files/install
 	mkdir -p $(1)/usr/bin
 	mkdir -p $(1)/sys
 	mkdir -p $(1)/root
-	mkdir -p $(1)/var
+	mkdir -p $(1)/var/cache
+	mkdir -p $(1)/var/lock
+	mkdir -p $(1)/var/run
+	mkdir -p $(1)/var/lib
 	mkdir -p $(1)/etc
 	ln -sfn /tmp/hosts $(1)/etc/hosts
 	ln -sfn /tmp/passwd $(1)/etc/passwd
