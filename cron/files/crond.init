@@ -1,0 +1,29 @@
+#!/opt/bin/sh
+# Copyright (C) 2015 NDM Systems, McMCC
+
+NAME=crond
+DAEMON=/opt/usr/sbin/$NAME
+PIDFILE=/opt/var/run/$NAME.pid
+
+DAEMON_OPT="-L /dev/null"
+
+do_start() {
+	start-stop-daemon --start --quiet --exec $DAEMON -- $DAEMON_OPT
+}
+
+do_stop() {
+	start-stop-daemon --stop --quiet --retry=TERM/10/KILL/5 --pidfile $PIDFILE --name $NAME
+}
+
+case "$1" in
+	stop)
+	    do_stop
+	    ;;
+	start|restart)
+	    do_stop
+	    do_start
+	    ;;
+	*)
+	    echo "Usage: $0 {start|stop|restart}"
+	    ;;
+esac

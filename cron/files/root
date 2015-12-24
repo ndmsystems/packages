@@ -1,0 +1,10 @@
+SHELL=/opt/bin/sh
+MAILTO=
+PATH=/opt/bin:/opt/sbin:/opt/usr/bin:/opt/usr/sbin:/usr/bin:/usr/sbin:/bin:/sbin
+
+# run-parts
+*/1 * * * * run-parts /opt/etc/cron.minutely
+04  * * * * run-parts /opt/etc/cron.hourly
+06  4 * * * run-parts /opt/etc/cron.daily
+22  4 * * 0 run-parts /opt/etc/cron.weekly
+42  4 1 * * run-parts /opt/etc/cron.monthly
