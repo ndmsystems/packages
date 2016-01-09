@@ -1,0 +1,12 @@
+diff -ruN gdb-7.10.orig/gdb/completer.c gdb-7.10/gdb/completer.c
+--- gdb-7.10.orig/gdb/completer.c	2015-12-17 12:36:18.469486078 +0300
++++ gdb-7.10/gdb/completer.c	2015-12-17 12:33:32.000000000 +0300
+@@ -38,6 +38,8 @@
+    rl_filename_completion_function.  */
+ #include "readline/readline.h"
+ 
++extern int rl_sort_completion_matches;
++
+ /* readline defines this.  */
+ #undef savestring
+ 

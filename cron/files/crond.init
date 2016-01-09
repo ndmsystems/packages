@@ -1,6 +1,8 @@
 #!/opt/bin/sh
 # Copyright (C) 2015 NDM Systems, McMCC
 
+export TZ=`cat /etc/TZ | tail -n 1`
+
 NAME=crond
 DAEMON=/opt/usr/sbin/$NAME
 PIDFILE=/opt/var/run/$NAME.pid
