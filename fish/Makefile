@@ -52,7 +52,7 @@ define Package/fish/install
 endef
 
 define Package/fish/postinst
-#!/bin/ash
+#!/opt/bin/ash
 if [ -f /opt/etc/shells ]; then
 	grep "/opt/bin/fish" /opt/etc/shells || echo "/opt/bin/fish" >> /opt/etc/shells
 fi

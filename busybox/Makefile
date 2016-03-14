@@ -116,7 +116,7 @@ define Package/busybox/install
 endef
 
 define Package/busybox/postinst
-#!/bin/sh
+#!/opt/bin/ash
 if [ -f /opt/etc/shells.busybox ]; then
 	ln -sfn bash /opt/bin/sh
 fi

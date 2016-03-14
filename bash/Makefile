@@ -67,7 +67,7 @@ define Build/Compile
 endef
 
 define Package/bash/postinst
-#!/bin/sh
+#!/opt/bin/ash
 ln -sfn bash /opt/bin/sh
 if [ -f /opt/etc/shells ]; then
 	cp -f /opt/etc/shells /opt/etc/shells.busybox
@@ -83,7 +83,7 @@ fi
 endef
 
 define Package/bash/postrm
-#!/bin/sh
+#!/opt/bin/ash
 ln -sfn busybox /opt/bin/sh
 if [ -f /opt/etc/shells.busybox ] && [ -f /opt/etc/profile.busybox ]; then
 	mv -f /opt/etc/shells.busybox /opt/etc/shells
