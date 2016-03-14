@@ -316,7 +316,7 @@ CONFIGURE_ARGS += \
 	--enable-ipv6 \
 	--enable-libipq \
 	--with-kernel="$(LINUX_DIR)" \
-	--with-xtlibdir=/usr/lib/iptables
+	--with-xtlibdir=/opt/usr/lib/iptables
 
 MAKE_FLAGS := \
 	$(TARGET_CONFIGURE_OPTS) \
@@ -351,10 +351,10 @@ define Package/iptables/install
 	$(INSTALL_DIR) $(1)/usr/sbin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/sbin/iptables $(1)/usr/sbin/
 	$(INSTALL_DIR) $(1)/usr/lib/iptables
-	(cd $(PKG_INSTALL_DIR)/usr/lib/iptables ; \
+	(cd $(PKG_INSTALL_DIR)/opt/usr/lib/iptables ; \
 		for m in $(patsubst xt_%,ipt_%,$(IPT_BUILTIN)) $(patsubst ipt_%,xt_%,$(IPT_BUILTIN)); do \
-			if [ -f $(PKG_INSTALL_DIR)/usr/lib/iptables/lib$$$${m}.so ]; then \
-				$(CP) $(PKG_INSTALL_DIR)/usr/lib/iptables/lib$$$${m}.so $(1)/usr/lib/iptables/ ;\
+			if [ -f $(PKG_INSTALL_DIR)/opt/usr/lib/iptables/lib$$$${m}.so ]; then \
+				$(CP) $(PKG_INSTALL_DIR)/opt/usr/lib/iptables/lib$$$${m}.so $(1)/usr/lib/iptables/ ;\
 			fi; \
 		done \
 	)
@@ -369,7 +369,7 @@ define Package/ip6tables/install
 	$(INSTALL_DIR) $(1)/usr/sbin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/sbin/ip6tables $(1)/usr/sbin/
 	$(INSTALL_DIR) $(1)/usr/lib/iptables
-	(cd $(PKG_INSTALL_DIR)/usr/lib/iptables ; \
+	(cd $(PKG_INSTALL_DIR)/opt/usr/lib/iptables ; \
 		$(CP) libip6t_*.so $(1)/usr/lib/iptables/ \
 	)
 endef
@@ -391,9 +391,9 @@ endef
 
 #define Package/libxtables6/install
 #	$(INSTALL_DIR) $(1)/usr/lib/iptables
-#	$(CP) $(PKG_INSTALL_DIR)/usr/lib/iptables/libxt_limit.so $(1)/usr/lib/iptables/
-#	$(CP) $(PKG_INSTALL_DIR)/usr/lib/iptables/libxt_standard.so $(1)/usr/lib/iptables/
-#	$(CP) $(PKG_INSTALL_DIR)/usr/lib/iptables/libxt_conntrack.so $(1)/usr/lib/iptables/
+#	$(CP) $(PKG_INSTALL_DIR)/opt/usr/lib/iptables/libxt_limit.so $(1)/usr/lib/iptables/
+#	$(CP) $(PKG_INSTALL_DIR)/opt/usr/lib/iptables/libxt_standard.so $(1)/usr/lib/iptables/
+#	$(CP) $(PKG_INSTALL_DIR)/opt/usr/lib/iptables/libxt_conntrack.so $(1)/usr/lib/iptables/
 #endef
 
 define Package/libipq/install
@@ -405,8 +405,8 @@ define BuildPlugin
   define Package/$(1)/install
 	$(INSTALL_DIR) $$(1)/usr/lib/iptables
 	for m in $(patsubst xt_%,ipt_%,$(2)) $(patsubst ipt_%,xt_%,$(2)); do \
-		if [ -f $(PKG_INSTALL_DIR)/usr/lib/iptables/lib$$$$$$$${m}.so ]; then \
-			$(CP) $(PKG_INSTALL_DIR)/usr/lib/iptables/lib$$$$$$$${m}.so $$(1)/usr/lib/iptables/ ; \
+		if [ -f $(PKG_INSTALL_DIR)/opt/usr/lib/iptables/lib$$$$$$$${m}.so ]; then \
+			$(CP) $(PKG_INSTALL_DIR)/opt/usr/lib/iptables/lib$$$$$$$${m}.so $$(1)/usr/lib/iptables/ ; \
 		fi; \
 	done
   endef
