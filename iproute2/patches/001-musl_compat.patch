@@ -36,13 +36,16 @@ diff '--exclude=*.o' -Nuar iproute2-2.6.37.orig/include/linux/netfilter_ipv4/ip_
 diff '--exclude=*.o' -Nuar iproute2-2.6.37.orig/include/utils.h iproute2-2.6.37/include/utils.h
 --- iproute2-2.6.37.orig/include/utils.h	2011-01-07 20:54:30.000000000 +0300
 +++ iproute2-2.6.37/include/utils.h	2014-09-29 17:40:24.258245644 +0400
-@@ -2,8 +2,12 @@
+@@ -2,8 +2,15 @@
  #define __UTILS_H__ 1
  
  #include <asm/types.h>
 -#include <resolv.h>
 +#include <sys/types.h>
++#include <linux/version.h>
++#if LINUX_VERSION_CODE > KERNEL_VERSION(2,6,30)
 +#include <asm-generic/param.h>
++#endif
 +#include <limits.h>
 +//#include <resolv.h>
  #include <stdlib.h>
