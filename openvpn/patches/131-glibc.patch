@@ -1,0 +1,11 @@
+diff -ruN openvpn-2.3.6.orig/src/openvpn/syshead.h openvpn-2.3.6/src/openvpn/syshead.h
+--- openvpn-2.3.6.orig/src/openvpn/syshead.h	2016-03-29 23:58:30.000000000 +0300
++++ openvpn-2.3.6/src/openvpn/syshead.h	2016-03-30 00:07:05.770008594 +0300
+@@ -214,6 +214,7 @@
+ 
+ #ifdef TARGET_LINUX
+ 
++#include <linux/if_ether.h>
+ #ifdef HAVE_LINUX_IF_TUN_H
+ #include <linux/if_tun.h>
+ #endif

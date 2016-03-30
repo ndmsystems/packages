@@ -1,0 +1,21 @@
+diff -ruN strace-4.10.old/v4l2.c strace-4.10/v4l2.c
+--- strace-4.10.old/v4l2.c	2015-02-26 23:00:03.000000000 +0300
++++ strace-4.10/v4l2.c	2016-03-19 02:06:36.697649915 +0300
+@@ -67,6 +67,17 @@
+ #define FMT_RECT "{left=%i, top=%i, width=%i, height=%i}"
+ #define ARGS_RECT(x) (x).left, (x).top, (x).width, (x).height
+ 
++#include <byteswap.h>
++#if WORDS_BIGENDIAN
++#ifndef htole32
++#define htole32(x) __bswap_32(x)
++#endif
++#else
++#ifndef htole32
++#define htole32(x) (x)
++#endif
++#endif
++
+ static void print_pixelformat(uint32_t fourcc)
+ {
+ 	union {

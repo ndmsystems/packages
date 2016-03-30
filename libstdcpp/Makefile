@@ -30,10 +30,18 @@ define Build/Compile
 	# nothing to do
 endef
 
+ifeq ($(CONFIG_TOOLCHAIN_LIBC_GLIBC),y)
+define Package/libstdcpp/install
+	$(INSTALL_DIR) $(1)/lib
+	find $(BUILD_DIR_TOOLCHAIN)/tools-*/*-gnu/sysroot/lib -name libstdc++.so* -exec cp -r {} $(1)/lib/ \;
+	rm -f $(1)/lib/libstdc++*.py
+endef
+else
 define Package/libstdcpp/install
 	$(INSTALL_DIR) $(1)/lib
 	$(CP) $(BUILD_DIR_TOOLCHAIN)/sysroot-*/lib/libstdc++.so* $(1)/lib/
 	rm -f $(1)/lib/libstdc++*.py
 endef
+endif
 
 $(eval $(call BuildPackage,libstdcpp))

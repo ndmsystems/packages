@@ -1,0 +1,35 @@
+diff -ruN gdb-7.10.orig/gdb/nat/linux-namespaces.c gdb-7.10/gdb/nat/linux-namespaces.c
+--- gdb-7.10.orig/gdb/nat/linux-namespaces.c	2015-08-29 00:22:07.000000000 +0300
++++ gdb-7.10/gdb/nat/linux-namespaces.c	2016-03-29 22:04:18.137620543 +0300
+@@ -34,18 +34,18 @@
+ 
+ /* Handle systems without setns.  */
+ 
+-#ifndef HAVE_SETNS
+ static int
+-setns (int fd, int nstype)
++do_setns (int fd, int nstype)
+ {
+-#ifdef __NR_setns
++#ifdef HAVE_SETNS
++  return setns (fd, nstype);
++#elif __NR_setns
+   return syscall (__NR_setns, fd, nstype);
+ #else
+   errno = ENOSYS;
+   return -1;
+ #endif
+ }
+-#endif
+ 
+ /* Handle systems without MSG_CMSG_CLOEXEC.  */
+ 
+@@ -495,7 +495,7 @@
+ static ssize_t
+ mnsh_handle_setns (int sock, int fd, int nstype)
+ {
+-  int result = setns (fd, nstype);
++  int result = do_setns (fd, nstype);
+ 
+   return mnsh_return_int (sock, result, errno);
+ }

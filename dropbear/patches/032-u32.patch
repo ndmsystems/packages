@@ -1,0 +1,13 @@
+diff -ruN dropbear-2015.68.orig/includes.h dropbear-2015.68/includes.h
+--- dropbear-2015.68.orig/includes.h	2015-08-08 15:35:33.000000000 +0300
++++ dropbear-2015.68/includes.h	2016-03-19 01:40:53.719578088 +0300
+@@ -157,6 +157,9 @@
+ #endif /* HAVE_UINT32_T */
+ 
+ #ifdef SO_PRIORITY
++#ifndef u32
++typedef unsigned int u32;
++#endif
+ #include <linux/types.h>
+ #include <linux/pkt_sched.h>
+ #endif

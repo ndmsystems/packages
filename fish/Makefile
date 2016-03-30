@@ -18,11 +18,15 @@ PKG_MAINTAINER:=Axel Liljencrantz <axel@liljencrantz.se>
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/nls.mk
 
+ifeq ($(CONFIG_TOOLCHAIN_LIBC_GLIBC),)
+  DEPS:=+libubacktrace
+endif
+
 define Package/fish
   SECTION:=utils
   CATEGORY:=Utilities
   TITLE:=Fish shell
-  DEPENDS:=+libubacktrace +libncurses
+  DEPENDS:=$(DEPS) +libncurses
   URL:=http://fishshell.com/
 endef
 

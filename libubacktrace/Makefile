@@ -28,9 +28,19 @@ define Build/Compile
 	#nothing to do
 endef
 
+ifeq ($(CONFIG_TOOLCHAIN_LIBC_GLIBC),y)
+
+define Package/libubacktrace/install
+
+endef
+
+else
+
 define Package/libubacktrace/install
 	$(INSTALL_DIR) $(1)/lib
 	find $(BUILD_DIR_TOOLCHAIN)/sysroot-* -name libubacktrace.so.0 -exec cp {} $(1)/lib/ \;
 endef
+
+endif
 
 $(eval $(call BuildPackage,libubacktrace))

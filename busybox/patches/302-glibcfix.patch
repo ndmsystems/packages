@@ -1,0 +1,26 @@
+diff -ruN busybox-1.24.1.orig/include/libbb.h busybox-1.24.1/include/libbb.h
+--- busybox-1.24.1.orig/include/libbb.h	2016-03-18 19:04:03.000000000 +0300
++++ busybox-1.24.1/include/libbb.h	2016-03-18 19:08:57.059716300 +0300
+@@ -173,6 +173,9 @@
+ # define BUFSIZ 4096
+ #endif
+ 
++#ifndef MNT_DETACH
++# define MNT_DETACH 2
++#endif
+ 
+ /* Busybox does not use threads, we can speed up stdio. */
+ #ifdef HAVE_UNLOCKED_STDIO
+diff -ruN busybox-1.24.1.orig/init/bootchartd.c busybox-1.24.1/init/bootchartd.c
+--- busybox-1.24.1.orig/init/bootchartd.c	2016-03-18 19:04:03.000000000 +0300
++++ busybox-1.24.1/init/bootchartd.c	2016-03-18 19:09:45.368409956 +0300
+@@ -55,9 +55,6 @@
+ # ifndef MS_SILENT
+ #  define MS_SILENT      (1 << 15)
+ # endif
+-# ifndef MNT_DETACH
+-#  define MNT_DETACH 0x00000002
+-# endif
+ #endif
+ 
+ #if !ENABLE_TAR && !ENABLE_WERROR

@@ -353,6 +353,7 @@ FFMPEG_CONFIGURE:= \
 	LDFLAGS="$(TARGET_LDFLAGS)" \
 	./configure \
 	--enable-cross-compile \
+	--ranlib=$(TARGET_CROSS)ranlib \
 	--cross-prefix="$(TARGET_CROSS)" \
 	--arch="$(ARCH)" \
 	--target-os=linux \
