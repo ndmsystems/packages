@@ -6,6 +6,8 @@ if [ "$DROPBEAR_ENABLE" = "no" ]; then
     exit
 fi
 
+export TZ=`cat /etc/TZ | tail -n 1`
+
 stop() {
 	killall dropbear 2>/dev/null
 }

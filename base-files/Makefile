@@ -12,7 +12,7 @@ include $(INCLUDE_DIR)/kernel.mk
 include $(INCLUDE_DIR)/version.mk
 
 PKG_NAME:=base-files
-PKG_RELEASE:=122
+PKG_RELEASE:=123
 
 include $(INCLUDE_DIR)/package.mk
 

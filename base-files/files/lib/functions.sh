@@ -4,6 +4,7 @@
 INITD="/opt/etc/init.d"
 
 export LANG=C
+export TZ=`cat /etc/TZ | tail -n 1`
 
 append() {
 	local var="$1"

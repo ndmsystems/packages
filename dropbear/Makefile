@@ -8,7 +8,7 @@ include $(INCLUDE_DIR)/package-defaults.mk
 PKG_NAME:=dropbear
 PKG_VERSION:=2015.68
 PKG_MD5SUM:=7664ac10f7cc2301c530eb80c756fc5d
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 PKG_LICENSE:=MIT
 
 PKG_SOURCE_URL:=https://dropbear.nl/mirror/releases

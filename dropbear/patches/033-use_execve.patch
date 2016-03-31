@@ -1,0 +1,20 @@
+diff -ruN dropbear-2015.68.orig/dbutil.c dropbear-2015.68/dbutil.c
+--- dropbear-2015.68.orig/dbutil.c	2015-08-08 15:35:33.000000000 +0300
++++ dropbear-2015.68/dbutil.c	2016-03-31 20:05:48.511377214 +0300
+@@ -334,6 +334,7 @@
+  */
+ void run_shell_command(const char* cmd, unsigned int maxfd, char* usershell) {
+ 	char * argv[4];
++	char * envv[2] = { "LD_LIBRARY_PATH=/opt/lib:/opt/usr/lib:/lib:/usr/lib", NULL };
+ 	char * baseshell = NULL;
+ 	unsigned int i;
+ 
+@@ -368,7 +369,7 @@
+ 		m_close(i);
+ 	}
+ 
+-	execv(usershell, argv);
++	execve(usershell, argv, envv);
+ }
+ 
+ #ifdef DEBUG_TRACE

@@ -4,6 +4,7 @@
 export LANG=C
 export PATH=/opt/bin:/opt/sbin:/opt/usr/bin:/opt/usr/sbin:/bin:/sbin:/usr/bin:/usr/sbin
 export LD_LIBRARY_PATH=/opt/lib:/opt/usr/lib:/lib:/usr/lib
+export TZ=`cat /etc/TZ | tail -n 1`
 
 . /opt/lib/functions.sh
 
