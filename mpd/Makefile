@@ -93,7 +93,7 @@ CONFIGURE_ARGS += \
 	--disable-documentation \
 	--disable-test \
 	--disable-werror \
-	\
+	--disable-signalfd \
 	--disable-ao \
 	--disable-bzip2 \
 	--disable-fluidsynth \
