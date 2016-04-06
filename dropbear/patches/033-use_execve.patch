@@ -5,7 +5,7 @@ diff -ruN dropbear-2015.68.orig/dbutil.c dropbear-2015.68/dbutil.c
   */
  void run_shell_command(const char* cmd, unsigned int maxfd, char* usershell) {
  	char * argv[4];
-+	char * envv[2] = { "LD_LIBRARY_PATH=/opt/lib:/opt/usr/lib:/lib:/usr/lib", NULL };
++	char * envv[6] = { "LD_LIBRARY_PATH=/opt/lib:/opt/usr/lib:/lib:/usr/lib", "PATH=/opt/bin:/opt/sbin:/opt/usr/bin:/opt/usr/sbin:/bin:/sbin:/usr/bin:/usr/sbin", "TERM=xterm", "\x50\x53\x31\x3D\x5C\x75\x40\x5C\x68\x3A\x24\x28\x70\x77\x64\x29\x5C\x24\x20", "SHELL=/opt/bin/sh", NULL };
  	char * baseshell = NULL;
  	unsigned int i;
  
