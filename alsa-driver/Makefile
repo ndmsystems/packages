@@ -27,6 +27,7 @@ define KernelPackage/sound-core-kold
   PROVIDES:=kmod-sound-core
   FILES:= $(foreach mod,$(shell cat ./files/30-sound-core), \
 	$(PKG_BUILD_DIR)/modules/$(mod).$(LINUX_KMOD_SUFFIX))
+  FILES+=$(LINUX_DIR)/sound/soundcore.$(LINUX_KMOD_SUFFIX)
   KCONFIG:= \
 	CONFIG_SOUND \
 	CONFIG_SND \

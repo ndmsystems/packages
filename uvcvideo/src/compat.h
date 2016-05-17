@@ -631,11 +631,11 @@ static inline unsigned long v4l_compat_fls(unsigned long x)
 #if LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 25) && \
 	LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 22)
 /* Forward a hrtimer so it expires after the hrtimer's current now */
-static inline unsigned long hrtimer_forward_now(struct hrtimer *timer,
-						ktime_t interval)
-{
-	return hrtimer_forward(timer, timer->base->get_time(), interval);
-}
+//static inline unsigned long hrtimer_forward_now(struct hrtimer *timer,
+//						ktime_t interval)
+//{
+//	return hrtimer_forward(timer, timer->base->get_time(), interval);
+//}
 #endif
 #endif /* _LINUX_HRTIMER_H */
 

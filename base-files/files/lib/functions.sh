@@ -27,7 +27,7 @@ load_modules() {
 	[ -d /opt/etc/modules.d ] && {
 		cd /opt/etc/modules.d
 		for a in `cat $1`; do
-			insmod /opt/lib/modules/2.6.36/$a.ko 2> /dev/null
+			insmod /opt/lib/modules/current/$a.ko 2> /dev/null
 		done
 	}
 }

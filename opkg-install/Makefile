@@ -65,6 +65,8 @@ define Package/opkg-install/install
 	$(CP) $(PKG_BUILD_DIR)/info/* $(1)/usr/lib/opkg/info
 	cat $(PKG_BUILD_DIR)/status >> $(1)/usr/lib/opkg/status
 	$(SED) 's#@@VER@@#$(VER)#g' -e 's#@@FULL_VER@@#$(FULL_VER)#g' -e 's#@@BOARD@@#$(SUBTARGET)#g' $(1)/usr/lib/opkg/status
+	$(INSTALL_DIR) $(1)/lib/modules
+	ln -sf $(LINUX_VERSION) $(1)/lib/modules/current
 endef
 
 $(eval $(call BuildPackage,opkg-install))
