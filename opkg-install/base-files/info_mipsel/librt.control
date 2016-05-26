@@ -1,0 +1,20 @@
+Package: librt
+Version: 2.19-ndm-1-2
+Depends: libpthread
+Provides: 
+Source: package/toolchain
+Section: libs
+Submenu: 
+Status: unknown hold not-installed
+Essential: yes
+Priority: optional
+Preset: 
+Hidden: 
+Sort-Order: 
+Master-Package: 
+Maintainer: NDMS Developers Team <support@ndmsystems.com>
+Architecture: mipsel
+Installed-Size: 12407
+Description:  POSIX.1b RealTime extension library
+Script:  
+@@

@@ -1,0 +1,20 @@
+Package: libgcc
+Version: 4.6.4-2
+Depends: 
+Provides: 
+Source: package/toolchain
+Section: libs
+Submenu: 
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Preset: 
+Hidden: 
+Sort-Order: 
+Master-Package: 
+Maintainer: NDMS Developers Team <support@ndmsystems.com>
+Architecture: mipsel
+Installed-Size: 53682
+Description:  GCC support library
+Script:  
+@@

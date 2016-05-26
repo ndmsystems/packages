@@ -6,20 +6,21 @@ include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
 PKG_NAME:=opkg-install
-PKG_RELEASE:=1
-PKG_VERSION:=1.1
+PKG_RELEASE:=2
+PKG_VERSION:=1.2
 VER:=$(LINUX_VERSION)-$(LINUX_RELEASE)
 FULL_VER:=$(VER)-$(LINUX_VERMAGIC)
 
 include $(INCLUDE_DIR)/package.mk
+include $(INCLUDE_DIR)/version.mk
 
 define Package/opkg-install
   SECTION:=base
   CATEGORY:=Base system
   URL:=http://keenopt.ru/
-  NAME:=opkg-install
-  TITLE:=Preinstall opkg data base.
-  DEPENDS:=+base-files +libc +libgcc +librt +libpthread +librpc +busybox +dropbear +libpam +libndm +pam_ndm +opkg
+#  NAME:=opkg-install
+  TITLE:=Preinstall opkg config and data base.
+  DEPENDS:=PACKAGE_opkg:opkg
   PKGARCH:=$(SUBTARGET)
 endef
 
@@ -28,6 +29,8 @@ define Build/Prepare
 endef
 
 define Build/Compile
+
+ifneq ($(CONFIG_PACKAGE_opkg),)
 	cd $(PKG_BUILD_DIR); \
 	mkdir -p $(PKG_BUILD_DIR)/info; \
 	IPKG_FILES="base-files libc libgcc librt libpthread librpc busybox dropbear libpam libndm pam_ndm opkg"; \
@@ -54,10 +57,19 @@ define Build/Compile
 		tar tvzf data.tar.gz --show-transformed-names | grep -v "^d.*" | awk -F" " '{print $$$$6}' | sed -e 's#^./#/opt/#g' > $(PKG_BUILD_DIR)/info/$$$${ipkg}.list; \
 		rm -f control.tar.gz data.tar.gz; \
 	done;
+else
+	mkdir -p $(PKG_BUILD_DIR)/info; \
+	$(CP) ./base-files/status_$(ARCH) $(PKG_BUILD_DIR)/status; \
+	$(CP) ./base-files/info_$(ARCH)/* $(PKG_BUILD_DIR)/info/;
+endif
+
 endef
 
 define Package/opkg-install/install
 	$(INSTALL_DIR) $(1)/usr/lib/opkg/info
+	$(INSTALL_DIR) $(1)/etc
+	$(INSTALL_DATA) ./configs/opkg.conf $(1)/etc/
+	$(VERSION_SED) $(1)/etc/opkg.conf
 	$(CP) ./files/* $(1)/usr/lib/opkg
 	for ipkg in `ls $(1)/usr/lib/opkg/info/*.control`; do \
 		$(SED) 's#@@VER@@#$(VER)#g' -e 's#@@FULL_VER@@#$(FULL_VER)#g' -e 's#@@BOARD@@#$(SUBTARGET)#g' $$$${ipkg}; \

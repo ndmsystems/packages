@@ -1,0 +1,21 @@
+Package: busybox
+Version: 1.24.1-2
+Depends: libc, librpc, libpam
+Provides: 
+Source: feeds/ndmfeed/busybox
+Section: base
+Submenu: 
+Status: unknown ok not-installed
+Essential: yes
+Priority: optional
+Preset: 
+Hidden: 
+Sort-Order: 
+Master-Package: 
+Maintainer: Felix Fietkau <nbd@openwrt.org>
+Architecture: mipsel
+Installed-Size: 360898
+Description:  The Swiss Army Knife of embedded Linux.
+ It slices, it dices, it makes Julian Fries.
+Script:  
+@@

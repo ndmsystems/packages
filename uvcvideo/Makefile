@@ -11,7 +11,7 @@ include $(INCLUDE_DIR)/package.mk
 
 define KernelPackage/video-core-kold
   SUBMENU:=$(VIDEO_MENU)
-  DEPENDS:=@LINUX_2_6_22||USB_SUPPORT
+  DEPENDS:=@LINUX_2_6_22 @USB_SUPPORT
   TITLE:=Video drivers V4L
   PROVIDES:=kmod-video-core
   KCONFIG:= \
@@ -31,7 +31,7 @@ define KernelPackage/video/Depends
 endef
 
 define KernelPackage/video-uvc-kold
-$(call KernelPackage/video/Depends,@LINUX_2_6_22||USB_SUPPORT +kmod-usb-core)
+$(call KernelPackage/video/Depends,@LINUX_2_6_22 @USB_SUPPORT +kmod-usb-core)
   SUBMENU:=$(VIDEO_MENU)
   TITLE:=Video drivers for UVC USB web-cameras
   PROVIDES:=kmod-video-uvc

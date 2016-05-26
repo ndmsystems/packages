@@ -1,0 +1,26 @@
+Package: opkg
+Version: 618-5
+Depends: libc
+Provides: 
+Source: feeds/ndmfeed/opkg
+Section: base
+Submenu: 
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Preset: 
+Hidden: 
+Sort-Order: 
+Master-Package: 
+Maintainer: Jo-Philipp Wich <xm@subsignal.org>
+Architecture: mips
+Installed-Size: 67939
+Description:  Lightweight package management system
+ opkg is the opkg Package Management System, for handling
+ installation and removal of packages on a system. It can
+ recursively follow dependencies and download all packages
+ necessary to install a particular package.
+ 
+ opkg knows how to install both .ipk and .deb packages.
+Script:  
+@@

@@ -1,0 +1,2 @@
+/opt/etc/pam.d/sshd
+/opt/lib/security/pam_ndm.so

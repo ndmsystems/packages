@@ -1,0 +1,20 @@
+Package: pam_ndm
+Version: 2.06.B.2.0-5-9-13d1bc7
+Depends: libc, libndm, libpam
+Provides: 
+Source: feeds/ndmfeed/pam_ndm
+Section: utils
+Submenu: 
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Preset: 
+Hidden: 
+Sort-Order: 
+Master-Package: 
+Maintainer: NDMS Developers Team <support@ndmsystems.com>
+Architecture: mipsel
+Installed-Size: 1789
+Description:  PAM authentication module for libndm
+Script:  
+@@

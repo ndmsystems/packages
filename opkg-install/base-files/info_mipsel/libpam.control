@@ -1,0 +1,20 @@
+Package: libpam
+Version: 1.1.8-3
+Depends: libc
+Provides: 
+Source: feeds/ndmfeed/libpam
+Section: libs
+Submenu: 
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Preset: 
+Hidden: 
+Sort-Order: 
+Master-Package: 
+Maintainer: NDMS Developers Team <support@ndmsystems.com>
+Architecture: mipsel
+Installed-Size: 188327
+Description:  Linux-PAM is a free implementation of the following DCE-RFC from Sunsoft.
+Script:  
+@@

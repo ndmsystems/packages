@@ -1,0 +1,125 @@
+Package: base-files
+Version: 123-keenopt
+Depends: libc
+Provides: 
+Status: install ok installed
+Essential: yes
+Architecture: all
+Conffiles:
+ /opt/etc/profile 091d3aa02fe323524c20e908cff4ac07
+ /opt/etc/shells d0c54eb5433015ee288688bbb2b6ba0f
+ /opt/etc/sysctl.conf 1fd2af566e66ded8cd84bb461fb73e60
+ /opt/usr/share/udhcpc/default.script 968d4d7a42097a9487a35fefce454c48
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: libc
+Version: 2.19-ndm-1-2
+Depends: libgcc
+Provides: 
+Status: install ok installed
+Essential: yes
+Architecture: mipsel
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: libgcc
+Version: 4.6.4-2
+Depends: 
+Provides: 
+Status: install ok installed
+Essential: yes
+Architecture: mipsel
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: librt
+Version: 2.19-ndm-1-2
+Depends: libpthread
+Provides: 
+Status: install ok installed
+Essential: yes
+Architecture: mipsel
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: libpthread
+Version: 2.19-ndm-1-2
+Depends: libgcc
+Provides: 
+Status: install ok installed
+Essential: yes
+Architecture: mipsel
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: librpc
+Version: 2015-04-10-1
+Depends: libc
+Provides: 
+Status: install ok installed
+Essential: yes
+Architecture: mipsel
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: busybox
+Version: 1.24.1-2
+Depends: libc, librpc, libpam
+Provides: 
+Status: install ok installed
+Essential: yes
+Architecture: mipsel
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: dropbear
+Version: 2015.68-2
+Depends: libc, libpam, pam_ndm
+Provides: 
+Status: install ok installed
+Essential: yes
+Architecture: mipsel
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: libpam
+Version: 1.1.8-3
+Depends: libc
+Provides: 
+Status: install ok installed
+Essential: yes
+Architecture: mipsel
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: libndm
+Version: 2.06.B.2.0-5-9-13d1bc7
+Depends: libc, librt
+Provides: 
+Status: install ok installed
+Essential: yes
+Architecture: mipsel
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: pam_ndm
+Version: 2.06.B.2.0-5-9-13d1bc7
+Depends: libc, libndm, libpam
+Provides: 
+Status: install ok installed
+Essential: yes
+Architecture: mipsel
+Installed-Time: 1445514529
+Auto-Installed: yes
+
+Package: opkg
+Version: 618-5
+Depends: libc
+Provides: 
+Status: install ok installed
+Essential: yes
+Architecture: mipsel
+Installed-Time: 1445514529
+Auto-Installed: yes
+

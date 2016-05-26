@@ -1,0 +1,20 @@
+Package: dropbear
+Version: 2015.68-2
+Depends: libc, libpam, pam_ndm
+Provides: 
+Source: feeds/ndmfeed/dropbear
+Section: net
+Submenu: 
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Preset: 
+Hidden: 
+Sort-Order: 
+Master-Package: 
+Maintainer: NDMS Developers Team <support@ndmsystems.com>
+Architecture: mipsel
+Installed-Size: 342354
+Description:  Lightweight SSH sever and client
+Script:  
+@@

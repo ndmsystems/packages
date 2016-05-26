@@ -5,14 +5,13 @@
 # See /LICENSE for more information.
 
 include $(TOPDIR)/rules.mk
-include $(INCLUDE_DIR)/kernel.mk
-include $(INCLUDE_DIR)/version.mk
+# include $(INCLUDE_DIR)/kernel.mk
 
 PKG_NAME:=opkg
 PKG_REV:=618
 PKG_VERSION:=$(PKG_REV)
 PKG_MD5SUM:=d6087a26ff5cf6b86bd159e8aca9f650
-PKG_RELEASE:=4
+PKG_RELEASE:=5
 PKG_LICENSE:=GPLv2
 
 PKG_SOURCE_PROTO:=svn
@@ -36,8 +35,9 @@ define Package/opkg
   CATEGORY:=Base system
   TITLE:=opkg package management system
   MAINTAINER:=Jo-Philipp Wich <xm@subsignal.org>
+  DEPENDS:=+PACKAGE_opkg-install:base-files +PACKAGE_opkg-install:libc +PACKAGE_opkg-install:libgcc +PACKAGE_opkg-install:librt +PACKAGE_opkg-install:libpthread +PACKAGE_opkg-install:librpc
+  DEPENDS+=+PACKAGE_opkg-install:busybox +PACKAGE_opkg-install:dropbear +PACKAGE_opkg-install:libpam +PACKAGE_opkg-install:libndm +PACKAGE_opkg-install:pam_ndm
   URL:=http://wiki.openmoko.org/wiki/Opkg
-  PKGARCH:=$(SUBTARGET)
 endef
 
 define Package/opkg/description
@@ -48,10 +48,6 @@ define Package/opkg/description
   necessary to install a particular package.
 
   opkg knows how to install both .ipk and .deb packages.
-endef
-
-define Package/opkg/conffiles
-/etc/opkg.conf
 endef
 
 TARGET_CFLAGS += $(if $(CONFIG_GCC_VERSION_4_3)$(CONFIG_GCC_VERSION_4_4),-Wno-array-bounds)
@@ -74,9 +70,6 @@ MAKE_FLAGS = \
 define Package/opkg/install
 	$(INSTALL_DIR) $(1)/usr/lib/opkg
 	$(INSTALL_DIR) $(1)/bin
-	$(INSTALL_DIR) $(1)/etc
-	$(INSTALL_DATA) ./files/opkg.conf $(1)/etc/
-	$(VERSION_SED) $(1)/etc/opkg.conf
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/opkg-cl $(1)/bin/opkg
 endef
 

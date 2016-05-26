@@ -1,0 +1,4 @@
+/etc/profile
+/etc/shells
+/etc/sysctl.conf
+/usr/share/udhcpc/default.script

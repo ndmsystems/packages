@@ -52,7 +52,7 @@ define KernelPackage/audio/Depends
 endef
 
 define KernelPackage/usb-audio-kold
-$(call KernelPackage/audio/Depends,@LINUX_2_6_22||USB_SUPPORT +kmod-usb-core)
+$(call KernelPackage/audio/Depends,@LINUX_2_6_22 @USB_SUPPORT +kmod-usb-core)
   SUBMENU:=$(AUDIO_MENU)
   TITLE:=USB Linux Sound drivers
   PROVIDES:=kmod-usb-audio

@@ -1,0 +1,8 @@
+/opt/bin/dbclient
+/opt/bin/scp
+/opt/bin/ssh
+/opt/sbin/dropbear
+/opt/sbin/dropbearkey
+/opt/sbin/dropbearconvert
+/opt/etc/init.d/S01dropbear
+/opt/etc/default/dropbear

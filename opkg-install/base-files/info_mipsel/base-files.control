@@ -1,0 +1,20 @@
+Package: base-files
+Version: 123-keenopt
+Depends: libc
+Provides: 
+Source: feeds/ndmfeed/base-files
+Section: base
+Submenu: 
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Preset: 
+Hidden: 
+Sort-Order: 
+Master-Package: 
+Maintainer: NDMS Developers Team <support@ndmsystems.com>
+Architecture: all
+Installed-Size: 14272
+Description:  This package contains a base filesystem and system scripts for OpenWrt.
+Script:  
+@@
