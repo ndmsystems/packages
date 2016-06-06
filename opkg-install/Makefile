@@ -14,6 +14,8 @@ FULL_VER:=$(VER)-$(LINUX_VERMAGIC)
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/version.mk
 
+PKG_BUILD_DEPENDS += opkg/host
+
 define Package/opkg-install
   SECTION:=base
   CATEGORY:=Base system
